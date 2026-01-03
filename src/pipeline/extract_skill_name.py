@@ -7,7 +7,7 @@ from typing import Dict, List
 import cv2 as cv
 import numpy as np
 import pytesseract
-
+from .skill_vocab import VOCAB, snap_name
 
 # -------- internal helpers --------
 
@@ -113,10 +113,18 @@ def extract_skill_names_batched(name_bgr_list: List[np.ndarray]) -> List[str]:
 
     cleaned: List[str] = []
     for ln in lines:
-        name = _clean_text(ln)
+        name_raw = _clean_text(ln)
+        snapped, score = snap_name(name_raw, VOCAB)
+
+        name = snapped if snapped else f"MISMATCH:{name_raw}"
+        if not snapped and name_raw:
+            print(f"[name] raw='{name_raw}' best_score={score}")
+            pass
         if len(name) < 2:
             name = ""
+
         cleaned.append(name)
+
 
     # Force length match (caller expects same count)
     if len(cleaned) < len(name_bgr_list):

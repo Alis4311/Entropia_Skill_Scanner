@@ -1,0 +1,165 @@
+Agility
+Alertness
+Aim
+Analysis
+Anatomy
+Animal Lore
+Animal Taming
+Archaeological Lore
+Armor Technology
+Artefact Preservation
+Attachments Technology
+Athletics
+Avoidance
+Axes
+Biology
+Bioregenesis
+BLP Weaponry Technology
+Blueprint Comprehension
+Body Sculpting
+Botany
+Bravado
+Butchering
+Carpentry
+Chemistry
+Clubs
+Color Matching
+Coloring
+Combat Reflexes
+Combat Sense
+Commando
+Computer
+Concentration
+Coolness
+Courage
+Cryogenics
+Deep Space Knowledge
+Dexterity
+Diagnosis
+Dispense Decoy
+Dodge
+Drilling
+Electrokinesis
+Electronics
+Engineering
+Enhancer Technology
+Evade
+Explosive Projectile Weaponry Technology
+Extraction
+Face Sculpting
+Fashion Design
+First Aid
+Force Merge
+Fragmentating
+Gauss Weaponry Technology
+Genetics
+Geology
+Ground Assessment
+Hair Stylist
+Handgun
+Health
+Heavy Melee Weapons
+Heavy Weapons
+Inflict Melee Damage
+Inflict Ranged Damage
+Intelligence
+Intuition
+Jamming
+Kill Strike
+Knives
+Laser Weaponry Technology
+Light Melee Weapons
+Long Blades
+Machinery
+Make Textile
+Manufacture Armor
+Manufacture Attachments
+Manufacture Clothing
+Manufacture Components
+Manufacture Electronic Equipment
+Manufacture Enhancers
+Manufacture Mechanical Equipment
+Manufacture Metal Equipment
+Manufacture Tools
+Manufacture Vehicle
+Manufacture Weapons
+Marksmanship
+Martial Arts
+Material Extraction Methodology
+Mechanics
+Medicine
+Melee Combat
+Melee Damage Assessment
+Melee Weapons
+Mentor
+Metallurgy
+Mindforce Harmony
+Mining
+Mining Laser Operator
+Mining Laser Technology
+Particle Beamer Technology
+Perception
+Plasma Weaponry Technology
+Plastic Surgery
+Power Catalyst
+Power Fist
+Precision Artefact Extraction
+Probing
+Promoter Rating
+Prospecting
+Psychotropy
+Psyche
+Pyrokinetics
+Quickness
+Ranged Damage Assessment
+Ranged Laser Weaponry
+Ranged Plasma Weaponry
+Ranged Weapon Handling
+Reaping
+Reclaiming
+Reputation
+Resource Gathering
+Rifle
+Robot Lore
+Robotology
+Salvaging
+Scan Animal
+Scan Human
+Scan Mutant
+Scan Robot
+Scan Technology
+Scavenging
+Scientist
+Scourging
+Serendipity
+Short Blades
+Skinning
+Spacecraft Engineering
+Spacecraft Pilot
+Spacecraft Systems
+Spacecraft Weaponry
+Stamina
+Strength
+Support Weapon Systems
+Surveying
+Sweat Gatherer
+Tailoring
+Telepathy
+Teleportation
+Texture Engineering
+Texture Pattern Matching
+Tier Upgrading
+Tools Technology
+Translocation
+Treatment
+Treasure Sense
+Vehicle Repairing
+Vehicle Technology
+Weapon Technology
+Weapons Handling
+Whips
+Wood Carving
+Wood Processing
+Wounding
+Xenobiology
+Zoology

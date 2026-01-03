@@ -19,37 +19,62 @@ class PointsDecimalResult:
 # -----------------------------
 # Fixed bar slice inside points_bgr (tune these once)
 # -----------------------------
+BAR_X1_OFF_PX = 12
+BAR_X2_OFF_PX = 15
 
-# X offsets (pixels) inside points_bgr
-BAR_X1_OFF_PX = 12          # set this (e.g. 8, 12, 16) once you confirm
-BAR_X2_OFF_PX = 15           # set as "trim from right" (e.g. 8, 10, 14)
+BAR_Y_CENTER_FRAC = 0.80
+BAR_HEIGHT_PX = 7
 
-# Y position inside points_bgr as fraction of height
-BAR_Y_CENTER_FRAC = 0.75     # bar tends to sit around ~60-70% of row height
-BAR_HEIGHT_PX = 7            # thin slice; 6–9 usually good
 
-# Optional guardrail
-ENABLE_TEAL_START_VALIDATION = True
-TEAL_LEFT_STRIP_PX = 8
-TEAL_MIN_LEFT_RATIO = 0.01   # how much teal must be present in left strip if bar has teal
+# -----------------------------
+# Teal detection (HSV)
+# -----------------------------
+# These are intentionally conservative. Adjust H/S/V only if debug proves needed.
+HSV_TEAL_LOWER = (70, 70, 40)
+HSV_TEAL_UPPER = (105, 255, 255)
+
+# Small cleanup (bar is only 7px tall, so keep kernels small)
+MORPH_OPEN_K = (3, 3)
+MORPH_CLOSE_K = (3, 3)
+
+
+# -----------------------------
+# Robust fill logic tuned for ~147x7 crops
+# -----------------------------
+# A column counts as "teal" if >= this many pixels are teal in that column.
+# For a 7px tall crop, 2 pixels is a good "real signal vs speckle" threshold.
+COL_TEAL_MIN_PX = 2
+
+# Left anchor: require at least one teal column in the first N columns to consider non-empty.
+LEFT_PROBE_PX = 10  # ~7% of 147
+
+# Full bar: if >= this fraction of columns are teal, treat as full.
+FULL_COL_FRAC = 0.99
+
+# If teal exists but is not left-anchored, we treat it as noise/ambiguous.
+# Optionally allow a tiny left-edge glitch.
+LEFT_START_TOL_PX = 3
+
+# Noise check: if we have teal but it’s extremely fragmented (many tiny CCs), fail.
+MAX_CC_COUNT = 6
+MIN_LARGEST_CC_PX = 25  # with 147x7, real fills create a CC bigger than this
 
 
 def parse_points_decimal_from_bar(
     points_bgr: np.ndarray,
     *,
-    sample_frac: float = 0.08,
     debug_dir: Union[str, Path, None] = None,
 ) -> PointsDecimalResult:
     """
-    points_bgr -> decimal via progress bar fill ratio (LAB prototype distances).
-    Now uses fixed-offset bar ROI (no detection), with optional teal-start validation.
+    points_bgr -> decimal via progress bar fill ratio using HSV teal mask and
+    left-anchored column boundary. Designed for small bar crops (~147x7).
     """
     if points_bgr is None or points_bgr.size == 0:
         return PointsDecimalResult(None, None, 0.0, "empty input")
 
     H, W = points_bgr.shape[:2]
 
-    # Build bar ROI deterministically
+    # Deterministic bar ROI
     bx1 = int(np.clip(BAR_X1_OFF_PX, 0, W - 2))
     bx2 = int(np.clip(W - BAR_X2_OFF_PX, bx1 + 2, W))
 
@@ -59,6 +84,9 @@ def parse_points_decimal_from_bar(
     by2 = int(np.clip(yc + half + 1, by1 + 1, H))
 
     bar_roi = (bx1, by1, bx2, by2)
+    bar = points_bgr[by1:by2, bx1:bx2]
+    if bar.size == 0:
+        return PointsDecimalResult(None, None, 0.0, "empty_bar_crop")
 
     dbg = Path(debug_dir) if debug_dir else None
     if dbg:
@@ -67,175 +95,129 @@ def parse_points_decimal_from_bar(
         vis = points_bgr.copy()
         cv2.rectangle(vis, (bx1, by1), (bx2 - 1, by2 - 1), (0, 255, 255), 2)
         cv2.imwrite(str(dbg / "01_bar_roi_fixed.png"), vis)
-        cv2.imwrite(str(dbg / "02_bar_crop.png"), points_bgr[by1:by2, bx1:bx2])
+        cv2.imwrite(str(dbg / "02_bar_crop.png"), bar)
 
-    # Optional teal-start validation (guardrail, not a detector)
-    if ENABLE_TEAL_START_VALIDATION:
-        ok, teal_meta = _validate_teal_start(points_bgr, bar_roi)
+    mask = _teal_mask(bar)
+
+    # Connected components stats (for noise gating)
+    cc_count, largest_cc = _cc_stats(mask)
+
+    # Column-wise teal
+    teal_per_col = (mask > 0).sum(axis=0)  # shape (w,)
+    col_is_teal = teal_per_col >= COL_TEAL_MIN_PX
+    w = col_is_teal.size
+
+    teal_cols = int(col_is_teal.sum())
+    teal_col_frac = teal_cols / max(1, w)
+
+    # Debug saves
+    if dbg:
+        cv2.imwrite(str(dbg / "03_teal_mask.png"), mask)
+        _write_fill_debug(dbg, bar, mask, col_is_teal, 0.0, reason="pre")
+
+    # Hard zero: no teal columns at all
+    if teal_cols == 0:
         if dbg:
-            _write_teal_debug(points_bgr, bar_roi, dbg, teal_meta)
+            _write_fill_debug(dbg, bar, mask, col_is_teal, 0.0, reason="zero_no_teal")
+        return PointsDecimalResult(0.0, 0.00, 1.0, "zero_no_teal")
 
-        if not ok:
-            # Still attempt parse (sometimes 0.00 has no teal),
-            # but mark low confidence and reason.
-            # If you prefer hard-fail, return here instead.
-            frac, dec = None, None
-            try:
-                frac_val = extract_decimal_from_bar(points_bgr, bar_roi, sample_frac=sample_frac, debug_dir=dbg)
-                frac_val = float(np.clip(frac_val, 0.0, 1.0))
-                frac, dec = frac_val, round(frac_val, 2)
-            except Exception:
-                pass
+    # Hard full: almost all columns teal
+    if teal_col_frac >= FULL_COL_FRAC:
+        if dbg:
+            _write_fill_debug(dbg, bar, mask, col_is_teal, 0.99, reason="full_by_cols")
+        return PointsDecimalResult(0.99, 0.99, 1.0, "full_by_cols")
 
-            return PointsDecimalResult(frac, dec, 0.25, f"teal-start failed: {teal_meta.get('reason','?')}")
+    # Noise/fragmentation check: teal exists but looks like speckle
+    if cc_count > MAX_CC_COUNT and largest_cc < MIN_LARGEST_CC_PX:
+        if dbg:
+            _write_fill_debug(dbg, bar, mask, col_is_teal, 0.0, reason=f"mismatch_noise_cc{cc_count}_lc{largest_cc}")
+        return PointsDecimalResult(None, None, 0.0, "MISMATCH: teal_noise_fragmented")
 
-    # Compute fill ratio using LAB prototype method
-    try:
-        frac = extract_decimal_from_bar(points_bgr, bar_roi, sample_frac=sample_frac, debug_dir=dbg)
-    except Exception as e:
-        return PointsDecimalResult(None, None, 0.0, f"bar parse failed: {e}")
+    # Left anchoring: must see teal near the left, else likely false positives
+    left_probe = min(LEFT_PROBE_PX, w)
+    if not col_is_teal[:left_probe].any():
+        if dbg:
+            _write_fill_debug(dbg, bar, mask, col_is_teal, 0.0, reason="zero_not_left_anchored")
+        # This is usually “empty bar + noise”. Safer to snap to 0.00 than guess.
+        return PointsDecimalResult(0.0, 0.00, 0.9, "zero_not_left_anchored")
 
-    frac = float(np.clip(frac, 0.0, 1.0))
-    dec = round(frac, 2)
+    # Find start of fill (allow tiny left-edge glitch)
+    ones = np.where(col_is_teal)[0]
+    start = int(ones[0])
+    if start > LEFT_START_TOL_PX:
+        if dbg:
+            _write_fill_debug(dbg, bar, mask, col_is_teal, 0.0, reason=f"mismatch_start_{start}")
+        return PointsDecimalResult(None, None, 0.0, "MISMATCH: teal_not_left_starting")
 
-    # Confidence: based on ROI width and teal validation (if enabled)
-    bar_w = max(1, bx2 - bx1)
-    conf = float(np.clip(bar_w / 200.0, 0.4, 1.0))
+    # Boundary = first non-teal after left run (starting from `start`)
+    tail = col_is_teal[start:]
+    zeros = np.where(~tail)[0]
+    boundary = (start + int(zeros[0])) if zeros.size > 0 else w
 
-    return PointsDecimalResult(frac, dec, conf, "ok")
+    fill_ratio = float(np.clip(boundary / max(1, w), 0.0, 1.0))
+    fill_ratio = min(fill_ratio, 0.99)
+    dec = round(fill_ratio, 2)
+
+    # Simple confidence: anchored + non-noisy => high
+    conf = 0.95
+    reason = "ok"
+
+    if dbg:
+        _write_fill_debug(dbg, bar, mask, col_is_teal, fill_ratio, reason="ok")
+
+    return PointsDecimalResult(fill_ratio, dec, conf, reason)
 
 
-# -----------------------------
-# Optional teal-start validation helpers
-# -----------------------------
-def _teal_mask(bgr: np.ndarray) -> np.ndarray:
-    hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)
-    lower = np.array([70, 60, 40], dtype=np.uint8)
-    upper = np.array([105, 255, 255], dtype=np.uint8)
+def _teal_mask(bar_bgr: np.ndarray) -> np.ndarray:
+    hsv = cv2.cvtColor(bar_bgr, cv2.COLOR_BGR2HSV)
+    lower = np.array(HSV_TEAL_LOWER, dtype=np.uint8)
+    upper = np.array(HSV_TEAL_UPPER, dtype=np.uint8)
     mask = cv2.inRange(hsv, lower, upper)
-    # light cleanup
-    k = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 3))
-    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, k, iterations=1)
+
+    k1 = cv2.getStructuringElement(cv2.MORPH_RECT, MORPH_OPEN_K)
+    k2 = cv2.getStructuringElement(cv2.MORPH_RECT, MORPH_CLOSE_K)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, k1, iterations=1)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, k2, iterations=1)
+
     return mask
 
 
-def _validate_teal_start(points_bgr: np.ndarray, bar_roi: Tuple[int, int, int, int]) -> Tuple[bool, dict]:
-    x1, y1, x2, y2 = bar_roi
-    crop = points_bgr[y1:y2, x1:x2]
-    if crop.size == 0:
-        return False, {"reason": "empty_bar_crop"}
-
-    mask = _teal_mask(crop)
-    teal_ratio = float((mask > 0).mean())
-
-    # If there's basically no teal anywhere, bar might be empty (0.00) — don't fail hard.
-    if teal_ratio < 0.01:
-        return True, {"reason": "no_teal_detected_ok", "teal_ratio": teal_ratio}
-
-    L = min(TEAL_LEFT_STRIP_PX, mask.shape[1])
-    left = mask[:, :L]
-    left_ratio = float((left > 0).mean())
-
-    ok = left_ratio >= TEAL_MIN_LEFT_RATIO
-    return ok, {
-        "reason": "ok" if ok else "left_strip_low",
-        "teal_ratio": teal_ratio,
-        "left_ratio": left_ratio,
-        "L": L,
-    }
+def _cc_stats(mask: np.ndarray) -> Tuple[int, int]:
+    # returns (component_count_excluding_bg, largest_component_area)
+    num, labels, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
+    if num <= 1:
+        return 0, 0
+    areas = stats[1:, cv2.CC_STAT_AREA]
+    return int(len(areas)), int(areas.max()) if len(areas) else 0
 
 
-def _write_teal_debug(points_bgr: np.ndarray, bar_roi: Tuple[int, int, int, int], dbg: Path, meta: dict) -> None:
-    x1, y1, x2, y2 = bar_roi
-    crop = points_bgr[y1:y2, x1:x2]
-    if crop.size == 0:
-        return
-    mask = _teal_mask(crop)
-    cv2.imwrite(str(dbg / "03_teal_mask.png"), mask)
-    vis = crop.copy()
-    L = min(TEAL_LEFT_STRIP_PX, vis.shape[1])
-    cv2.rectangle(vis, (0, 0), (L - 1, vis.shape[0] - 1), (0, 255, 255), 1)
-    cv2.putText(vis, f"{meta}", (5, max(12, vis.shape[0] - 5)),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 255, 255), 1, cv2.LINE_AA)
-    cv2.imwrite(str(dbg / "04_teal_start_vis.png"), vis)
-
-
-# -----------------------------
-# Your existing method stays the same
-# -----------------------------
-def extract_decimal_from_bar(
-    image: np.ndarray,
-    bar_roi: Tuple[int, int, int, int],
+def _write_fill_debug(
+    dbg: Path,
+    bar: np.ndarray,
+    mask: np.ndarray,
+    col_is_teal: np.ndarray,
+    fill_ratio: float,
     *,
-    sample_frac: float = 0.08,
-    debug_dir: Optional[Path] = None,
-) -> float:
-    x1, y1, x2, y2 = bar_roi
-    bar = image[y1:y2, x1:x2]
-
+    reason: str,
+) -> None:
     h, w = bar.shape[:2]
-    if w < 10 or h < 4:
-        raise ValueError(f"Bar ROI too small: {bar.shape}")
+    bx = int(round(fill_ratio * (w - 1)))
 
-    band_half = max(1, h // 6)
-    cy = h // 2
-    y0 = max(0, cy - band_half)
-    y1b = min(h, cy + band_half + 1)
-    band = bar[y0:y1b, :, :]
+    vis = bar.copy()
+    cv2.line(vis, (bx, 0), (bx, h - 1), (0, 255, 0), 2)
+    cv2.putText(
+        vis,
+        f"fill={fill_ratio:.3f} {reason}",
+        (2, max(12, h - 2)),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.35,
+        (0, 255, 0),
+        1,
+        cv2.LINE_AA,
+    )
+    cv2.imwrite(str(dbg / "05_bar_fill_vis.png"), vis)
 
-    lab = cv2.cvtColor(band, cv2.COLOR_BGR2LAB).astype(np.float32)
-    ab = lab[:, :, 1:3]
-    feat = ab.mean(axis=0)
-
-    n = max(3, int(sample_frac * w))
-    left_proto = feat[:n].mean(axis=0)
-    right_proto = feat[-n:].mean(axis=0)
-
-    d_left = np.linalg.norm(feat - left_proto, axis=1)
-    d_right = np.linalg.norm(feat - right_proto, axis=1)
-
-    filled_like = (d_left <= d_right).astype(np.uint8)
-
-    k = max(3, (w // 50) * 2 + 1)
-    kernel = np.ones((k,), dtype=np.uint8)
-    filled_like = cv2.morphologyEx(filled_like.reshape(1, -1), cv2.MORPH_CLOSE, kernel).ravel()
-    filled_like = cv2.morphologyEx(filled_like.reshape(1, -1), cv2.MORPH_OPEN, kernel).ravel()
-
-    if filled_like.sum() == 0:
-        fill_ratio = 0.0
-    elif filled_like.sum() == w:
-        fill_ratio = 1.0
-    else:
-        first_zero_after_left_run = int(np.argmax(filled_like == 0))
-        if first_zero_after_left_run == 0:
-            diff = np.diff(np.r_[0, filled_like, 0])
-            starts = np.where(diff == 1)[0]
-            ends = np.where(diff == -1)[0]
-            lengths = ends - starts
-            boundary = int(ends[np.argmax(lengths)])
-        else:
-            boundary = first_zero_after_left_run
-        fill_ratio = boundary / float(w)
-
-    if debug_dir is not None:
-        debug_dir.mkdir(parents=True, exist_ok=True)
-        vis = bar.copy()
-        bx = int(round(fill_ratio * (w - 1)))
-        cv2.line(vis, (bx, 0), (bx, h - 1), (0, 255, 0), 2)
-        cv2.putText(
-            vis,
-            f"fill={fill_ratio:.3f}",
-            (5, max(15, h - 5)),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            0.5,
-            (0, 255, 0),
-            2,
-            cv2.LINE_AA,
-        )
-        cv2.imwrite(str(debug_dir / "05_bar_fill_vis.png"), vis)
-
-        fl = (filled_like * 255).astype(np.uint8).reshape(1, -1)
-        fl = cv2.resize(fl, (w, 40), interpolation=cv2.INTER_NEAREST)
-        cv2.imwrite(str(debug_dir / "06_filled_like.png"), fl)
-
-    return float(fill_ratio)
+    # Column signal visualization
+    sig = (col_is_teal.astype(np.uint8) * 255).reshape(1, -1)
+    sig = cv2.resize(sig, (w, 40), interpolation=cv2.INTER_NEAREST)
+    cv2.imwrite(str(dbg / "06_col_is_teal.png"), sig)
