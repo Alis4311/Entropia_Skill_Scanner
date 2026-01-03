@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.DS_Store
+*.log
+out*/
+debug*/
+dist/
+build/
+*.egg-info/
+data/
+out_points_test/
+out_test_one/
+skills.csv
