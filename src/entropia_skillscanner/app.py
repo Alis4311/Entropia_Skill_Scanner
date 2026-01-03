@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import time
-import csv
+from pathlib import Path
 import hashlib
 import threading
 import queue
@@ -15,6 +15,8 @@ except ImportError:
     raise SystemExit("Missing dependency: pillow (pip install pillow)")
 
 from pipeline.run_pipeline import run_pipeline, PipelineConfig
+from entropia_skillscanner.exporter import ExportError, build_export, write_csv
+from entropia_skillscanner.models import SkillRow
 
 
 POLL_MS = 400
@@ -30,7 +32,7 @@ class SkillScannerApp(tk.Tk):
         self.cfg = cfg or PipelineConfig()
         self.debug = debug
 
-        # Data model: list of dicts {name, value, ts}
+        # Data model: list[SkillRow]
         self.rows = []
         self._last_added_indices = []
 
@@ -234,7 +236,11 @@ class SkillScannerApp(tk.Tk):
         start_idx = len(self.rows)
         ts = time.strftime("%Y-%m-%d %H:%M:%S")
         for name, val in extracted_rows:
-            self.rows.append({"name": str(name), "value": str(val), "ts": ts})
+            try:
+                fval = float(val)
+            except Exception:
+                continue
+            self.rows.append(SkillRow(name=str(name), value=fval, added=ts))
 
         end_idx = len(self.rows) - 1
         self._last_added_indices = list(range(start_idx, end_idx + 1))
@@ -248,7 +254,7 @@ class SkillScannerApp(tk.Tk):
 
         for i, r in enumerate(self.rows):
             tags = ("new",) if i in last_set else ()
-            self.tree.insert("", "end", values=(r["name"], r["value"], r["ts"]), tags=tags)
+            self.tree.insert("", "end", values=(r.name, f"{r.value:.2f}", r.added), tags=tags)
 
         # Scroll to bottom
         if self.rows:
@@ -271,16 +277,16 @@ class SkillScannerApp(tk.Tk):
             return
 
         try:
-            with open(path, "w", newline="", encoding="utf-8") as f:
-                w = csv.writer(f)
-                w.writerow(["Skill name", "Skill value", "Added"])
-                for r in self.rows:
-                    w.writerow([r["name"], r["value"], r["ts"]])
+            result = build_export(self.rows)
+            write_csv(result, Path(path))
+        except ExportError as e:
+            messagebox.showerror("Export CSV", f"Export failed:\n{e}")
+            return
         except Exception as e:
             messagebox.showerror("Export CSV", f"Failed to export:\n{e}")
             return
 
-        messagebox.showinfo("Export CSV", f"Exported {len(self.rows)} rows.")
+        messagebox.showinfo("Export CSV", f"Exported {len(self.rows)} rows with categories.")
 
     def _clear(self):
         self.rows.clear()
