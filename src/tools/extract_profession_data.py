@@ -137,7 +137,7 @@ def main() -> int:
                 "pct": int(sk["skillEffect"]),
             }
             for sk in detail.get("professionSkills", [])
-            if not sk.get("hidden")
+            #if not sk.get("hidden")
         ]
 
         out[name] = skills

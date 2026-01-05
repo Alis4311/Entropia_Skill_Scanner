@@ -6,6 +6,8 @@ from .parse_points_int import parse_points_int, parse_points_int_batch
 from .parse_points_decimal import parse_points_decimal_from_bar as parse_points_decimal
 from .parse_points_value import parse_points_value
 from .extract_skill_name import extract_skill_name
+from .professions import compute_professions
+from .profession_store import get_profession_weights
 
 
 __all__ = [
@@ -17,6 +19,8 @@ __all__ = [
     "parse_points_decimal",
     "parse_points_value",
     "extract_skill_name",
-    "parse_points_int_batch" 
+    "parse_points_int_batch",
+    "compute_professions",
+    "get_profession_weights"
 
 ]

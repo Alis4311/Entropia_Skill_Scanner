@@ -17,11 +17,13 @@ except ImportError:
 from pipeline.run_pipeline import run_pipeline, PipelineConfig
 from entropia_skillscanner.exporter import ExportError, build_export, write_csv
 from entropia_skillscanner.models import SkillRow
-
+from decimal import Decimal
+from pipeline.professions import compute_professions
+from pipeline.profession_store import get_profession_weights
 
 POLL_MS = 400
 HIGHLIGHT_LAST_N = 12
-
+PROF_PATH = Path("data/professions.json")
 
 class SkillScannerApp(tk.Tk):
     def __init__(self, cfg=None, debug=False):
@@ -65,12 +67,19 @@ class SkillScannerApp(tk.Tk):
 
         ttk.Separator(self).pack(fill="x")
 
-        # Table
+                # Notebook (Skills / Professions)
         mid = ttk.Frame(self, padding=(10, 8, 10, 8))
         mid.pack(fill="both", expand=True)
 
+        nb = ttk.Notebook(mid)
+        nb.pack(fill="both", expand=True)
+
+        # ---- Skills tab ----
+        skills_tab = ttk.Frame(nb)
+        nb.add(skills_tab, text="Skills")
+
         cols = ("skill", "value", "added")
-        self.tree = ttk.Treeview(mid, columns=cols, show="headings", height=20)
+        self.tree = ttk.Treeview(skills_tab, columns=cols, show="headings", height=20)
         self.tree.heading("skill", text="Skill name")
         self.tree.heading("value", text="Skill value")
         self.tree.heading("added", text="Added")
@@ -79,14 +88,43 @@ class SkillScannerApp(tk.Tk):
         self.tree.column("value", width=140, anchor="e")
         self.tree.column("added", width=180, anchor="w")
 
-        vsb = ttk.Scrollbar(mid, orient="vertical", command=self.tree.yview)
+        vsb = ttk.Scrollbar(skills_tab, orient="vertical", command=self.tree.yview)
         self.tree.configure(yscrollcommand=vsb.set)
 
         self.tree.grid(row=0, column=0, sticky="nsew")
         vsb.grid(row=0, column=1, sticky="ns")
 
-        mid.grid_rowconfigure(0, weight=1)
-        mid.grid_columnconfigure(0, weight=1)
+        skills_tab.grid_rowconfigure(0, weight=1)
+        skills_tab.grid_columnconfigure(0, weight=1)
+
+        self.tree.tag_configure("new", background="#e9f5ff")
+        self.tree.tag_configure("err", background="#ffe9e9")
+
+        # ---- Professions tab ----
+        prof_tab = ttk.Frame(nb)
+        nb.add(prof_tab, text="Professions")
+
+        pcols = ("profession", "value", "flags")
+        self.prof_tree = ttk.Treeview(prof_tab, columns=pcols, show="headings", height=20)
+        self.prof_tree.heading("profession", text="Profession")
+        self.prof_tree.heading("value", text="Value")
+        self.prof_tree.heading("flags", text="Flags")
+
+        self.prof_tree.column("profession", width=420, anchor="w")
+        self.prof_tree.column("value", width=140, anchor="e")
+        self.prof_tree.column("flags", width=180, anchor="w")
+
+        pvsb = ttk.Scrollbar(prof_tab, orient="vertical", command=self.prof_tree.yview)
+        self.prof_tree.configure(yscrollcommand=pvsb.set)
+
+        self.prof_tree.grid(row=0, column=0, sticky="nsew")
+        pvsb.grid(row=0, column=1, sticky="ns")
+
+        prof_tab.grid_rowconfigure(0, weight=1)
+        prof_tab.grid_columnconfigure(0, weight=1)
+
+        self.prof_tree.tag_configure("warn", background="#fff6e5")  # light warning highlight
+
 
         # Tags for highlighting new rows
         self.tree.tag_configure("new", background="#e9f5ff")  # light highlight
@@ -261,9 +299,11 @@ class SkillScannerApp(tk.Tk):
             last = self.tree.get_children()[-1]
             self.tree.see(last)
 
+        self._refresh_professions()
+
     # ---------------- Actions ----------------
 
-    def _export_csv(self):
+    def _export_csv(self):  
         if not self.rows:
             messagebox.showinfo("Export CSV", "No rows to export yet.")
             return
@@ -293,6 +333,51 @@ class SkillScannerApp(tk.Tk):
         self._last_added_indices = []
         self._refresh_table()
         self._set_status("waiting for screenshot")
+    
+    def _refresh_professions(self):
+        """
+        Recompute professions from current skills and render.
+        Non-strict so it never hard-fails mid-scan.
+        """
+        self.prof_tree.delete(*self.prof_tree.get_children())
+
+        if not self.rows:
+            return
+
+        # Build skill->Decimal map from scanned rows
+        skills = {r.name: Decimal(str(r.value)) for r in self.rows}
+
+        try:
+            weights = get_profession_weights(PROF_PATH)
+            prof_vals = compute_professions(
+                skills=skills,
+                profession_weights=weights,
+                strict=False,
+            )
+        except Exception as e:
+            # Show a single error row
+            self.prof_tree.insert("", "end", values=("ERROR", "", str(e)), tags=("warn",))
+            return
+
+        # Sort by value desc (best for debugging)
+        items = sorted(prof_vals.items(), key=lambda kv: kv[1].value, reverse=True)
+
+        for prof, pv in items:
+            flags = []
+            if pv.missing_skills:
+                flags.append("MISSING_SKILLS")
+            # Optional: pct sum audit (helps find weird weight sets)
+            if pv.pct_sum != Decimal("100"):
+                flags.append(f"PCT_SUM={pv.pct_sum}")
+
+            tag = ("warn",) if flags else ()
+            self.prof_tree.insert(
+                "",
+                "end",
+                values=(prof, format(pv.value, ".2f"), ";".join(flags)),
+                tags=tag,
+            )
+
 
 
 def main():

@@ -29,6 +29,14 @@
       "pct": 2
     },
     {
+      "skill": "Scientist",
+      "pct": 5
+    },
+    {
+      "skill": "Xenobiology",
+      "pct": 4
+    },
+    {
       "skill": "Zoology",
       "pct": 2
     },
@@ -51,6 +59,18 @@
       "pct": 9
     },
     {
+      "skill": "Serendipity",
+      "pct": 8
+    },
+    {
+      "skill": "Butchering",
+      "pct": 10
+    },
+    {
+      "skill": "Scavenging",
+      "pct": 5
+    },
+    {
       "skill": "Skinning",
       "pct": 35
     },
@@ -67,6 +87,14 @@
       "pct": 3
     },
     {
+      "skill": "Scientist",
+      "pct": 2
+    },
+    {
+      "skill": "Xenobiology",
+      "pct": 2
+    },
+    {
       "skill": "Zoology",
       "pct": 4
     },
@@ -79,6 +107,10 @@
     {
       "skill": "Intelligence",
       "pct": 1
+    },
+    {
+      "skill": "Combat Sense",
+      "pct": 2
     },
     {
       "skill": "Melee Combat",
@@ -109,6 +141,14 @@
       "pct": 21
     },
     {
+      "skill": "Animal Taming",
+      "pct": 38
+    },
+    {
+      "skill": "Scientist",
+      "pct": 2
+    },
+    {
       "skill": "Zoology",
       "pct": 13
     },
@@ -119,8 +159,20 @@
   ],
   "Archaelogist": [
     {
+      "skill": "Serendipity",
+      "pct": 3
+    },
+    {
+      "skill": "Archaeological Lore",
+      "pct": 5
+    },
+    {
       "skill": "Artefact Preservation",
       "pct": 52
+    },
+    {
+      "skill": "Miner",
+      "pct": 8
     },
     {
       "skill": "Precision Artefact Extraction",
@@ -145,12 +197,24 @@
       "pct": 11
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
     },
     {
       "skill": "Manufacture Armor",
       "pct": 32
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Engineering",
@@ -167,12 +231,24 @@
       "pct": 11
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
     },
     {
       "skill": "Manufacture Attachments",
       "pct": 32
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Intelligence",
@@ -185,12 +261,32 @@
   ],
   "Biotropic": [
     {
+      "skill": "Intuition",
+      "pct": 3
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
+    },
+    {
       "skill": "Diagnosis",
       "pct": 4
     },
     {
       "skill": "Concentration",
       "pct": 10
+    },
+    {
+      "skill": "Force Merge",
+      "pct": 7
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 7
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 6
     },
     {
       "skill": "Anatomy",
@@ -219,8 +315,16 @@
       "pct": 14
     },
     {
+      "skill": "Coolness",
+      "pct": 5
+    },
+    {
       "skill": "Perception",
       "pct": 2
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 1
     },
     {
       "skill": "Agility",
@@ -235,8 +339,20 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Handgun",
       "pct": 38
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 7
     },
     {
       "skill": "Weapons Handling",
@@ -265,6 +381,10 @@
       "pct": 14
     },
     {
+      "skill": "Coolness",
+      "pct": 4
+    },
+    {
       "skill": "Courage",
       "pct": 3
     },
@@ -277,6 +397,10 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 3
     },
@@ -287,6 +411,18 @@
     {
       "skill": "Combat Reflexes",
       "pct": 3
+    },
+    {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
     }
   ],
   "BLP Weapons Engineer": [
@@ -295,8 +431,20 @@
       "pct": 4
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Weapons",
@@ -317,12 +465,24 @@
   ],
   "Body Sculptor": [
     {
+      "skill": "Beauty Sense",
+      "pct": 19
+    },
+    {
       "skill": "Body Sculpting",
       "pct": 46
     },
     {
       "skill": "Plastic Surgery",
       "pct": 12
+    },
+    {
+      "skill": "Quality Sense",
+      "pct": 4
+    },
+    {
+      "skill": "Fashion Design",
+      "pct": 7
     },
     {
       "skill": "Dexterity",
@@ -343,12 +503,28 @@
       "pct": 5
     },
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
       "skill": "Melee Combat",
       "pct": 5
     },
     {
+      "skill": "Melee Damage Assessment",
+      "pct": 14
+    },
+    {
       "skill": "Power Fist",
       "pct": 25
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -361,6 +537,10 @@
   ],
   "Brawler (Hit)": [
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Strength",
       "pct": 3
     },
@@ -369,8 +549,20 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 4
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Light Melee Weapons",
       "pct": 7
+    },
+    {
+      "skill": "Martial Arts",
+      "pct": 9
     },
     {
       "skill": "Melee Combat",
@@ -382,6 +574,10 @@
     },
     {
       "skill": "Bravado",
+      "pct": 6
+    },
+    {
+      "skill": "Coolness",
       "pct": 6
     },
     {
@@ -403,6 +599,10 @@
   ],
   "Captain": [
     {
+      "skill": "Avoidance",
+      "pct": 10
+    },
+    {
       "skill": "Courage",
       "pct": 5
     },
@@ -415,8 +615,16 @@
       "pct": 10
     },
     {
+      "skill": "Deep Space Knowledge",
+      "pct": 10
+    },
+    {
       "skill": "Spacecraft Pilot",
       "pct": 30
+    },
+    {
+      "skill": "Spacecraft Systems",
+      "pct": 20
     },
     {
       "skill": "Intelligence",
@@ -425,12 +633,24 @@
   ],
   "Carpenter": [
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
       "skill": "Carpentry",
       "pct": 31
     },
     {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 5
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 4
     },
     {
       "skill": "Wood Carving",
@@ -455,6 +675,14 @@
       "pct": 3
     },
     {
+      "skill": "Coloring Methodology",
+      "pct": 12
+    },
+    {
+      "skill": "Glamor",
+      "pct": 3
+    },
+    {
       "skill": "Agility",
       "pct": 2
     },
@@ -467,11 +695,27 @@
       "pct": 47
     },
     {
+      "skill": "Fashion Design",
+      "pct": 6
+    },
+    {
       "skill": "Dexterity",
       "pct": 5
     }
   ],
   "Cryogenic (Dmg)": [
+    {
+      "skill": "Force Merge",
+      "pct": 3
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 4
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 10
+    },
     {
       "skill": "Agility",
       "pct": 1
@@ -483,6 +727,18 @@
     {
       "skill": "Inflict Ranged Damage",
       "pct": 3
+    },
+    {
+      "skill": "Ranged Damage Assessment",
+      "pct": 5
+    },
+    {
+      "skill": "Wounding",
+      "pct": 9
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -503,6 +759,18 @@
       "pct": 50
     },
     {
+      "skill": "Force Merge",
+      "pct": 6
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 6
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 6
+    },
+    {
       "skill": "Intelligence",
       "pct": 2
     },
@@ -519,6 +787,14 @@
       "pct": 3
     },
     {
+      "skill": "Intuition",
+      "pct": 3
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 3
+    },
+    {
       "skill": "Concentration",
       "pct": 10
     }
@@ -529,8 +805,16 @@
       "pct": 5
     },
     {
+      "skill": "Combat Sense",
+      "pct": 2
+    },
+    {
       "skill": "Dispense Decoy",
       "pct": 50
+    },
+    {
+      "skill": "Coolness",
+      "pct": 6
     },
     {
       "skill": "Dexterity",
@@ -541,6 +825,10 @@
       "pct": 14
     },
     {
+      "skill": "Serendipity",
+      "pct": 8
+    },
+    {
       "skill": "Agility",
       "pct": 3
     }
@@ -549,6 +837,14 @@
     {
       "skill": "Combat Reflexes",
       "pct": 10
+    },
+    {
+      "skill": "Combat Sense",
+      "pct": 7
+    },
+    {
+      "skill": "Avoidance",
+      "pct": 5
     },
     {
       "skill": "Dodge",
@@ -567,14 +863,42 @@
       "pct": 6
     },
     {
+      "skill": "Intuition",
+      "pct": 5
+    },
+    {
+      "skill": "Quickness",
+      "pct": 9
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 7
+    },
+    {
       "skill": "Agility",
       "pct": 3
     }
   ],
   "Driller": [
     {
+      "skill": "Serendipity",
+      "pct": 3
+    },
+    {
       "skill": "Drilling",
       "pct": 55
+    },
+    {
+      "skill": "Drilling Expertise",
+      "pct": 8
+    },
+    {
+      "skill": "Extraction",
+      "pct": 14
+    },
+    {
+      "skill": "Miner",
+      "pct": 9
     },
     {
       "skill": "Computer",
@@ -599,12 +923,36 @@
       "pct": 3
     },
     {
+      "skill": "Ranged Damage Assessment",
+      "pct": 5
+    },
+    {
+      "skill": "Wounding",
+      "pct": 9
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
+    },
+    {
       "skill": "Anatomy",
       "pct": 17
     },
     {
       "skill": "Electrokinesis",
       "pct": 40
+    },
+    {
+      "skill": "Force Merge",
+      "pct": 3
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 4
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 10
     },
     {
       "skill": "Agility",
@@ -629,6 +977,14 @@
       "pct": 3
     },
     {
+      "skill": "Intuition",
+      "pct": 3
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 3
+    },
+    {
       "skill": "Concentration",
       "pct": 10
     },
@@ -637,11 +993,35 @@
       "pct": 50
     },
     {
+      "skill": "Force Merge",
+      "pct": 6
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 6
+    },
+    {
       "skill": "Intelligence",
       "pct": 2
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 6
     }
   ],
   "Electronics Engineer": [
+    {
+      "skill": "Blueprint Comprehension",
+      "pct": 11
+    },
+    {
+      "skill": "Equipment Methodology",
+      "pct": 5
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 5
+    },
     {
       "skill": "Manufacture Electronic Equipment",
       "pct": 34
@@ -669,6 +1049,18 @@
       "pct": 8
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Enhancer Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
     },
@@ -677,11 +1069,19 @@
       "pct": 35
     },
     {
+      "skill": "Manufacture Methodology",
+      "pct": 5
+    },
+    {
       "skill": "Engineering",
       "pct": 20
     }
   ],
   "Evader": [
+    {
+      "skill": "Combat Sense",
+      "pct": 6
+    },
     {
       "skill": "Evade",
       "pct": 25
@@ -695,6 +1095,14 @@
       "pct": 7
     },
     {
+      "skill": "Intuition",
+      "pct": 3
+    },
+    {
+      "skill": "Quickness",
+      "pct": 9
+    },
+    {
       "skill": "Agility",
       "pct": 8
     },
@@ -703,7 +1111,15 @@
       "pct": 11
     },
     {
+      "skill": "Avoidance",
+      "pct": 7
+    },
+    {
       "skill": "Alertness",
+      "pct": 5
+    },
+    {
+      "skill": "Serendipity",
       "pct": 5
     }
   ],
@@ -717,12 +1133,24 @@
       "pct": 2
     },
     {
+      "skill": "Beauty Sense",
+      "pct": 19
+    },
+    {
       "skill": "Face Sculpting",
       "pct": 46
     },
     {
       "skill": "Plastic Surgery",
       "pct": 12
+    },
+    {
+      "skill": "Quality Sense",
+      "pct": 4
+    },
+    {
+      "skill": "Fashion Design",
+      "pct": 7
     },
     {
       "skill": "Dexterity",
@@ -732,6 +1160,10 @@
   "Gardener": [
     {
       "skill": "Botany",
+      "pct": 0
+    },
+    {
+      "skill": "Scientist",
       "pct": 0
     },
     {
@@ -773,6 +1205,18 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
+    },
+    {
       "skill": "Rifle",
       "pct": 39
     },
@@ -783,6 +1227,10 @@
     {
       "skill": "Gauss Weaponry Technology",
       "pct": 14
+    },
+    {
+      "skill": "Coolness",
+      "pct": 4
     },
     {
       "skill": "Courage",
@@ -797,18 +1245,34 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 3
     }
   ],
   "Gauss Weapons Engineer": [
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
       "skill": "Gauss Weaponry Technology",
       "pct": 4
     },
     {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Weapons",
@@ -833,8 +1297,28 @@
       "pct": 4
     },
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
+    },
+    {
+      "skill": "Ranged Damage Assessment",
+      "pct": 13
+    },
+    {
+      "skill": "Wounding",
+      "pct": 8
+    },
+    {
       "skill": "Explosive Projectile Weaponry Technology",
       "pct": 34
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -855,6 +1339,18 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
+    },
+    {
       "skill": "Support Weapon Systems",
       "pct": 39
     },
@@ -865,6 +1361,10 @@
     {
       "skill": "Explosive Projectile Weaponry Technology",
       "pct": 14
+    },
+    {
+      "skill": "Coolness",
+      "pct": 4
     },
     {
       "skill": "Courage",
@@ -879,6 +1379,10 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 3
     }
@@ -889,8 +1393,28 @@
       "pct": 15
     },
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
+      "skill": "Ranged Damage Assessment",
+      "pct": 15
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 5
+    },
+    {
+      "skill": "Deep Space Knowledge",
+      "pct": 15
+    },
+    {
       "skill": "Mechanics",
       "pct": 15
+    },
+    {
+      "skill": "Spacecraft Systems",
+      "pct": 20
     },
     {
       "skill": "Intelligence",
@@ -903,6 +1427,10 @@
       "pct": 5
     },
     {
+      "skill": "Marksmanship",
+      "pct": 10
+    },
+    {
       "skill": "Spacecraft Weaponry",
       "pct": 45
     },
@@ -911,14 +1439,30 @@
       "pct": 5
     },
     {
+      "skill": "Deep Space Knowledge",
+      "pct": 15
+    },
+    {
+      "skill": "Spacecraft Systems",
+      "pct": 15
+    },
+    {
       "skill": "Intelligence",
       "pct": 5
     }
   ],
   "Hair Stylist": [
     {
+      "skill": "Beauty Sense",
+      "pct": 19
+    },
+    {
       "skill": "Plastic Surgery",
       "pct": 12
+    },
+    {
+      "skill": "Quality Sense",
+      "pct": 4
     },
     {
       "skill": "Genetics",
@@ -933,11 +1477,19 @@
       "pct": 46
     },
     {
+      "skill": "Fashion Design",
+      "pct": 7
+    },
+    {
       "skill": "Dexterity",
       "pct": 1
     }
   ],
   "Humanoid Investigator": [
+    {
+      "skill": "Scientist",
+      "pct": 7
+    },
     {
       "skill": "Intelligence",
       "pct": 2
@@ -981,6 +1533,14 @@
       "pct": 5
     },
     {
+      "skill": "Quickness",
+      "pct": 9
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 5
+    },
+    {
       "skill": "Concentration",
       "pct": 14
     },
@@ -997,8 +1557,20 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 4
+    },
+    {
+      "skill": "Avoidance",
+      "pct": 6
+    },
+    {
       "skill": "Athletics",
       "pct": 13
+    },
+    {
+      "skill": "Intuition",
+      "pct": 4
     }
   ],
   "Knifefighter (Dmg)": [
@@ -1007,12 +1579,28 @@
       "pct": 5
     },
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
       "skill": "Melee Combat",
       "pct": 5
     },
     {
+      "skill": "Melee Damage Assessment",
+      "pct": 14
+    },
+    {
       "skill": "Shortblades",
       "pct": 25
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -1025,6 +1613,10 @@
   ],
   "Knifefighter (Hit)": [
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Strength",
       "pct": 3
     },
@@ -1033,7 +1625,19 @@
       "pct": 5
     },
     {
+      "skill": "Combat Sense",
+      "pct": 4
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Light Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Martial Arts",
       "pct": 7
     },
     {
@@ -1047,6 +1651,10 @@
     {
       "skill": "Bravado",
       "pct": 7
+    },
+    {
+      "skill": "Coolness",
+      "pct": 6
     },
     {
       "skill": "Courage",
@@ -1075,8 +1683,20 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Handgun",
       "pct": 38
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 7
     },
     {
       "skill": "Weapons Handling",
@@ -1085,6 +1705,10 @@
     {
       "skill": "Laser Weaponry Technology",
       "pct": 14
+    },
+    {
+      "skill": "Coolness",
+      "pct": 5
     },
     {
       "skill": "Courage",
@@ -1097,6 +1721,10 @@
     {
       "skill": "Perception",
       "pct": 2
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 1
     },
     {
       "skill": "Agility",
@@ -1113,6 +1741,18 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
+    },
+    {
       "skill": "Rifle",
       "pct": 39
     },
@@ -1123,6 +1763,10 @@
     {
       "skill": "Laser Weaponry Technology",
       "pct": 14
+    },
+    {
+      "skill": "Coolness",
+      "pct": 4
     },
     {
       "skill": "Courage",
@@ -1139,9 +1783,17 @@
     {
       "skill": "Agility",
       "pct": 3
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 1
     }
   ],
   "Laser Weapons Engineer": [
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
     {
       "skill": "Laser Weaponry Technology",
       "pct": 4
@@ -1149,6 +1801,10 @@
     {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Weapons",
@@ -1165,9 +1821,17 @@
     {
       "skill": "Intelligence",
       "pct": 2
+    },
+    {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
     }
   ],
   "Longblades Engineer": [
+    {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
     {
       "skill": "Manufacture Weapons",
       "pct": 31
@@ -1181,8 +1845,16 @@
       "pct": 4
     },
     {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Weapon Technology",
@@ -1203,6 +1875,10 @@
       "pct": 40
     },
     {
+      "skill": "Quality Sense",
+      "pct": 3
+    },
+    {
       "skill": "Carpentry",
       "pct": 4
     },
@@ -1215,14 +1891,42 @@
       "pct": 5
     },
     {
+      "skill": "Fashion Design",
+      "pct": 6
+    },
+    {
+      "skill": "Glamor",
+      "pct": 0
+    },
+    {
       "skill": "Make Textile",
       "pct": 10
+    },
+    {
+      "skill": "Material Comprehension",
+      "pct": 12
+    },
+    {
+      "skill": "Surface Composition",
+      "pct": 8
     }
   ],
   "Material Manufacturer": [
     {
+      "skill": "Quality Sense",
+      "pct": 1
+    },
+    {
+      "skill": "Blueprint Comprehension",
+      "pct": 7
+    },
+    {
       "skill": "Carpentry",
       "pct": 5
+    },
+    {
+      "skill": "Material Extraction Methodology",
+      "pct": 8
     },
     {
       "skill": "Texture Engineering",
@@ -1231,6 +1935,10 @@
     {
       "skill": "Make Textile",
       "pct": 11
+    },
+    {
+      "skill": "Surface Composition",
+      "pct": 5
     },
     {
       "skill": "Tailoring",
@@ -1242,6 +1950,18 @@
     }
   ],
   "Mechanical Engineer": [
+    {
+      "skill": "Blueprint Comprehension",
+      "pct": 11
+    },
+    {
+      "skill": "Equipment Methodology",
+      "pct": 5
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 5
+    },
     {
       "skill": "Manufacture Mechanical Equipment",
       "pct": 34
@@ -1267,6 +1987,18 @@
   ],
   "Metal Engineer": [
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 11
+    },
+    {
+      "skill": "Equipment Methodology",
+      "pct": 5
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 5
+    },
+    {
       "skill": "Manufacture Metal Equipment",
       "pct": 34
     },
@@ -1284,6 +2016,22 @@
     }
   ],
   "Miner": [
+    {
+      "skill": "Serendipity",
+      "pct": 3
+    },
+    {
+      "skill": "Drilling Expertise",
+      "pct": 7
+    },
+    {
+      "skill": "Extraction",
+      "pct": 15
+    },
+    {
+      "skill": "Miner",
+      "pct": 10
+    },
     {
       "skill": "Mining",
       "pct": 56
@@ -1311,8 +2059,20 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Heavy Weapons",
       "pct": 39
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
     },
     {
       "skill": "Weapons Handling",
@@ -1321,6 +2081,10 @@
     {
       "skill": "BLP Weaponry Technology",
       "pct": 14
+    },
+    {
+      "skill": "Coolness",
+      "pct": 4
     },
     {
       "skill": "Courage",
@@ -1333,6 +2097,10 @@
     {
       "skill": "Perception",
       "pct": 2
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 1
     },
     {
       "skill": "Agility",
@@ -1349,8 +2117,20 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Heavy Weapons",
       "pct": 39
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
     },
     {
       "skill": "Weapons Handling",
@@ -1359,6 +2139,10 @@
     {
       "skill": "Explosive Projectile Weaponry Technology",
       "pct": 14
+    },
+    {
+      "skill": "Coolness",
+      "pct": 4
     },
     {
       "skill": "Courage",
@@ -1373,6 +2157,10 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 3
     }
@@ -1381,6 +2169,14 @@
     {
       "skill": "Aim",
       "pct": 4
+    },
+    {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
     },
     {
       "skill": "Heavy Weapons",
@@ -1395,6 +2191,10 @@
       "pct": 14
     },
     {
+      "skill": "Coolness",
+      "pct": 4
+    },
+    {
       "skill": "Courage",
       "pct": 3
     },
@@ -1407,12 +2207,20 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 3
     },
     {
       "skill": "Combat Reflexes",
       "pct": 3
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
     }
   ],
   "Mutant Investigator": [
@@ -1427,6 +2235,10 @@
     {
       "skill": "Genetics",
       "pct": 9
+    },
+    {
+      "skill": "Scientist",
+      "pct": 3
     },
     {
       "skill": "Intelligence",
@@ -1451,6 +2263,10 @@
     {
       "skill": "Biology",
       "pct": 5
+    },
+    {
+      "skill": "Xenobiology",
+      "pct": 4
     }
   ],
   "Mutant Looter": [
@@ -1479,6 +2295,18 @@
       "pct": 9
     },
     {
+      "skill": "Serendipity",
+      "pct": 8
+    },
+    {
+      "skill": "Reaping",
+      "pct": 10
+    },
+    {
+      "skill": "Scavenging",
+      "pct": 5
+    },
+    {
       "skill": "Anatomy",
       "pct": 7
     },
@@ -1489,6 +2317,14 @@
     {
       "skill": "Biology",
       "pct": 3
+    },
+    {
+      "skill": "Scientist",
+      "pct": 2
+    },
+    {
+      "skill": "Xenobiology",
+      "pct": 2
     }
   ],
   "One Handed Clubber (Dmg)": [
@@ -1501,8 +2337,24 @@
       "pct": 5
     },
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
       "skill": "Melee Combat",
       "pct": 5
+    },
+    {
+      "skill": "Melee Damage Assessment",
+      "pct": 14
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -1527,7 +2379,19 @@
       "pct": 5
     },
     {
+      "skill": "Combat Sense",
+      "pct": 4
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Light Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Martial Arts",
       "pct": 7
     },
     {
@@ -1537,6 +2401,10 @@
     {
       "skill": "Bravado",
       "pct": 7
+    },
+    {
+      "skill": "Coolness",
+      "pct": 6
     },
     {
       "skill": "Courage",
@@ -1551,6 +2419,10 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 2
     }
@@ -1558,6 +2430,10 @@
   "Paramedic": [
     {
       "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Serendipity",
       "pct": 3
     },
     {
@@ -1569,8 +2445,28 @@
       "pct": 8
     },
     {
+      "skill": "Doctor",
+      "pct": 12
+    },
+    {
       "skill": "First Aid",
       "pct": 37
+    },
+    {
+      "skill": "Medical Therapy",
+      "pct": 5
+    },
+    {
+      "skill": "Medicine",
+      "pct": 6
+    },
+    {
+      "skill": "Treatment",
+      "pct": 5
+    },
+    {
+      "skill": "Scientist",
+      "pct": 3
     },
     {
       "skill": "Intelligence",
@@ -1603,6 +2499,14 @@
       "pct": 40
     },
     {
+      "skill": "Animal Taming",
+      "pct": 20
+    },
+    {
+      "skill": "Scientist",
+      "pct": 2
+    },
+    {
       "skill": "Zoology",
       "pct": 19
     },
@@ -1621,8 +2525,20 @@
       "pct": 3
     },
     {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
       "skill": "Handgun",
       "pct": 38
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 7
     },
     {
       "skill": "Weapons Handling",
@@ -1631,6 +2547,10 @@
     {
       "skill": "Plasma Weaponry Technology",
       "pct": 14
+    },
+    {
+      "skill": "Coolness",
+      "pct": 5
     },
     {
       "skill": "Courage",
@@ -1645,6 +2565,10 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 3
     }
@@ -1653,6 +2577,18 @@
     {
       "skill": "Combat Reflexes",
       "pct": 3
+    },
+    {
+      "skill": "Combat Sense",
+      "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 8
     },
     {
       "skill": "Rifle",
@@ -1667,6 +2603,10 @@
       "pct": 14
     },
     {
+      "skill": "Coolness",
+      "pct": 4
+    },
+    {
       "skill": "Courage",
       "pct": 3
     },
@@ -1677,6 +2617,10 @@
     {
       "skill": "Perception",
       "pct": 2
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 1
     },
     {
       "skill": "Agility",
@@ -1693,8 +2637,20 @@
       "pct": 2
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Weapons",
@@ -1723,8 +2679,20 @@
       "pct": 4
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Weapons",
@@ -1741,12 +2709,24 @@
   ],
   "Projectile Launcher Engineer": [
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 28
+    },
+    {
       "skill": "Explosive Projectile Weaponry Technology",
       "pct": 9
     },
     {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Weapons",
@@ -1771,8 +2751,24 @@
       "pct": 5
     },
     {
+      "skill": "Serendipity",
+      "pct": 2
+    },
+    {
       "skill": "Geology",
       "pct": 21
+    },
+    {
+      "skill": "Ground Assessment",
+      "pct": 8
+    },
+    {
+      "skill": "Miner",
+      "pct": 5
+    },
+    {
+      "skill": "Mineral Sense",
+      "pct": 6
     },
     {
       "skill": "Prospecting",
@@ -1793,8 +2789,32 @@
       "pct": 3
     },
     {
+      "skill": "Ranged Damage Assessment",
+      "pct": 5
+    },
+    {
+      "skill": "Wounding",
+      "pct": 9
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
+    },
+    {
       "skill": "Anatomy",
       "pct": 17
+    },
+    {
+      "skill": "Force Merge",
+      "pct": 3
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 4
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 10
     },
     {
       "skill": "Pyrokinesis",
@@ -1823,8 +2843,28 @@
       "pct": 3
     },
     {
+      "skill": "Intuition",
+      "pct": 3
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 3
+    },
+    {
       "skill": "Concentration",
       "pct": 10
+    },
+    {
+      "skill": "Force Merge",
+      "pct": 6
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 6
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 6
     },
     {
       "skill": "Pyrokinesis",
@@ -1841,8 +2881,28 @@
       "pct": 4
     },
     {
+      "skill": "Kill Strike",
+      "pct": 11
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 10
+    },
+    {
+      "skill": "Ranged Damage Assessment",
+      "pct": 15
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
       "skill": "BLP Weaponry Technology",
       "pct": 25
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -1859,8 +2919,28 @@
       "pct": 4
     },
     {
+      "skill": "Kill Strike",
+      "pct": 11
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 10
+    },
+    {
+      "skill": "Ranged Damage Assessment",
+      "pct": 15
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
       "skill": "Gauss Weaponry Technology",
       "pct": 25
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -1877,6 +2957,22 @@
       "pct": 4
     },
     {
+      "skill": "Kill Strike",
+      "pct": 11
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 10
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
+    },
+    {
       "skill": "Anatomy",
       "pct": 20
     },
@@ -1885,11 +2981,19 @@
       "pct": 1
     },
     {
+      "skill": "Ranged Damage Assessment",
+      "pct": 15
+    },
+    {
       "skill": "Laser Weaponry Technology",
       "pct": 25
     }
   ],
   "Ranged Plasma (Dmg)": [
+    {
+      "skill": "Serendipity",
+      "pct": 4
+    },
     {
       "skill": "Agility",
       "pct": 1
@@ -1897,6 +3001,22 @@
     {
       "skill": "Inflict Ranged Damage",
       "pct": 4
+    },
+    {
+      "skill": "Kill Strike",
+      "pct": 11
+    },
+    {
+      "skill": "Marksmanship",
+      "pct": 10
+    },
+    {
+      "skill": "Ranged Damage Assessment",
+      "pct": 15
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
     },
     {
       "skill": "Plasma Weaponry Technology",
@@ -1987,6 +3107,14 @@
       "pct": 3
     },
     {
+      "skill": "Robotology",
+      "pct": 8
+    },
+    {
+      "skill": "Scientist",
+      "pct": 4
+    },
+    {
       "skill": "Intelligence",
       "pct": 2
     }
@@ -2005,8 +3133,20 @@
       "pct": 9
     },
     {
+      "skill": "Serendipity",
+      "pct": 8
+    },
+    {
       "skill": "Reclaiming",
       "pct": 35
+    },
+    {
+      "skill": "Salvaging",
+      "pct": 10
+    },
+    {
+      "skill": "Scavenging",
+      "pct": 5
     },
     {
       "skill": "Analysis",
@@ -2025,6 +3165,14 @@
       "pct": 3
     },
     {
+      "skill": "Robotology",
+      "pct": 2
+    },
+    {
+      "skill": "Scientist",
+      "pct": 2
+    },
+    {
       "skill": "Intelligence",
       "pct": 1
     }
@@ -2035,8 +3183,20 @@
       "pct": 4
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Weapons",
@@ -2085,6 +3245,10 @@
       "pct": 5
     },
     {
+      "skill": "Spacecraft Systems",
+      "pct": 0
+    },
+    {
       "skill": "Intelligence",
       "pct": 5
     }
@@ -2095,8 +3259,24 @@
       "pct": 5
     },
     {
+      "skill": "Serendipity",
+      "pct": 2
+    },
+    {
       "skill": "Geology",
       "pct": 20
+    },
+    {
+      "skill": "Ground Assessment",
+      "pct": 9
+    },
+    {
+      "skill": "Miner",
+      "pct": 5
+    },
+    {
+      "skill": "Mineral Sense",
+      "pct": 6
     },
     {
       "skill": "Surveying",
@@ -2131,12 +3311,24 @@
   ],
   "Swordsman (Dmg)": [
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
       "skill": "Longblades",
       "pct": 25
     },
     {
       "skill": "Melee Combat",
       "pct": 5
+    },
+    {
+      "skill": "Melee Damage Assessment",
+      "pct": 14
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -2149,9 +3341,17 @@
     {
       "skill": "Inflict Melee Damage",
       "pct": 5
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
     }
   ],
   "Swordsman (Hit)": [
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
     {
       "skill": "Heavy Melee Weapons",
       "pct": 7
@@ -2163,6 +3363,10 @@
     {
       "skill": "Bravado",
       "pct": 7
+    },
+    {
+      "skill": "Coolness",
+      "pct": 5
     },
     {
       "skill": "Courage",
@@ -2189,8 +3393,20 @@
       "pct": 5
     },
     {
+      "skill": "Combat Sense",
+      "pct": 4
+    },
+    {
       "skill": "Longblades",
       "pct": 39
+    },
+    {
+      "skill": "Martial Arts",
+      "pct": 6
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 1
     }
   ],
   "Tailor": [
@@ -2208,6 +3424,22 @@
     },
     {
       "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Quality Sense",
+      "pct": 3
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 4
+    },
+    {
+      "skill": "Fashion Design",
+      "pct": 8
+    },
+    {
+      "skill": "Glamor",
       "pct": 2
     },
     {
@@ -2235,6 +3467,14 @@
     {
       "skill": "Mechanics",
       "pct": 3
+    },
+    {
+      "skill": "Robotology",
+      "pct": 8
+    },
+    {
+      "skill": "Scientist",
+      "pct": 4
     },
     {
       "skill": "Intelligence",
@@ -2267,8 +3507,28 @@
       "pct": 3
     },
     {
+      "skill": "Intuition",
+      "pct": 3
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 3
+    },
+    {
       "skill": "Concentration",
       "pct": 20
+    },
+    {
+      "skill": "Force Merge",
+      "pct": 6
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 6
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 6
     },
     {
       "skill": "Telepathy",
@@ -2283,6 +3543,10 @@
     {
       "skill": "Melee Combat",
       "pct": 4
+    },
+    {
+      "skill": "Enhancer Technology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Enhancers",
@@ -2323,8 +3587,20 @@
   ],
   "Tool Engineer": [
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
+    },
+    {
+      "skill": "Industrialist",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 6
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Tools",
@@ -2353,8 +3629,24 @@
       "pct": 2
     },
     {
+      "skill": "Intuition",
+      "pct": 2
+    },
+    {
       "skill": "Concentration",
       "pct": 15
+    },
+    {
+      "skill": "Force Merge",
+      "pct": 6
+    },
+    {
+      "skill": "Mindforce Harmony",
+      "pct": 5
+    },
+    {
+      "skill": "Power Catalyst",
+      "pct": 6
     },
     {
       "skill": "Translocation",
@@ -2371,8 +3663,24 @@
       "pct": 5
     },
     {
+      "skill": "Serendipity",
+      "pct": 2
+    },
+    {
+      "skill": "Archaeological Lore",
+      "pct": 16
+    },
+    {
       "skill": "Geology",
       "pct": 21
+    },
+    {
+      "skill": "Ground Assessment",
+      "pct": 8
+    },
+    {
+      "skill": "Miner",
+      "pct": 5
     },
     {
       "skill": "Treasure Sense",
@@ -2393,8 +3701,24 @@
       "pct": 5
     },
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
       "skill": "Melee Combat",
       "pct": 5
+    },
+    {
+      "skill": "Melee Damage Assessment",
+      "pct": 14
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Anatomy",
@@ -2407,12 +3731,20 @@
   ],
   "Two Handed Clubber (Hit)": [
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Strength",
       "pct": 4
     },
     {
       "skill": "Clubs",
       "pct": 39
+    },
+    {
+      "skill": "Combat Sense",
+      "pct": 4
     },
     {
       "skill": "Heavy Melee Weapons",
@@ -2425,6 +3757,10 @@
     {
       "skill": "Bravado",
       "pct": 7
+    },
+    {
+      "skill": "Coolness",
+      "pct": 5
     },
     {
       "skill": "Courage",
@@ -2445,6 +3781,14 @@
     {
       "skill": "Combat Reflexes",
       "pct": 5
+    },
+    {
+      "skill": "Commando",
+      "pct": 3
+    },
+    {
+      "skill": "Martial Arts",
+      "pct": 6
     }
   ],
   "Vehicle Engineer": [
@@ -2453,8 +3797,16 @@
       "pct": 2
     },
     {
+      "skill": "Blueprint Comprehension",
+      "pct": 6
+    },
+    {
       "skill": "Machinery",
       "pct": 8
+    },
+    {
+      "skill": "Manufacture Methodology",
+      "pct": 5
     },
     {
       "skill": "Manufacture Vehicle",
@@ -2475,8 +3827,16 @@
       "pct": 6
     },
     {
+      "skill": "Scientist",
+      "pct": 4
+    },
+    {
       "skill": "Intelligence",
       "pct": 5
+    },
+    {
+      "skill": "Blueprint Comprehension",
+      "pct": 9
     },
     {
       "skill": "Vehicle Repairing",
@@ -2485,6 +3845,14 @@
     {
       "skill": "Vehicle Technology",
       "pct": 12
+    },
+    {
+      "skill": "Intuition",
+      "pct": 7
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Electronics",
@@ -2501,12 +3869,28 @@
       "pct": 5
     },
     {
+      "skill": "Kill Strike",
+      "pct": 10
+    },
+    {
       "skill": "Melee Combat",
       "pct": 5
     },
     {
+      "skill": "Melee Damage Assessment",
+      "pct": 14
+    },
+    {
       "skill": "Whip",
       "pct": 25
+    },
+    {
+      "skill": "Wounding",
+      "pct": 10
+    },
+    {
+      "skill": "Serendipity",
+      "pct": 4
     },
     {
       "skill": "Agility",
@@ -2525,6 +3909,10 @@
     {
       "skill": "Light Melee Weapons",
       "pct": 7
+    },
+    {
+      "skill": "Martial Arts",
+      "pct": 5
     },
     {
       "skill": "Weapons Handling",
@@ -2547,12 +3935,20 @@
       "pct": 2
     },
     {
+      "skill": "Serendipity",
+      "pct": 1
+    },
+    {
       "skill": "Agility",
       "pct": 2
     },
     {
       "skill": "Strength",
       "pct": 3
+    },
+    {
+      "skill": "Combat Sense",
+      "pct": 4
     },
     {
       "skill": "Melee Combat",

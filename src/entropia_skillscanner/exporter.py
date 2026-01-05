@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import csv
 from dataclasses import dataclass
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, ROUND_HALF_UP, ROUND_DOWN
 from pathlib import Path
 from typing import Dict, Iterable, List, Sequence, Tuple
 
@@ -37,6 +37,12 @@ def _to_decimal_value(v: float) -> Decimal:
     return Decimal(str(v))
 
 
+def _floor_points(x: Decimal) -> Decimal:
+    # In-game totals appear to use full points only (truncate decimals).
+    # ROUND_DOWN is correct for positive values.
+    return x.quantize(Decimal("1"), rounding=ROUND_DOWN)
+
+
 def _attach_categories(
     rows: Sequence[SkillRow],
     *,
@@ -59,8 +65,6 @@ def _attach_categories(
             warnings.append(f"UNKNOWN_SKILL_CATEGORY:{r.name}")
 
         dec = _q2(_to_decimal_value(r.value))
-        # NOTE: ExportSkill/ExportTotals currently appear to carry float values.
-        # We keep internal Decimal math, but store float outward unless you update models.
         out.append(ExportSkill(name=r.name, value=dec, category=cat))
 
     if missing:
@@ -77,10 +81,11 @@ def _category_totals(
     strict: bool,
     unknown_bucket: str = "Unknown Skills",
 ) -> List[ExportTotals]:
-    # Decimal aggregation, then convert at the edge.
+    # IMPORTANT: Totals must match in-game, which uses full points only.
     totals: Dict[str, Decimal] = {}
     for s in skills:
-        totals[s.category] = totals.get(s.category, Decimal("0")) + s.value
+        iv = _floor_points(s.value)
+        totals[s.category] = totals.get(s.category, Decimal("0")) + iv
 
     ordered: List[ExportTotals] = []
 
@@ -91,8 +96,7 @@ def _category_totals(
 
     for cat in schema_order:
         if cat in totals:
-            ordered.append(ExportTotals(category=cat, total=_q2(totals[cat])))
-
+            ordered.append(ExportTotals(category=cat, total=_floor_points(totals[cat])))
 
     return ordered
 
@@ -107,7 +111,6 @@ def build_export(
         raise ExportError("no rows to export")
 
     # Surface schema/config errors early (startup/export time).
-    # strict=False still validates schema representability, but you can relax if you want.
     validate_mappings(strict=True)
 
     skills, warnings = _attach_categories(rows, schema=schema, strict=strict)
@@ -122,9 +125,9 @@ def build_export(
 
     totals = _category_totals(skills, schema=schema, strict=strict)
 
-    overall_total = _q2(sum((s.value for s in skills), Decimal("0")))
+    # Overall total must also match in-game (full points only)
+    overall_total = _floor_points(sum((_floor_points(s.value) for s in skills), Decimal("0")))
     totals.append(ExportTotals(category="Total", total=overall_total))
-
 
     return ExportResult(skills=skills, totals=totals, warnings=warnings)
 
@@ -134,19 +137,18 @@ def write_csv(result: ExportResult, path: Path) -> None:
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
 
-        # Skills section
+        # Skills section (keep 2 decimals)
         w.writerow(["[Skills]"])
         for s in result.skills:
             # locale-invariant decimal point
             w.writerow([s.name, format(s.value, ".2f"), s.category])
 
-
         w.writerow([])
 
-        # Totals section
+        # Totals section (integer, in-game aligned)
         w.writerow(["[Totals]"])
         for t in result.totals:
-            w.writerow([t.category, format(t.total, ".2f")])
+            w.writerow([t.category, str(int(t.total))])
 
         # Optional: audit warnings at end (commented out for now)
         # if result.warnings:

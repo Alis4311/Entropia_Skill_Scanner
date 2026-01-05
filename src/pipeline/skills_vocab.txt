@@ -69,7 +69,7 @@ Kill Strike
 Knives
 Laser Weaponry Technology
 Light Melee Weapons
-Long Blades
+Longblades
 Machinery
 Make Textile
 Manufacture Armor
@@ -109,7 +109,7 @@ Promoter Rating
 Prospecting
 Psychotropy
 Psyche
-Pyrokinetics
+Pyrokinesis
 Quickness
 Ranged Damage Assessment
 Ranged Laser Weaponry
@@ -132,7 +132,7 @@ Scavenging
 Scientist
 Scourging
 Serendipity
-Short Blades
+Shortblades
 Skinning
 Spacecraft Engineering
 Spacecraft Pilot
@@ -157,7 +157,7 @@ Vehicle Repairing
 Vehicle Technology
 Weapon Technology
 Weapons Handling
-Whips
+Whip
 Wood Carving
 Wood Processing
 Wounding
