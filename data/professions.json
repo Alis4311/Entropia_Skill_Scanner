@@ -1,0 +1,2566 @@
+{
+  "Animal Investigator": [
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Probing",
+      "pct": 6
+    },
+    {
+      "skill": "Scan Animal",
+      "pct": 46
+    },
+    {
+      "skill": "Analysis",
+      "pct": 10
+    },
+    {
+      "skill": "Biology",
+      "pct": 10
+    },
+    {
+      "skill": "Botany",
+      "pct": 8
+    },
+    {
+      "skill": "Computer",
+      "pct": 2
+    },
+    {
+      "skill": "Zoology",
+      "pct": 2
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Animal Looter": [
+    {
+      "skill": "Alertness",
+      "pct": 6
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 9
+    },
+    {
+      "skill": "Skinning",
+      "pct": 35
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 7
+    },
+    {
+      "skill": "Analysis",
+      "pct": 5
+    },
+    {
+      "skill": "Biology",
+      "pct": 3
+    },
+    {
+      "skill": "Zoology",
+      "pct": 4
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 1
+    }
+  ],
+  "Animal Tamer": [
+    {
+      "skill": "Intelligence",
+      "pct": 1
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 2
+    },
+    {
+      "skill": "Whip",
+      "pct": 8
+    },
+    {
+      "skill": "Bravado",
+      "pct": 3
+    },
+    {
+      "skill": "Courage",
+      "pct": 5
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 1
+    },
+    {
+      "skill": "Animal Lore",
+      "pct": 21
+    },
+    {
+      "skill": "Zoology",
+      "pct": 13
+    },
+    {
+      "skill": "Agility",
+      "pct": 1
+    }
+  ],
+  "Archaelogist": [
+    {
+      "skill": "Artefact Preservation",
+      "pct": 52
+    },
+    {
+      "skill": "Precision Artefact Extraction",
+      "pct": 21
+    },
+    {
+      "skill": "Computer",
+      "pct": 5
+    },
+    {
+      "skill": "Engineering",
+      "pct": 3
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 3
+    }
+  ],
+  "Armor Engineer": [
+    {
+      "skill": "Armor Technology",
+      "pct": 11
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Armor",
+      "pct": 32
+    },
+    {
+      "skill": "Engineering",
+      "pct": 29
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Attachment Engineer": [
+    {
+      "skill": "Attachments Technology",
+      "pct": 11
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Attachments",
+      "pct": 32
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Engineering",
+      "pct": 29
+    }
+  ],
+  "Biotropic": [
+    {
+      "skill": "Diagnosis",
+      "pct": 4
+    },
+    {
+      "skill": "Concentration",
+      "pct": 10
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 4
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Psyche",
+      "pct": 5
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Bioregenesis",
+      "pct": 45
+    }
+  ],
+  "BLP Pistoleer (Hit)": [
+    {
+      "skill": "BLP Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    },
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Handgun",
+      "pct": 38
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 9
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    }
+  ],
+  "BLP Sniper (Hit)": [
+    {
+      "skill": "Rifle",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "BLP Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    },
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    }
+  ],
+  "BLP Weapons Engineer": [
+    {
+      "skill": "BLP Weaponry Technology",
+      "pct": 4
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 30
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 10
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Body Sculptor": [
+    {
+      "skill": "Body Sculpting",
+      "pct": 46
+    },
+    {
+      "skill": "Plastic Surgery",
+      "pct": 12
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 1
+    },
+    {
+      "skill": "Genetics",
+      "pct": 4
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    }
+  ],
+  "Brawler (Dmg)": [
+    {
+      "skill": "Inflict Melee Damage",
+      "pct": 5
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 5
+    },
+    {
+      "skill": "Power Fist",
+      "pct": 25
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Agility",
+      "pct": 7
+    }
+  ],
+  "Brawler (Hit)": [
+    {
+      "skill": "Strength",
+      "pct": 3
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Light Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 12
+    },
+    {
+      "skill": "Power Fist",
+      "pct": 36
+    },
+    {
+      "skill": "Bravado",
+      "pct": 6
+    },
+    {
+      "skill": "Courage",
+      "pct": 4
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    }
+  ],
+  "Captain": [
+    {
+      "skill": "Courage",
+      "pct": 5
+    },
+    {
+      "skill": "Perception",
+      "pct": 10
+    },
+    {
+      "skill": "Computer",
+      "pct": 10
+    },
+    {
+      "skill": "Spacecraft Pilot",
+      "pct": 30
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 5
+    }
+  ],
+  "Carpenter": [
+    {
+      "skill": "Carpentry",
+      "pct": 31
+    },
+    {
+      "skill": "Machinery",
+      "pct": 5
+    },
+    {
+      "skill": "Wood Carving",
+      "pct": 7
+    },
+    {
+      "skill": "Wood Processing",
+      "pct": 8
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Colorer": [
+    {
+      "skill": "Intelligence",
+      "pct": 3
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Color Matching",
+      "pct": 20
+    },
+    {
+      "skill": "Coloring",
+      "pct": 47
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 5
+    }
+  ],
+  "Cryogenic (Dmg)": [
+    {
+      "skill": "Agility",
+      "pct": 1
+    },
+    {
+      "skill": "Psyche",
+      "pct": 4
+    },
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 3
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 17
+    },
+    {
+      "skill": "Cryogenics",
+      "pct": 40
+    }
+  ],
+  "Cryogenic (Hit)": [
+    {
+      "skill": "Bravado",
+      "pct": 3
+    },
+    {
+      "skill": "Cryogenics",
+      "pct": 50
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Psyche",
+      "pct": 5
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Concentration",
+      "pct": 10
+    }
+  ],
+  "Decoy Dispenser": [
+    {
+      "skill": "Combat Reflexes",
+      "pct": 5
+    },
+    {
+      "skill": "Dispense Decoy",
+      "pct": 50
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 12
+    },
+    {
+      "skill": "Perception",
+      "pct": 14
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Dodger": [
+    {
+      "skill": "Combat Reflexes",
+      "pct": 10
+    },
+    {
+      "skill": "Dodge",
+      "pct": 31
+    },
+    {
+      "skill": "Alertness",
+      "pct": 5
+    },
+    {
+      "skill": "Athletics",
+      "pct": 12
+    },
+    {
+      "skill": "Courage",
+      "pct": 6
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Driller": [
+    {
+      "skill": "Drilling",
+      "pct": 55
+    },
+    {
+      "skill": "Computer",
+      "pct": 6
+    },
+    {
+      "skill": "Engineering",
+      "pct": 4
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 1
+    }
+  ],
+  "Electro Kinetic (Dmg)": [
+    {
+      "skill": "Psyche",
+      "pct": 4
+    },
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 3
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 17
+    },
+    {
+      "skill": "Electrokinesis",
+      "pct": 40
+    },
+    {
+      "skill": "Agility",
+      "pct": 1
+    }
+  ],
+  "Electro Kinetic (Hit)": [
+    {
+      "skill": "Psyche",
+      "pct": 5
+    },
+    {
+      "skill": "Bravado",
+      "pct": 3
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Concentration",
+      "pct": 10
+    },
+    {
+      "skill": "Electrokinesis",
+      "pct": 50
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Electronics Engineer": [
+    {
+      "skill": "Manufacture Electronic Equipment",
+      "pct": 34
+    },
+    {
+      "skill": "Electronics",
+      "pct": 13
+    },
+    {
+      "skill": "Engineering",
+      "pct": 30
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Enhancer Manufacturer": [
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Attachments Technology",
+      "pct": 8
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Enhancers",
+      "pct": 35
+    },
+    {
+      "skill": "Engineering",
+      "pct": 20
+    }
+  ],
+  "Evader": [
+    {
+      "skill": "Evade",
+      "pct": 25
+    },
+    {
+      "skill": "Athletics",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 7
+    },
+    {
+      "skill": "Agility",
+      "pct": 8
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 11
+    },
+    {
+      "skill": "Alertness",
+      "pct": 5
+    }
+  ],
+  "Face Sculptor": [
+    {
+      "skill": "Genetics",
+      "pct": 4
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Face Sculpting",
+      "pct": 46
+    },
+    {
+      "skill": "Plastic Surgery",
+      "pct": 12
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 1
+    }
+  ],
+  "Gardener": [
+    {
+      "skill": "Botany",
+      "pct": 0
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 0
+    },
+    {
+      "skill": "Alertness",
+      "pct": 4
+    },
+    {
+      "skill": "Perception",
+      "pct": 8
+    },
+    {
+      "skill": "Probing",
+      "pct": 0
+    },
+    {
+      "skill": "Geology",
+      "pct": 0
+    },
+    {
+      "skill": "Analysis",
+      "pct": 0
+    },
+    {
+      "skill": "Biology",
+      "pct": 0
+    }
+  ],
+  "Gauss Sniper (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Rifle",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "Gauss Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Gauss Weapons Engineer": [
+    {
+      "skill": "Gauss Weaponry Technology",
+      "pct": 4
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 30
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 10
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Grenadier (Dmg)": [
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 4
+    },
+    {
+      "skill": "Explosive Projectile Weaponry Technology",
+      "pct": 34
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 18
+    },
+    {
+      "skill": "Agility",
+      "pct": 1
+    }
+  ],
+  "Grenadier (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Support Weapon Systems",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "Explosive Projectile Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Gunner (Dmg)": [
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 15
+    },
+    {
+      "skill": "Mechanics",
+      "pct": 15
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 5
+    }
+  ],
+  "Gunner (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 5
+    },
+    {
+      "skill": "Spacecraft Weaponry",
+      "pct": 45
+    },
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 5
+    }
+  ],
+  "Hair Stylist": [
+    {
+      "skill": "Plastic Surgery",
+      "pct": 12
+    },
+    {
+      "skill": "Genetics",
+      "pct": 4
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Hair Stylist",
+      "pct": 46
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 1
+    }
+  ],
+  "Humanoid Investigator": [
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Probing",
+      "pct": 6
+    },
+    {
+      "skill": "Scan Human",
+      "pct": 50
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 10
+    },
+    {
+      "skill": "Analysis",
+      "pct": 10
+    },
+    {
+      "skill": "Biology",
+      "pct": 8
+    },
+    {
+      "skill": "Computer",
+      "pct": 2
+    }
+  ],
+  "Jammer": [
+    {
+      "skill": "Psyche",
+      "pct": 5
+    },
+    {
+      "skill": "Alertness",
+      "pct": 5
+    },
+    {
+      "skill": "Concentration",
+      "pct": 14
+    },
+    {
+      "skill": "Jamming",
+      "pct": 30
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Athletics",
+      "pct": 13
+    }
+  ],
+  "Knifefighter (Dmg)": [
+    {
+      "skill": "Inflict Melee Damage",
+      "pct": 5
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 5
+    },
+    {
+      "skill": "Shortblades",
+      "pct": 25
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Strength",
+      "pct": 7
+    }
+  ],
+  "Knifefighter (Hit)": [
+    {
+      "skill": "Strength",
+      "pct": 3
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 5
+    },
+    {
+      "skill": "Light Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 9
+    },
+    {
+      "skill": "Shortblades",
+      "pct": 38
+    },
+    {
+      "skill": "Bravado",
+      "pct": 7
+    },
+    {
+      "skill": "Courage",
+      "pct": 4
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    }
+  ],
+  "Laser Pistoleer (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Handgun",
+      "pct": 38
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 9
+    },
+    {
+      "skill": "Laser Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Laser Sniper (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Rifle",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "Laser Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Laser Weapons Engineer": [
+    {
+      "skill": "Laser Weaponry Technology",
+      "pct": 4
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 31
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Longblades Engineer": [
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 31
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Longblades",
+      "pct": 4
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    }
+  ],
+  "Material Designer": [
+    {
+      "skill": "Tailoring",
+      "pct": 6
+    },
+    {
+      "skill": "Texture Pattern Matching",
+      "pct": 40
+    },
+    {
+      "skill": "Carpentry",
+      "pct": 4
+    },
+    {
+      "skill": "Color Matching",
+      "pct": 3
+    },
+    {
+      "skill": "Coloring",
+      "pct": 5
+    },
+    {
+      "skill": "Make Textile",
+      "pct": 10
+    }
+  ],
+  "Material Manufacturer": [
+    {
+      "skill": "Carpentry",
+      "pct": 5
+    },
+    {
+      "skill": "Texture Engineering",
+      "pct": 33
+    },
+    {
+      "skill": "Make Textile",
+      "pct": 11
+    },
+    {
+      "skill": "Tailoring",
+      "pct": 5
+    },
+    {
+      "skill": "Engineering",
+      "pct": 20
+    }
+  ],
+  "Mechanical Engineer": [
+    {
+      "skill": "Manufacture Mechanical Equipment",
+      "pct": 34
+    },
+    {
+      "skill": "Engineering",
+      "pct": 30
+    },
+    {
+      "skill": "Mechanics",
+      "pct": 13
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Mentor": [
+    {
+      "skill": "Mentor",
+      "pct": 100
+    }
+  ],
+  "Metal Engineer": [
+    {
+      "skill": "Manufacture Metal Equipment",
+      "pct": 34
+    },
+    {
+      "skill": "Metallurgy",
+      "pct": 13
+    },
+    {
+      "skill": "Engineering",
+      "pct": 30
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Miner": [
+    {
+      "skill": "Mining",
+      "pct": 56
+    },
+    {
+      "skill": "Computer",
+      "pct": 5
+    },
+    {
+      "skill": "Engineering",
+      "pct": 3
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 1
+    }
+  ],
+  "Mounted BLP (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Heavy Weapons",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "BLP Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Mounted Grenadier (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Heavy Weapons",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "Explosive Projectile Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Mounted Laser (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Heavy Weapons",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "Laser Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    }
+  ],
+  "Mutant Investigator": [
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Computer",
+      "pct": 2
+    },
+    {
+      "skill": "Genetics",
+      "pct": 9
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 1
+    },
+    {
+      "skill": "Probing",
+      "pct": 7
+    },
+    {
+      "skill": "Scan Mutant",
+      "pct": 50
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 4
+    },
+    {
+      "skill": "Analysis",
+      "pct": 10
+    },
+    {
+      "skill": "Biology",
+      "pct": 5
+    }
+  ],
+  "Mutant Looter": [
+    {
+      "skill": "Scourging",
+      "pct": 35
+    },
+    {
+      "skill": "Genetics",
+      "pct": 4
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 1
+    },
+    {
+      "skill": "Alertness",
+      "pct": 6
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 9
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 7
+    },
+    {
+      "skill": "Analysis",
+      "pct": 5
+    },
+    {
+      "skill": "Biology",
+      "pct": 3
+    }
+  ],
+  "One Handed Clubber (Dmg)": [
+    {
+      "skill": "Clubs",
+      "pct": 25
+    },
+    {
+      "skill": "Inflict Melee Damage",
+      "pct": 5
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 5
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Strength",
+      "pct": 7
+    }
+  ],
+  "One Handed Clubber (Hit)": [
+    {
+      "skill": "Strength",
+      "pct": 3
+    },
+    {
+      "skill": "Clubs",
+      "pct": 38
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 5
+    },
+    {
+      "skill": "Light Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 9
+    },
+    {
+      "skill": "Bravado",
+      "pct": 7
+    },
+    {
+      "skill": "Courage",
+      "pct": 4
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    }
+  ],
+  "Paramedic": [
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 13
+    },
+    {
+      "skill": "Diagnosis",
+      "pct": 8
+    },
+    {
+      "skill": "First Aid",
+      "pct": 37
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 5
+    }
+  ],
+  "Pet Handler": [
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Alertness",
+      "pct": 3
+    },
+    {
+      "skill": "Courage",
+      "pct": 5
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Animal Lore",
+      "pct": 40
+    },
+    {
+      "skill": "Zoology",
+      "pct": 19
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    }
+  ],
+  "Plasma Pistoleer (Hit)": [
+    {
+      "skill": "Aim",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Handgun",
+      "pct": 38
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 9
+    },
+    {
+      "skill": "Plasma Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    }
+  ],
+  "Plasma Sniper (Hit)": [
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Rifle",
+      "pct": 39
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "Plasma Weaponry Technology",
+      "pct": 14
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 3
+    },
+    {
+      "skill": "Aim",
+      "pct": 4
+    }
+  ],
+  "Plasma Weapons Engineer": [
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 31
+    },
+    {
+      "skill": "Plasma Weaponry Technology",
+      "pct": 4
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    }
+  ],
+  "Powerfist Engineer": [
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Power Fist",
+      "pct": 4
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 31
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    }
+  ],
+  "Projectile Launcher Engineer": [
+    {
+      "skill": "Explosive Projectile Weaponry Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 9
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Engineering",
+      "pct": 26
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Prospector": [
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Geology",
+      "pct": 21
+    },
+    {
+      "skill": "Prospecting",
+      "pct": 50
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 3
+    }
+  ],
+  "Pyro Kinetic (Dmg)": [
+    {
+      "skill": "Psyche",
+      "pct": 4
+    },
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 3
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 17
+    },
+    {
+      "skill": "Pyrokinesis",
+      "pct": 40
+    },
+    {
+      "skill": "Agility",
+      "pct": 1
+    }
+  ],
+  "Pyro Kinetic (Hit)": [
+    {
+      "skill": "Psyche",
+      "pct": 5
+    },
+    {
+      "skill": "Bravado",
+      "pct": 3
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Concentration",
+      "pct": 10
+    },
+    {
+      "skill": "Pyrokinesis",
+      "pct": 50
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Ranged BLP (Dmg)": [
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 4
+    },
+    {
+      "skill": "BLP Weaponry Technology",
+      "pct": 25
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Agility",
+      "pct": 1
+    }
+  ],
+  "Ranged Gauss (Dmg)": [
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 4
+    },
+    {
+      "skill": "Gauss Weaponry Technology",
+      "pct": 25
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Agility",
+      "pct": 1
+    }
+  ],
+  "Ranged Laser (Dmg)": [
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 4
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Agility",
+      "pct": 1
+    },
+    {
+      "skill": "Laser Weaponry Technology",
+      "pct": 25
+    }
+  ],
+  "Ranged Plasma (Dmg)": [
+    {
+      "skill": "Agility",
+      "pct": 1
+    },
+    {
+      "skill": "Inflict Ranged Damage",
+      "pct": 4
+    },
+    {
+      "skill": "Plasma Weaponry Technology",
+      "pct": 25
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    }
+  ],
+  "Resource Gatherer": [
+    {
+      "skill": "Botany",
+      "pct": 0
+    },
+    {
+      "skill": "Genetics",
+      "pct": 0
+    },
+    {
+      "skill": "Zoology",
+      "pct": 0
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 0
+    },
+    {
+      "skill": "Alertness",
+      "pct": 4
+    },
+    {
+      "skill": "Athletics",
+      "pct": 4
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 4
+    },
+    {
+      "skill": "Perception",
+      "pct": 10
+    },
+    {
+      "skill": "Geology",
+      "pct": 0
+    },
+    {
+      "skill": "Resource Gathering",
+      "pct": 34
+    },
+    {
+      "skill": "Analysis",
+      "pct": 0
+    },
+    {
+      "skill": "Biology",
+      "pct": 0
+    }
+  ],
+  "Robot Investigator": [
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Probing",
+      "pct": 8
+    },
+    {
+      "skill": "Scan Robot",
+      "pct": 50
+    },
+    {
+      "skill": "Analysis",
+      "pct": 10
+    },
+    {
+      "skill": "Computer",
+      "pct": 5
+    },
+    {
+      "skill": "Electronics",
+      "pct": 5
+    },
+    {
+      "skill": "Mechanics",
+      "pct": 3
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Robot Looter": [
+    {
+      "skill": "Alertness",
+      "pct": 6
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Perception",
+      "pct": 9
+    },
+    {
+      "skill": "Reclaiming",
+      "pct": 35
+    },
+    {
+      "skill": "Analysis",
+      "pct": 5
+    },
+    {
+      "skill": "Computer",
+      "pct": 4
+    },
+    {
+      "skill": "Electronics",
+      "pct": 7
+    },
+    {
+      "skill": "Mechanics",
+      "pct": 3
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 1
+    }
+  ],
+  "Shortblades Engineer": [
+    {
+      "skill": "Shortblades",
+      "pct": 4
+    },
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Weapons",
+      "pct": 31
+    },
+    {
+      "skill": "Weapon Technology",
+      "pct": 9
+    },
+    {
+      "skill": "Engineering",
+      "pct": 28
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Spacecraft Engineering": [
+    {
+      "skill": "Spacecraft Weaponry",
+      "pct": 0
+    },
+    {
+      "skill": "Vehicle Technology",
+      "pct": 10
+    },
+    {
+      "skill": "Courage",
+      "pct": 5
+    },
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Computer",
+      "pct": 5
+    },
+    {
+      "skill": "Electronics",
+      "pct": 5
+    },
+    {
+      "skill": "Mechanics",
+      "pct": 5
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 5
+    }
+  ],
+  "Surveyor": [
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Geology",
+      "pct": 20
+    },
+    {
+      "skill": "Surveying",
+      "pct": 50
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 3
+    }
+  ],
+  "Sweat Gatherer": [
+    {
+      "skill": "Psyche",
+      "pct": 5
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Concentration",
+      "pct": 10
+    },
+    {
+      "skill": "Sweat Gatherer",
+      "pct": 80
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Swordsman (Dmg)": [
+    {
+      "skill": "Longblades",
+      "pct": 25
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 5
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Strength",
+      "pct": 7
+    },
+    {
+      "skill": "Inflict Melee Damage",
+      "pct": 5
+    }
+  ],
+  "Swordsman (Hit)": [
+    {
+      "skill": "Heavy Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 9
+    },
+    {
+      "skill": "Bravado",
+      "pct": 7
+    },
+    {
+      "skill": "Courage",
+      "pct": 4
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Strength",
+      "pct": 4
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 5
+    },
+    {
+      "skill": "Longblades",
+      "pct": 39
+    }
+  ],
+  "Tailor": [
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Computer",
+      "pct": 2
+    },
+    {
+      "skill": "Engineering",
+      "pct": 20
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Make Textile",
+      "pct": 39
+    },
+    {
+      "skill": "Tailoring",
+      "pct": 8
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 10
+    }
+  ],
+  "Technology Investigator": [
+    {
+      "skill": "Computer",
+      "pct": 5
+    },
+    {
+      "skill": "Electronics",
+      "pct": 5
+    },
+    {
+      "skill": "Mechanics",
+      "pct": 3
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Probing",
+      "pct": 8
+    },
+    {
+      "skill": "Scan Technology",
+      "pct": 50
+    },
+    {
+      "skill": "Analysis",
+      "pct": 10
+    }
+  ],
+  "Telepath": [
+    {
+      "skill": "Psyche",
+      "pct": 5
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 3
+    },
+    {
+      "skill": "Concentration",
+      "pct": 20
+    },
+    {
+      "skill": "Telepathy",
+      "pct": 46
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Tier Upgrader": [
+    {
+      "skill": "Melee Combat",
+      "pct": 4
+    },
+    {
+      "skill": "Manufacture Enhancers",
+      "pct": 5
+    },
+    {
+      "skill": "Tier Upgrading",
+      "pct": 50
+    },
+    {
+      "skill": "Evade",
+      "pct": 4
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 4
+    },
+    {
+      "skill": "Mining",
+      "pct": 4
+    },
+    {
+      "skill": "Analysis",
+      "pct": 5
+    },
+    {
+      "skill": "Computer",
+      "pct": 5
+    },
+    {
+      "skill": "Engineering",
+      "pct": 10
+    },
+    {
+      "skill": "Aim",
+      "pct": 4
+    }
+  ],
+  "Tool Engineer": [
+    {
+      "skill": "Machinery",
+      "pct": 6
+    },
+    {
+      "skill": "Manufacture Tools",
+      "pct": 32
+    },
+    {
+      "skill": "Tools Technology",
+      "pct": 11
+    },
+    {
+      "skill": "Engineering",
+      "pct": 29
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    }
+  ],
+  "Translocator": [
+    {
+      "skill": "Psyche",
+      "pct": 4
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 2
+    },
+    {
+      "skill": "Concentration",
+      "pct": 15
+    },
+    {
+      "skill": "Translocation",
+      "pct": 54
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 6
+    }
+  ],
+  "Treasure Hunter": [
+    {
+      "skill": "Perception",
+      "pct": 5
+    },
+    {
+      "skill": "Geology",
+      "pct": 21
+    },
+    {
+      "skill": "Treasure Sense",
+      "pct": 38
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 5
+    }
+  ],
+  "Two Handed Clubber (Dmg)": [
+    {
+      "skill": "Clubs",
+      "pct": 25
+    },
+    {
+      "skill": "Inflict Melee Damage",
+      "pct": 5
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 5
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    },
+    {
+      "skill": "Strength",
+      "pct": 7
+    }
+  ],
+  "Two Handed Clubber (Hit)": [
+    {
+      "skill": "Strength",
+      "pct": 4
+    },
+    {
+      "skill": "Clubs",
+      "pct": 39
+    },
+    {
+      "skill": "Heavy Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 9
+    },
+    {
+      "skill": "Bravado",
+      "pct": 7
+    },
+    {
+      "skill": "Courage",
+      "pct": 4
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Combat Reflexes",
+      "pct": 5
+    }
+  ],
+  "Vehicle Engineer": [
+    {
+      "skill": "Intelligence",
+      "pct": 2
+    },
+    {
+      "skill": "Machinery",
+      "pct": 8
+    },
+    {
+      "skill": "Manufacture Vehicle",
+      "pct": 37
+    },
+    {
+      "skill": "Vehicle Technology",
+      "pct": 11
+    },
+    {
+      "skill": "Engineering",
+      "pct": 26
+    }
+  ],
+  "Vehicle Structural Engineer": [
+    {
+      "skill": "Mechanics",
+      "pct": 6
+    },
+    {
+      "skill": "Intelligence",
+      "pct": 5
+    },
+    {
+      "skill": "Vehicle Repairing",
+      "pct": 37
+    },
+    {
+      "skill": "Vehicle Technology",
+      "pct": 12
+    },
+    {
+      "skill": "Electronics",
+      "pct": 6
+    },
+    {
+      "skill": "Engineering",
+      "pct": 10
+    }
+  ],
+  "Whipper (Dmg)": [
+    {
+      "skill": "Inflict Melee Damage",
+      "pct": 5
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 5
+    },
+    {
+      "skill": "Whip",
+      "pct": 25
+    },
+    {
+      "skill": "Agility",
+      "pct": 7
+    },
+    {
+      "skill": "Anatomy",
+      "pct": 20
+    }
+  ],
+  "Whipper (Hit)": [
+    {
+      "skill": "Combat Reflexes",
+      "pct": 3
+    },
+    {
+      "skill": "Light Melee Weapons",
+      "pct": 7
+    },
+    {
+      "skill": "Weapons Handling",
+      "pct": 8
+    },
+    {
+      "skill": "Bravado",
+      "pct": 6
+    },
+    {
+      "skill": "Courage",
+      "pct": 3
+    },
+    {
+      "skill": "Dexterity",
+      "pct": 2
+    },
+    {
+      "skill": "Perception",
+      "pct": 2
+    },
+    {
+      "skill": "Agility",
+      "pct": 2
+    },
+    {
+      "skill": "Strength",
+      "pct": 3
+    },
+    {
+      "skill": "Melee Combat",
+      "pct": 10
+    },
+    {
+      "skill": "Whip",
+      "pct": 44
+    }
+  ]
+}
