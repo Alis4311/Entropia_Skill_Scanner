@@ -1,0 +1,646 @@
+[
+  {
+    "id": 1,
+    "activityName": "Animal Investigator",
+    "hidden": false,
+    "type": "Animal Info",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 12,
+    "activityName": "Animal Looter",
+    "hidden": false,
+    "type": "Looting",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 26,
+    "activityName": "Animal Tamer",
+    "hidden": false,
+    "type": "Taming Animals",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 39,
+    "activityName": "Archaelogist",
+    "hidden": false,
+    "type": "Extracting Treasure",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 47,
+    "activityName": "Armor Engineer",
+    "hidden": false,
+    "type": "Armor",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 55,
+    "activityName": "Attachment Engineer",
+    "hidden": false,
+    "type": "Attachments",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 63,
+    "activityName": "Biotropic",
+    "hidden": false,
+    "type": "Mindforce Healing",
+    "category": "Mindforce"
+  },
+  {
+    "id": 75,
+    "activityName": "BLP Pistoleer (Hit)",
+    "hidden": false,
+    "type": "BLP Pistol Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 89,
+    "activityName": "BLP Sniper (Hit)",
+    "hidden": false,
+    "type": "BLP Rifle Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 103,
+    "activityName": "BLP Weapons Engineer",
+    "hidden": false,
+    "type": "Weapons (BLP)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 112,
+    "activityName": "Body Sculptor",
+    "hidden": false,
+    "type": "Body",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 120,
+    "activityName": "Brawler (Dmg)",
+    "hidden": false,
+    "type": "Power Fist Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 129,
+    "activityName": "Brawler (Hit)",
+    "hidden": false,
+    "type": "Power Fist Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 144,
+    "activityName": "Captain",
+    "hidden": false,
+    "type": "Space",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 152,
+    "activityName": "Carpenter",
+    "hidden": false,
+    "type": "Furniture",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 161,
+    "activityName": "Colorer",
+    "hidden": false,
+    "type": "Coloring Items",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 169,
+    "activityName": "Cryogenic (Dmg)",
+    "hidden": false,
+    "type": "Cryogenic Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 180,
+    "activityName": "Cryogenic (Hit)",
+    "hidden": false,
+    "type": "Cryogenic Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 192,
+    "activityName": "Decoy Dispenser",
+    "hidden": false,
+    "type": "Dispense Decoy",
+    "category": "Combat"
+  },
+  {
+    "id": 200,
+    "activityName": "Dodger",
+    "hidden": false,
+    "type": "Ranged Defence",
+    "category": "Combat"
+  },
+  {
+    "id": 211,
+    "activityName": "Driller",
+    "hidden": false,
+    "type": "Extracting Enmatter",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 219,
+    "activityName": "Electro Kinetic (Dmg)",
+    "hidden": false,
+    "type": "Electric Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 230,
+    "activityName": "Electro Kinetic (Hit)",
+    "hidden": false,
+    "type": "Electro Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 242,
+    "activityName": "Electronics Engineer",
+    "hidden": false,
+    "type": "Electronic Components",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 249,
+    "activityName": "Enhancer Manufacturer",
+    "hidden": false,
+    "type": "Enhancers",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 258,
+    "activityName": "Evader",
+    "hidden": false,
+    "type": "Melee Defence",
+    "category": "Combat"
+  },
+  {
+    "id": 269,
+    "activityName": "Face Sculptor",
+    "hidden": false,
+    "type": "Face",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 277,
+    "activityName": "Gardener",
+    "hidden": false,
+    "type": "Gardening",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 286,
+    "activityName": "Gauss Sniper (Hit)",
+    "hidden": false,
+    "type": "Gauss Rifle Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 300,
+    "activityName": "Gauss Weapons Engineer",
+    "hidden": false,
+    "type": "Weapons (Gauss)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 309,
+    "activityName": "Grenadier (Dmg)",
+    "hidden": false,
+    "type": "Support Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 318,
+    "activityName": "Grenadier (Hit)",
+    "hidden": false,
+    "type": "Support Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 332,
+    "activityName": "Gunner (Dmg)",
+    "hidden": false,
+    "type": "Space",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 340,
+    "activityName": "Gunner (Hit)",
+    "hidden": false,
+    "type": "Space",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 347,
+    "activityName": "Hair Stylist",
+    "hidden": false,
+    "type": "Hair",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 355,
+    "activityName": "Humanoid Investigator",
+    "hidden": false,
+    "type": "Human Info",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 364,
+    "activityName": "Jammer",
+    "hidden": false,
+    "type": "Mindforce Defence",
+    "category": "Mindforce"
+  },
+  {
+    "id": 376,
+    "activityName": "Knifefighter (Dmg)",
+    "hidden": false,
+    "type": "Shortblades Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 385,
+    "activityName": "Knifefighter (Hit)",
+    "hidden": false,
+    "type": "Shortblades Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 400,
+    "activityName": "Laser Pistoleer (Hit)",
+    "hidden": false,
+    "type": "Laser Pistol Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 414,
+    "activityName": "Laser Sniper (Hit)",
+    "hidden": false,
+    "type": "Laser Rifle Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 428,
+    "activityName": "Laser Weapons Engineer",
+    "hidden": false,
+    "type": "Weapons (Laser)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 437,
+    "activityName": "Longblades Engineer",
+    "hidden": false,
+    "type": "Weapons (Longblades)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 446,
+    "activityName": "Material Designer",
+    "hidden": true,
+    "type": "Texturing Items",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 457,
+    "activityName": "Material Manufacturer",
+    "hidden": true,
+    "type": "Materials",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 466,
+    "activityName": "Mechanical Engineer",
+    "hidden": false,
+    "type": "Mechanical Components",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 473,
+    "activityName": "Mentor",
+    "hidden": false,
+    "type": "Mentoring",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 474,
+    "activityName": "Metal Engineer",
+    "hidden": false,
+    "type": "Metal Components",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 481,
+    "activityName": "Miner",
+    "hidden": false,
+    "type": "Extracting Ore",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 489,
+    "activityName": "Mounted BLP (Hit)",
+    "hidden": false,
+    "type": "Vehicles Hit (BLP)",
+    "category": "Combat"
+  },
+  {
+    "id": 503,
+    "activityName": "Mounted Grenadier (Hit)",
+    "hidden": false,
+    "type": "Vehicles Hit (Support)",
+    "category": "Combat"
+  },
+  {
+    "id": 517,
+    "activityName": "Mounted Laser (Hit)",
+    "hidden": false,
+    "type": "Vehicles Hit (Laser)",
+    "category": "Combat"
+  },
+  {
+    "id": 531,
+    "activityName": "Mutant Investigator",
+    "hidden": false,
+    "type": "Mutant Info",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 542,
+    "activityName": "Mutant Looter",
+    "hidden": false,
+    "type": "Looting",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 556,
+    "activityName": "One Handed Clubber (Dmg)",
+    "hidden": false,
+    "type": "One Handed Clubs Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 565,
+    "activityName": "One Handed Clubber (Hit)",
+    "hidden": false,
+    "type": "One Handed Clubs Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 580,
+    "activityName": "Paramedic",
+    "hidden": false,
+    "type": "Healing Tools",
+    "category": "Combat"
+  },
+  {
+    "id": 591,
+    "activityName": "Pet Handler",
+    "hidden": false,
+    "type": "Handling pets",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 601,
+    "activityName": "Plasma Pistoleer (Hit)",
+    "hidden": false,
+    "type": "Plasma Pistol Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 615,
+    "activityName": "Plasma Sniper (Hit)",
+    "hidden": false,
+    "type": "Plasma Rifle Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 629,
+    "activityName": "Plasma Weapons Engineer",
+    "hidden": false,
+    "type": "Weapons (Plasma)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 638,
+    "activityName": "Powerfist Engineer",
+    "hidden": false,
+    "type": "Weapons (Powerfist)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 647,
+    "activityName": "Projectile Launcher Engineer",
+    "hidden": false,
+    "type": "Weapons (Support)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 656,
+    "activityName": "Prospector",
+    "hidden": false,
+    "type": "Detecting Ore",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 664,
+    "activityName": "Pyro Kinetic (Dmg)",
+    "hidden": false,
+    "type": "Pyro Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 675,
+    "activityName": "Pyro Kinetic (Hit)",
+    "hidden": false,
+    "type": "Pyro Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 687,
+    "activityName": "Ranged BLP (Dmg)",
+    "hidden": false,
+    "type": "BLP Weapons Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 696,
+    "activityName": "Ranged Gauss (Dmg)",
+    "hidden": false,
+    "type": "Gauss Weapons Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 705,
+    "activityName": "Ranged Laser (Dmg)",
+    "hidden": false,
+    "type": "Laser Weapons Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 714,
+    "activityName": "Ranged Plasma (Dmg)",
+    "hidden": false,
+    "type": "Plasma Weapons Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 723,
+    "activityName": "Resource Gatherer",
+    "hidden": false,
+    "type": "Resource Gatherer",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 735,
+    "activityName": "Robot Investigator",
+    "hidden": false,
+    "type": "Robot Info",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 745,
+    "activityName": "Robot Looter",
+    "hidden": false,
+    "type": "Looting",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 759,
+    "activityName": "Shortblades Engineer",
+    "hidden": false,
+    "type": "Weapons (Shortblades)",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 768,
+    "activityName": "Spacecraft Engineering",
+    "hidden": false,
+    "type": "Space",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 777,
+    "activityName": "Surveyor",
+    "hidden": false,
+    "type": "Detecting Enmatter",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 785,
+    "activityName": "Sweat Gatherer",
+    "hidden": false,
+    "type": "Sweat Gathering",
+    "category": "Mindforce"
+  },
+  {
+    "id": 790,
+    "activityName": "Swordsman (Dmg)",
+    "hidden": false,
+    "type": "Longblades Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 799,
+    "activityName": "Swordsman (Hit)",
+    "hidden": false,
+    "type": "Longblades Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 814,
+    "activityName": "Tailor",
+    "hidden": false,
+    "type": "Clothes",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 825,
+    "activityName": "Technology Investigator",
+    "hidden": false,
+    "type": "Mechanical Info",
+    "category": "Miscellaneous"
+  },
+  {
+    "id": 835,
+    "activityName": "Telepath",
+    "hidden": false,
+    "type": "Telepathy",
+    "category": "Mindforce"
+  },
+  {
+    "id": 845,
+    "activityName": "Tier Upgrader",
+    "hidden": false,
+    "type": "Tier Items",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 856,
+    "activityName": "Tool Engineer",
+    "hidden": false,
+    "type": "Tools",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 864,
+    "activityName": "Translocator",
+    "hidden": false,
+    "type": "Teleporting",
+    "category": "Mindforce"
+  },
+  {
+    "id": 873,
+    "activityName": "Treasure Hunter",
+    "hidden": false,
+    "type": "Detecting Treasure",
+    "category": "Resource Collecting"
+  },
+  {
+    "id": 881,
+    "activityName": "Two Handed Clubber (Dmg)",
+    "hidden": false,
+    "type": "Two Handed Clubs Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 890,
+    "activityName": "Two Handed Clubber (Hit)",
+    "hidden": false,
+    "type": "Two Handed Clubs Hit",
+    "category": "Combat"
+  },
+  {
+    "id": 905,
+    "activityName": "Vehicle Engineer",
+    "hidden": false,
+    "type": "Vehicles",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 912,
+    "activityName": "Vehicle Structural Engineer",
+    "hidden": false,
+    "type": "Vehicle Repair",
+    "category": "Manufacturing"
+  },
+  {
+    "id": 922,
+    "activityName": "Whipper (Dmg)",
+    "hidden": false,
+    "type": "Whip Damage",
+    "category": "Combat"
+  },
+  {
+    "id": 931,
+    "activityName": "Whipper (Hit)",
+    "hidden": false,
+    "type": "Whip Hit",
+    "category": "Combat"
+  }
+]
