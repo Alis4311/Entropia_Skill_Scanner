@@ -3,7 +3,7 @@ import cv2
 
 from pipeline import extract_skill_window, extract_table, extract_rows, extract_columns, parse_points_int
 
-INPUT = Path("data/screenshots/1024x768-125.png")
+INPUT = Path("data\screenshots\Entropia 2026-01-02 23.45.03.png")
 
 OUT_DIR = Path("out_test_one")
 DEBUG_DIR = OUT_DIR / "_debug"

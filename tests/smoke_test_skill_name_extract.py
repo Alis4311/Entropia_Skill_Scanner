@@ -2,7 +2,8 @@ from pathlib import Path
 from pipeline.extract_skill_name import extract_skill_name
 import cv2 as cv
 # ---- Hardcoded input ----
-INPUT = Path("out_test_one/04_cols/row_01/01_name_roi.png")
+INPUT = Path("out_test_one\\04_cols\\row_02\\02_name_roi.png")
+
 def main() -> int:
     if not INPUT.exists():
         print(f"ERROR: input not found: {INPUT.resolve()}")
