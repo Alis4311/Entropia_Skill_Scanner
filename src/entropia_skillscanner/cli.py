@@ -4,15 +4,13 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Iterable, List, Tuple
+from typing import List
 
 import cv2 as cv
 import numpy as np
 
-from pipeline.run_pipeline import run_pipeline, PipelineConfig
-
-
-RowOut = Tuple[str, str]  # ("Placeholder", "1234.56")
+from entropia_skillscanner.core import PipelineResult
+from pipeline.run_pipeline import PipelineConfig, run_pipeline
 
 
 def _iter_inputs(paths: List[Path], exts={".png", ".jpg", ".jpeg", ".bmp", ".webp"}) -> List[Path]:
@@ -61,23 +59,26 @@ def main(argv: List[str] | None = None) -> int:
 
         try:
             bgr = _load_bgr(img_path)
-            rows, status = run_pipeline(
+            result = run_pipeline(
                 cfg,
                 bgr,
                 debug_dir=debug_dir,
                 logger=logger,
             )
         except Exception as e:
-            rows, status = [], f"error:exception:{e}"
+            result = PipelineResult(rows=[], status=f"error:exception:{e}", ok=False)
 
-        ok = (status == "ok")
-        if args.fail_on_empty and not rows:
+        ok = result.ok
+        status = result.status
+
+        if args.fail_on_empty and not result.rows:
             ok = False
-            if status == "ok":
+            if result.ok:
                 status = "error:empty"
 
         overall_ok = overall_ok and ok
 
+        rows = [(r.name, r.value) for r in result.rows]
         all_results.append(
             {
                 "input": str(img_path),

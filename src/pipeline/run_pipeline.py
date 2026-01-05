@@ -3,9 +3,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Optional, List, Tuple, Union
+from typing import Callable, Optional, List, Union
 
 import numpy as np
+from entropia_skillscanner.core import PipelineResult, PipelineRow
 
 from .extract_skill_window import extract_skill_window
 from .extract_table import extract_table
@@ -15,9 +16,6 @@ from .extract_columns import extract_columns_from_row
 from .extract_skill_name import extract_skill_names_batched
 from .parse_points_int import parse_points_int_batch
 from .parse_points_decimal import parse_points_decimal_from_bar
-
-
-RowOut = Tuple[str, str]  # (skill_name, "1234.56")
 
 
 @dataclass(frozen=True)
@@ -33,7 +31,7 @@ def run_pipeline(
     debug: bool = False,
     debug_dir: Union[str, Path, None] = None,
     logger: Optional[Callable[[str], None]] = None,
-) -> Tuple[List[RowOut], str]:
+) -> PipelineResult:
     """
     Fast pipeline:
       - window detect (normalize)
@@ -44,7 +42,7 @@ def run_pipeline(
       - batched OCR for integer points
       - per-row decimal-from-bar
     """
-    out: List[RowOut] = []
+    out: List[PipelineRow] = []
 
     dbg_root = Path(debug_dir) if (debug and debug_dir is not None) else None
     if dbg_root:
@@ -63,7 +61,7 @@ def run_pipeline(
         debug_dir=win_dbg,
     )
     if win_res.norm_bgr is None:
-        return [], f"window not found: {win_res.reason}"
+        return PipelineResult(rows=[], status=f"window not found: {win_res.reason}", ok=False)
 
     norm_bgr = win_res.norm_bgr
 
@@ -76,9 +74,9 @@ def run_pipeline(
         min_density=cfg.min_table_density,
     )
     if table_res.table_bgr is None:
-        return [], f"table not found: {table_res.reason}"
+        return PipelineResult(rows=[], status=f"table not found: {table_res.reason}", ok=False)
     if not table_res.valid:
-        return [], f"table invalid: {table_res.reason}"
+        return PipelineResult(rows=[], status=f"table invalid: {table_res.reason}", ok=False)
 
     table_bgr = table_res.table_bgr
 
@@ -91,7 +89,7 @@ def run_pipeline(
     )
     row_images = rows_res.row_images
     if not row_images:
-        return [], f"no rows: {rows_res.reason}"
+        return PipelineResult(rows=[], status=f"no rows: {rows_res.reason}", ok=False)
 
     # ---- 4) Columns per row (collect crops) ----
     log("extracting columns")
@@ -150,6 +148,6 @@ def run_pipeline(
         value = float(int_res.value + dec_val)
 
         name = skill_names[i] if i < len(skill_names) else ""
-        out.append((name, f"{value:.2f}"))
+        out.append(PipelineRow(name=name, value=f"{value:.2f}"))
 
-    return out, f"done (+{len(out)} rows)"
+    return PipelineResult(rows=out, status=f"done (+{len(out)} rows)", ok=True)
