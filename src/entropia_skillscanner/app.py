@@ -5,6 +5,7 @@ from pathlib import Path
 import hashlib
 import threading
 import queue
+from decimal import Decimal
 
 import numpy as np
 import cv2 as cv
@@ -17,13 +18,17 @@ except ImportError:
 from pipeline.run_pipeline import run_pipeline, PipelineConfig
 from entropia_skillscanner.exporter import ExportError, build_export, write_csv
 from entropia_skillscanner.models import SkillRow
-from decimal import Decimal
+
 from pipeline.professions import compute_professions
 from pipeline.profession_store import get_profession_weights
+
+from entropia_skillscanner.import_skills_csv import load_skill_rows_from_export_csv, ImportError
+
 
 POLL_MS = 400
 HIGHLIGHT_LAST_N = 12
 PROF_PATH = Path("data/professions.json")
+
 
 class SkillScannerApp(tk.Tk):
     def __init__(self, cfg=None, debug=False):
@@ -67,7 +72,7 @@ class SkillScannerApp(tk.Tk):
 
         ttk.Separator(self).pack(fill="x")
 
-                # Notebook (Skills / Professions)
+        # Notebook (Skills / Professions)
         mid = ttk.Frame(self, padding=(10, 8, 10, 8))
         mid.pack(fill="both", expand=True)
 
@@ -125,16 +130,12 @@ class SkillScannerApp(tk.Tk):
 
         self.prof_tree.tag_configure("warn", background="#fff6e5")  # light warning highlight
 
-
-        # Tags for highlighting new rows
-        self.tree.tag_configure("new", background="#e9f5ff")  # light highlight
-        self.tree.tag_configure("err", background="#ffe9e9")
-
         # Bottom controls
         bot = ttk.Frame(self, padding=(10, 6, 10, 10))
         bot.pack(fill="x")
 
-        ttk.Button(bot, text="Export CSV…", command=self._export_csv).pack(side="left")
+        ttk.Button(bot, text="Load Skills CSV…", command=self.on_load_skills_csv).pack(side="left")
+        ttk.Button(bot, text="Export CSV…", command=self._export_csv).pack(side="left", padx=(8, 0))
         ttk.Button(bot, text="Clear", command=self._clear).pack(side="left", padx=(8, 0))
 
         self.auto_var = tk.BooleanVar(value=True)
@@ -303,7 +304,30 @@ class SkillScannerApp(tk.Tk):
 
     # ---------------- Actions ----------------
 
-    def _export_csv(self):  
+    def on_load_skills_csv(self) -> None:
+        fp = filedialog.askopenfilename(
+            title="Load export CSV (reads [Skills] only)",
+            filetypes=[("CSV files", "*.csv"), ("All files", "*.*")],
+        )
+        if not fp:
+            return
+
+        try:
+            res = load_skill_rows_from_export_csv(Path(fp), added_label="imported", strict=True)
+        except ImportError as e:
+            messagebox.showerror("Import failed", str(e))
+            return
+        except Exception as e:
+            messagebox.showerror("Import failed", f"Unexpected error:\n{e}")
+            return
+
+        self.rows = list(res.rows)
+        self._last_added_indices = []  # don’t highlight imported rows as “new”
+
+        self._refresh_table()
+        self._set_status(f"loaded {len(self.rows)} skills from CSV")
+
+    def _export_csv(self):
         if not self.rows:
             messagebox.showinfo("Export CSV", "No rows to export yet.")
             return
@@ -333,7 +357,7 @@ class SkillScannerApp(tk.Tk):
         self._last_added_indices = []
         self._refresh_table()
         self._set_status("waiting for screenshot")
-    
+
     def _refresh_professions(self):
         """
         Recompute professions from current skills and render.
@@ -366,7 +390,6 @@ class SkillScannerApp(tk.Tk):
             flags = []
             if pv.missing_skills:
                 flags.append("MISSING_SKILLS")
-            # Optional: pct sum audit (helps find weird weight sets)
             if pv.pct_sum != Decimal("100"):
                 flags.append(f"PCT_SUM={pv.pct_sum}")
 
@@ -377,7 +400,6 @@ class SkillScannerApp(tk.Tk):
                 values=(prof, format(pv.value, ".2f"), ";".join(flags)),
                 tags=tag,
             )
-
 
 
 def main():

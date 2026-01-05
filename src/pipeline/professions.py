@@ -113,7 +113,7 @@ def compute_professions(
             total += (skills[skill]*factor) * (pct / Decimal("100"))
 
         out[prof] = ProfessionValue(
-            value=q2(total),
+            value=total/100,
             missing_skills=tuple(sorted(set(missing))),
             pct_sum=pct_sum,
         )

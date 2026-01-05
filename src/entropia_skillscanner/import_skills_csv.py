@@ -3,12 +3,14 @@ from __future__ import annotations
 
 import csv
 from dataclasses import dataclass
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import List, Tuple
 
+from entropia_skillscanner.models import SkillRow
 
 _SECTION_SKILLS = "Skills"
+_Q2 = Decimal("0.01")
 
 
 class ImportError(Exception):
@@ -16,15 +18,8 @@ class ImportError(Exception):
 
 
 @dataclass(frozen=True)
-class ImportedSkill:
-    name: str
-    value: Decimal
-    category: str  # imported, but you can ignore it if your taxonomy is source of truth
-
-
-@dataclass(frozen=True)
 class ImportSkillsResult:
-    skills: List[ImportedSkill]
+    rows: List[SkillRow]
     warnings: Tuple[str, ...] = ()
 
 
@@ -36,63 +31,72 @@ def _parse_decimal(s: str, *, ctx: str) -> Decimal:
         raise ImportError(f"Invalid decimal '{s}' in {ctx}") from e
 
 
-def load_skills_section(path: Path, *, strict: bool = True) -> ImportSkillsResult:
+def load_skill_rows_from_export_csv(
+    path: Path,
+    *,
+    added_label: str = "imported",
+    strict: bool = True,
+) -> ImportSkillsResult:
     """
-    Reads ONLY the [Skills] section from an export CSV.
+    Reads ONLY the [Skills] section from an export CSV and returns SkillRow list.
 
     Expected rows inside [Skills]:
       name,value,category
 
-    Everything else is ignored (Totals/Professions/etc).
+    Everything else (Professions/Totals/etc) is ignored on purpose.
     """
     if not path.exists():
         raise ImportError(f"File not found: {path}")
 
-    skills: List[ImportedSkill] = []
+    rows: List[SkillRow] = []
     warnings: List[str] = []
-
-    in_skills: bool = False
+    in_skills = False
 
     with path.open("r", encoding="utf-8-sig", newline="") as f:
         reader = csv.reader(f)
-        for row_idx, row in enumerate(reader, start=1):
+        for line_no, row in enumerate(reader, start=1):
             if not row or all(not cell.strip() for cell in row):
                 continue
 
             first = row[0].strip()
 
-            # Section header?
+            # Section header like [Skills]
             if first.startswith("[") and first.endswith("]") and len(row) == 1:
-                sec = first[1:-1].strip()
-                in_skills = (sec == _SECTION_SKILLS)
+                section = first[1:-1].strip()
+                in_skills = (section == _SECTION_SKILLS)
                 continue
 
             if not in_skills:
                 continue
 
-            # Parse skill row
-            if len(row) < 3:
-                msg = f"Expected 3 columns (name,value,category) in [Skills] at line {row_idx}: {row}"
+            # name,value,category (category ignored here)
+            if len(row) < 2:
+                msg = f"Bad [Skills] row at line {line_no}: {row}"
                 if strict:
                     raise ImportError(msg)
                 warnings.append(msg)
                 continue
 
             name = row[0].strip()
-            val_s = row[1].strip()
-            category = row[2].strip()
-
             if not name:
-                msg = f"Empty skill name in [Skills] at line {row_idx}"
+                msg = f"Empty skill name in [Skills] at line {line_no}"
                 if strict:
                     raise ImportError(msg)
                 warnings.append(msg)
                 continue
 
-            value = _parse_decimal(val_s, ctx=f"[Skills] line {row_idx}")
-            skills.append(ImportedSkill(name=name, value=value, category=category))
+            val_s = row[1].strip()
+            d = _parse_decimal(val_s, ctx=f"[Skills] line {line_no}").quantize(_Q2, rounding=ROUND_HALF_UP)
 
-    if not skills and strict:
-        raise ImportError("No [Skills] rows found (or missing [Skills] section).")
+            # SkillRow.value is float in your app; keep it consistent.
+            value = float(d)
 
-    return ImportSkillsResult(skills=skills, warnings=tuple(warnings))
+            rows.append(SkillRow(name=name, value=value, added=added_label))
+
+    if not rows:
+        msg = "No skills found (missing [Skills] section or empty section)."
+        if strict:
+            raise ImportError(msg)
+        warnings.append(msg)
+
+    return ImportSkillsResult(rows=rows, warnings=tuple(warnings))

@@ -1,0 +1,171 @@
+[Skills]
+Agility,93.63,Attributes
+Health,319.80,Attributes
+Intelligence,116.86,Attributes
+Psyche,86.48,Attributes
+Stamina,99.86,Attributes
+Strength,105.94,Attributes
+Alertness,7567.37,General
+Athletics,7013.93,General
+Bravado,5932.93,General
+Coolness,7745.61,General
+Courage,8135.20,General
+Dexterity,10746.44,General
+Intuition,4183.06,General
+Perception,10872.16,General
+Quickness,4040.52,General
+Serendipity,8697.58,General
+Aim,7480.86,Combat
+Clubs,277.35,Combat
+Combat Reflexes,7953.25,Combat
+Combat Sense,7932.14,Combat
+Commando,6478.88,Combat
+Handgun,11884.96,Combat
+Heavy Melee Weapons,4352.11,Combat
+Heavy Weapons,260.42,Combat
+Inflict Melee Damage,4869.35,Combat
+Inflict Ranged Damage,7781.03,Combat
+Kill Strike,8176.83,Combat
+Light Melee Weapons,4958.31,Combat
+Longblades,6613.95,Combat
+Marksmanship,10605.82,Combat
+Martial Arts,4971.83,Combat
+Melee Combat,6046.76,Combat
+Melee Damage Assessment,6023.00,Combat
+Mining Laser Operator,1.00,Combat
+Power Fist,1063.74,Combat
+Ranged Damage Assessment,10551.03,Combat
+Rifle,10648.33,Combat
+Shortblades,8947.09,Combat
+Support Weapon Systems,334.28,Combat
+Weapons Handling,8765.09,Combat
+Whip,167.63,Combat
+Wounding,9805.63,Combat
+Avoidance,4859.25,Defense
+Dispense Decoy,1.00,Defense
+Dodge,3406.54,Defense
+Evade,7044.45,Defense
+Anatomy,13559.46,Medical
+Diagnosis,3671.22,Medical
+First Aid,3927.62,Medical
+Medicine,1270.90,Medical
+Treatment,932.25,Medical
+Analysis,5089.12,Science
+Animal Lore,525.85,Science
+Animal Taming,420.97,Science
+Biology,1157.46,Science
+Botany,156.20,Science
+Computer,1141.81,Science
+Deep Space Knowledge,1.80,Science
+Electronics,1349.20,Science
+Engineering,3501.09,Science
+Genetics,63.67,Science
+Mechanics,2192.83,Science
+Robotology,3.45,Science
+Scientist,958.31,Science
+Spacecraft Pilot,422.35,Science
+Spacecraft Systems,1377.76,Science
+Xenobiology,44.37,Science
+Zoology,995.22,Science
+Butchering,5816.86,Information
+Fragmentating,1.00,Information
+Mentor,3.00,Information
+Probing,82.35,Information
+Reaping,3171.94,Information
+Reclaiming,5874.83,Information
+Salvaging,3935.40,Information
+Scan Animal,341.50,Information
+Scan Human,103.85,Information
+Scan Mutant,13.16,Information
+Scan Robot,27.84,Information
+Scan Technology,2.65,Information
+Scavenging,4533.90,Information
+Scourging,5027.60,Information
+Skinning,7812.26,Information
+Archaeological Lore,246.47,Mining
+Artefact Preservation,984.26,Mining
+Drilling,2044.10,Mining
+Extraction,1404.09,Mining
+Geology,2203.73,Mining
+Ground Assessment,1242.99,Mining
+Metallurgy,300.58,Mining
+Mining,2878.01,Mining
+Precision Artefact Extraction,537.30,Mining
+Prospecting,3058.08,Mining
+Resource Gathering,397.31,Mining
+Surveying,1966.31,Mining
+Treasure Sense,891.37,Mining
+Armor Technology,14.47,Construction
+Attachments Technology,196.93,Construction
+BLP Weaponry Technology,10555.98,Construction
+Blueprint Comprehension,2064.05,Construction
+Carpentry,26.33,Construction
+Chemistry,1.00,Construction
+Enhancer Technology,8.29,Construction
+Explosive Projectile Weaponry Technology,391.85,Construction
+Gauss Weaponry Technology,1.00,Construction
+Laser Weaponry Technology,11529.81,Construction
+Machinery,166.28,Construction
+Manufacture Armor,46.63,Construction
+Manufacture Attachments,222.16,Construction
+Manufacture Electronic Equipment,586.85,Construction
+Manufacture Enhancers,331.16,Construction
+Manufacture Mechanical Equipment,2665.54,Construction
+Manufacture Metal Equipment,524.39,Construction
+Manufacture Tools,63.40,Construction
+Manufacture Vehicle,1.00,Construction
+Manufacture Weapons,1834.62,Construction
+Material Extraction Methodology,33.23,Construction
+Mining Laser Technology,1.00,Construction
+Particle Beamer Technology,1.00,Construction
+Plasma Weaponry Technology,1580.44,Construction
+Spacecraft Engineering,1.00,Construction
+Spacecraft Weaponry,1487.66,Construction
+Texture Engineering,143.42,Construction
+Tier Upgrading,383.77,Construction
+Tools Technology,26.05,Construction
+Vehicle Repairing,2875.82,Construction
+Vehicle Technology,1606.18,Construction
+Weapon Technology,63.03,Construction
+Wood Carving,1.00,Construction
+Wood Processing,1.00,Construction
+Color Matching,46.69,Tailoring
+Coloring,62.65,Tailoring
+Fashion Design,1.00,Tailoring
+Make Textile,280.99,Tailoring
+Tailoring,87.93,Tailoring
+Texture Pattern Matching,1.00,Tailoring
+Bioregenesis,6698.91,Mindforce
+Concentration,6974.76,Mindforce
+Cryogenics,2813.78,Mindforce
+Electrokinesis,11533.59,Mindforce
+Force Merge,6459.74,Mindforce
+Jamming,1.00,Mindforce
+Mindforce Harmony,6758.10,Mindforce
+Power Catalyst,7501.26,Mindforce
+Pyrokinesis,5108.35,Mindforce
+Sweat Gatherer,115.60,Mindforce
+Telepathy,1.40,Mindforce
+Translocation,1120.13,Mindforce
+Body Sculpting,1.00,Beauty
+Face Sculpting,1.00,Beauty
+Hair Stylist,1.00,Beauty
+Plastic Surgery,1.00,Beauty
+Promoter Rating,1000.00,Social
+Reputation,1004.00,Social
+
+[Totals]
+Attributes,823
+General,74935
+Combat,156951
+Defense,15311
+Medical,23361
+Science,19401
+Information,36748
+Mining,18155
+Construction,39436
+Tailoring,480
+Mindforce,55087
+Beauty,4
+Social,2004
+Total,442696
