@@ -8,7 +8,8 @@ from pathlib import Path
 
 import cv2 as cv
 
-from pipeline.run_pipeline import run_pipeline, PipelineConfig
+from entropia_skillscanner.core import PipelineResult
+from pipeline.run_pipeline import PipelineConfig, run_pipeline
 
 
 def profile_once(image_path: Path, *, debug: bool = False, top: int = 40) -> int:
@@ -25,11 +26,14 @@ def profile_once(image_path: Path, *, debug: bool = False, top: int = 40) -> int
 
     pr = cProfile.Profile()
     pr.enable()
-    rows, status = run_pipeline(cfg, bgr, debug=debug, debug_dir=None, logger=None)
+    result = run_pipeline(cfg, bgr, debug=debug, debug_dir=None, logger=None)
     pr.disable()
 
+    status = result.status if isinstance(result, PipelineResult) else ""
+    rows_count = len(result.rows) if isinstance(result, PipelineResult) else 0
+
     print(f"status: {status}")
-    print(f"rows:   {len(rows)}")
+    print(f"rows:   {rows_count}")
 
     # Print a readable summary
     s = io.StringIO()

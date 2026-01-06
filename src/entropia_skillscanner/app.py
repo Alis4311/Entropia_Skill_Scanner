@@ -6,6 +6,7 @@ import hashlib
 import threading
 import queue
 from decimal import Decimal
+from typing import Sequence
 
 import numpy as np
 import cv2 as cv
@@ -15,9 +16,9 @@ try:
 except ImportError:
     raise SystemExit("Missing dependency: pillow (pip install pillow)")
 
-from pipeline.run_pipeline import run_pipeline, PipelineConfig
+from entropia_skillscanner.core import PipelineRow, PipelineResult, SkillRow
+from pipeline.run_pipeline import PipelineConfig, run_pipeline
 from entropia_skillscanner.exporter import ExportError, build_export, write_csv
-from entropia_skillscanner.models import SkillRow
 
 from pipeline.professions import compute_professions
 from pipeline.profession_store import get_profession_weights
@@ -221,14 +222,14 @@ class SkillScannerApp(tk.Tk):
             self._results_q.put(("log", msg))
 
         try:
-            rows, status = run_pipeline(
+            result = run_pipeline(
                 self.cfg,
                 bgr,
                 debug=self.debug,
                 debug_dir=None,
                 logger=worker_logger,
             )
-            self._results_q.put(("ok", (rows, status)))
+            self._results_q.put(("ok", result))
         except Exception as e:
             self._results_q.put(("err", str(e)))
 
@@ -248,14 +249,14 @@ class SkillScannerApp(tk.Tk):
                     self._set_status(f"error (pipeline): {payload}")
 
                 elif kind == "ok":
-                    rows, status = payload
+                    result: PipelineResult = payload
                     self._worker_busy = False
 
-                    if rows:
-                        self._append_rows(rows)
-                        self._set_status(status or f"done (+{len(rows)} rows)")
+                    if result.rows:
+                        self._append_rows(result.rows)
+                        self._set_status(result.status or f"done (+{len(result.rows)} rows)")
                     else:
-                        self._set_status(status or "done (no rows)")
+                        self._set_status(result.status or "done (no rows)")
 
                 # After any terminal event, if we have a pending screenshot, run it next.
                 if (not self._worker_busy) and (self._pending_bgr is not None):
@@ -270,16 +271,16 @@ class SkillScannerApp(tk.Tk):
 
     # ---------------- Data / Table rendering ----------------
 
-    def _append_rows(self, extracted_rows):
-        # extracted_rows expected: iterable of (skill_name, skill_value_str_or_float)
+    def _append_rows(self, extracted_rows: Sequence[PipelineRow]):
+        # extracted_rows expected: iterable of PipelineRow
         start_idx = len(self.rows)
         ts = time.strftime("%Y-%m-%d %H:%M:%S")
-        for name, val in extracted_rows:
+        for row in extracted_rows:
             try:
-                fval = float(val)
+                fval = float(row.value)
             except Exception:
                 continue
-            self.rows.append(SkillRow(name=str(name), value=fval, added=ts))
+            self.rows.append(SkillRow(name=str(row.name), value=fval, added=ts))
 
         end_idx = len(self.rows) - 1
         self._last_added_indices = list(range(start_idx, end_idx + 1))

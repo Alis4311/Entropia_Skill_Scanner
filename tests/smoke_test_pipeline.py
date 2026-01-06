@@ -4,16 +4,14 @@ import argparse
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Tuple
+from typing import List
 
 import cv2 as cv
 import numpy as np
 
 # Adjust these imports to your actual package layout
+from entropia_skillscanner.core import PipelineResult
 from pipeline.run_pipeline import run_pipeline, PipelineConfig
-
-
-RowOut = Tuple[str, str]  # (skill_name, "1234.56")
 
 
 VALUE_RE = re.compile(r"^\d+(\.\d{2})?$")  # allow ints or 2 decimals (depending on your formatting)
@@ -46,14 +44,16 @@ def _is_value_ok(s: str, require_decimals: bool) -> bool:
 
 def _run_one(cfg: PipelineConfig, img_path: Path, scfg: SmokeConfig, debug: bool) -> None:
     bgr = _load_bgr(img_path)
-    rows, status = run_pipeline(cfg, bgr, debug=debug, debug_dir=img_path.parent / "_debug")
+    result = run_pipeline(cfg, bgr, debug=debug, debug_dir=img_path.parent / "_debug")
 
-    assert isinstance(status, str) and status, f"{img_path.name}: empty status"
-    assert isinstance(rows, list), f"{img_path.name}: rows not a list"
-    assert len(rows) >= scfg.min_rows, f"{img_path.name}: too few rows ({len(rows)})"
+    assert isinstance(result, PipelineResult), f"{img_path.name}: pipeline returned unexpected type"
+    assert isinstance(result.status, str) and result.status, f"{img_path.name}: empty status"
+    assert isinstance(result.rows, list), f"{img_path.name}: rows not a list"
+    assert result.ok, f"{img_path.name}: pipeline reported failure: {result.status}"
+    assert len(result.rows) >= scfg.min_rows, f"{img_path.name}: too few rows ({len(result.rows)})"
 
-    names = [n for (n, _) in rows]
-    values = [v for (_, v) in rows]
+    names = [r.name for r in result.rows]
+    values = [r.value for r in result.rows]
 
     named_ok = sum(1 for n in names if n.strip() not in NAME_BAD)
     values_ok = sum(1 for v in values if _is_value_ok(v, scfg.require_decimals))

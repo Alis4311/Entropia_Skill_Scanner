@@ -3,12 +3,17 @@ from __future__ import annotations
 
 import csv
 import json
-from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
-from .models import ExportSkill, ExportTotals, SkillRow
+from entropia_skillscanner.core import (
+    ExportProfession,
+    ExportResult,
+    ExportSkill,
+    ExportTotals,
+    SkillRow,
+)
 from .taxonomy import ExportSchema, SCHEMA_OLD, validate_mappings, get_category, all_categories
 
 # Professions live in pipeline (derived)
@@ -22,21 +27,6 @@ from pipeline.professions import (
 # Quantize to 2 decimals everywhere (HALF_UP for human expectations)
 _Q2 = Decimal("0.01")
 _Q0 = Decimal("1")
-
-
-@dataclass(frozen=True)
-class ExportProfession:
-    name: str
-    value: Decimal
-    category: str
-
-
-@dataclass(frozen=True)
-class ExportResult:
-    skills: List[ExportSkill]
-    professions: List[ExportProfession]
-    totals: List[ExportTotals]
-    warnings: Tuple[str, ...] = ()
 
 
 class ExportError(Exception):
