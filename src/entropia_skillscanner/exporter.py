@@ -14,6 +14,11 @@ from entropia_skillscanner.core import (
     ExportTotals,
     SkillRow,
 )
+from entropia_skillscanner.config import (
+    DEFAULT_PROFESSIONS_LIST_PATH,
+    DEFAULT_PROFESSIONS_WEIGHTS_PATH,
+    AppConfig,
+)
 from .taxonomy import ExportSchema, SCHEMA_OLD, validate_mappings, get_category, all_categories
 from entropia_skillscanner.professions import (
     ProfessionValue,
@@ -179,12 +184,13 @@ def _build_professions(
 def build_export(
     rows: Sequence[SkillRow],
     *,
-    schema: ExportSchema = SCHEMA_OLD,
+    app_config: AppConfig | None = None,
+    schema: ExportSchema | None = None,
     strict: bool = True,
-    include_professions: bool = True,
-    professions_weights_path: Path = Path("data/professions.json"),
-    professions_list_path: Path = Path("data/professions_list.json"),
-    professions_strict: bool = False,
+    include_professions: bool | None = None,
+    professions_weights_path: Path | None = None,
+    professions_list_path: Path | None = None,
+    professions_strict: bool | None = None,
     profession_services: Optional[ProfessionServices] = None,
 ) -> ExportResult:
     if not rows:
@@ -192,6 +198,12 @@ def build_export(
 
     # Surface schema/config errors early (startup/export time).
     validate_mappings(strict=True)
+
+    schema = schema or (app_config.export_schema if app_config else SCHEMA_OLD)
+    include_professions = include_professions if include_professions is not None else (app_config.include_professions if app_config else True)
+    professions_weights_path = professions_weights_path or (app_config.professions_weights_path if app_config else DEFAULT_PROFESSIONS_WEIGHTS_PATH)
+    professions_list_path = professions_list_path or (app_config.professions_list_path if app_config else DEFAULT_PROFESSIONS_LIST_PATH)
+    professions_strict = professions_strict if professions_strict is not None else (app_config.professions_strict if app_config else False)
 
     skills, warnings_sk = _attach_categories(rows, schema=schema, strict=strict)
 
