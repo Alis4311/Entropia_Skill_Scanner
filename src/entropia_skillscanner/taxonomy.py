@@ -28,6 +28,7 @@ CANONICAL_CATEGORY_ORDER: List[str] = [
     "Beauty",
     "Social",
 ]
+CATEGORY_ORDER = CANONICAL_CATEGORY_ORDER
 
 # Mapping of canonical skill name -> CANONICAL category.
 # NOTE: Keys MUST match your snapped canonical vocab exactly.
