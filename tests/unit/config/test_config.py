@@ -1,5 +1,4 @@
 import json
-from pathlib import Path
 
 import pytest
 
@@ -11,19 +10,16 @@ from entropia_skillscanner.config import (
 )
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-
-
-def test_load_app_config_reads_defaults_from_pyproject():
-    cfg = load_app_config(project_root=PROJECT_ROOT)
+def test_load_app_config_reads_defaults_from_pyproject(project_root):
+    cfg = load_app_config(project_root=project_root)
     cfg.validate()
 
     assert cfg.export_schema.name == "OLD"
-    assert cfg.professions_weights_path == PROJECT_ROOT / DEFAULT_PROFESSIONS_WEIGHTS_PATH
-    assert cfg.professions_list_path == PROJECT_ROOT / DEFAULT_PROFESSIONS_LIST_PATH
+    assert cfg.professions_weights_path == project_root / DEFAULT_PROFESSIONS_WEIGHTS_PATH
+    assert cfg.professions_list_path == project_root / DEFAULT_PROFESSIONS_LIST_PATH
 
 
-def test_load_app_config_json_override(tmp_path: Path):
+def test_load_app_config_json_override(tmp_path, project_root):
     override = tmp_path / "config.json"
     override.write_text(
         json.dumps(
@@ -31,13 +27,13 @@ def test_load_app_config_json_override(tmp_path: Path):
                 "schema": "NEW",
                 "debug_pipeline": True,
                 "pipeline": {"norm_width": 1500},
-                "paths": {"data_dir": str(PROJECT_ROOT / "data")},
+                "paths": {"data_dir": str(project_root / "data")},
             }
         ),
         encoding="utf-8",
     )
 
-    cfg = load_app_config(project_root=PROJECT_ROOT, override_path=override)
+    cfg = load_app_config(project_root=project_root, override_path=override)
     cfg.validate()
 
     assert cfg.pipeline_norm_width == 1500
@@ -45,7 +41,7 @@ def test_load_app_config_json_override(tmp_path: Path):
     assert cfg.debug_pipeline is True
 
 
-def test_app_config_validation_checks_required_paths(tmp_path: Path):
+def test_app_config_validation_checks_required_paths(tmp_path):
     cfg = AppConfig(
         data_dir=tmp_path / "missing_data",
         professions_weights_path=tmp_path / "missing_data" / "professions.json",

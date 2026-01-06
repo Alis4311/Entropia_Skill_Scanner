@@ -9,6 +9,7 @@ from pipeline.extract_skill_window import CropResult
 from pipeline.extract_table import FixedTableResult
 from pipeline.parse_points_int import PointsIntBatchResult, PointsIntResult
 from pipeline.run_pipeline import PipelineConfig, run_pipeline
+from pipeline.stage_results import PipelineStageError, TableExtraction
 
 
 @pytest.fixture
@@ -94,6 +95,16 @@ def test_run_pipeline_rows_failure(monkeypatch, sample_image):
     assert not result.ok
     assert result.status.startswith("row-extraction: no rows found")
     assert "table_size=(10, 10)" in result.status
+
+
+def test_table_extraction_include_context_on_empty_crop():
+    res = TableExtraction.from_fixed_table(FixedTableResult((1, 2, 3, 4), None, True, 0.5, "ok"))
+    with pytest.raises(PipelineStageError) as exc:
+        res.require_ok()
+
+    assert exc.value.stage == "table-extraction"
+    assert "empty table crop" in exc.value.reason or exc.value.reason.startswith("empty")
+    assert "density=0.5000" in exc.value.status
 
 
 def test_run_pipeline_ocr_failure(monkeypatch, sample_image):
