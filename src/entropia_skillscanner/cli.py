@@ -4,7 +4,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 import cv2 as cv
 import numpy as np
@@ -31,7 +31,7 @@ def _load_bgr(path: Path) -> np.ndarray:
     return bgr
 
 
-def main(argv: List[str] | None = None) -> int:
+def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(prog="entropia-skillscanner", description="Headless regression runner for skill scanner.")
     ap.add_argument("inputs", nargs="+", help="Image files or directories (recursively scanned).")
     ap.add_argument("--debug-dir", default=None, help="If set, pipeline debug artifacts go here.")
