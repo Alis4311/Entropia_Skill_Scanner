@@ -5,9 +5,9 @@ from pathlib import Path
 from decimal import Decimal
 from typing import Callable, Optional, Sequence, Union
 
+from entropia_skillscanner.config import AppConfig, load_app_config
 from entropia_skillscanner.core import PipelineRow, PipelineResult, SkillRow
 from entropia_skillscanner.runtime import PipelineRunner
-from pipeline.run_pipeline import PipelineConfig
 from entropia_skillscanner.exporter import ExportError, build_export, write_csv
 
 from pipeline.professions import compute_professions
@@ -17,17 +17,22 @@ from entropia_skillscanner.import_skills_csv import load_skill_rows_from_export_
 
 
 HIGHLIGHT_LAST_N = 12
-PROF_PATH = Path("data/professions.json")
 
 
 class SkillScannerApp(tk.Tk):
-    def __init__(self, cfg=None, debug=False, runner_factory: Optional[Callable[..., PipelineRunner]] = None):
+    def __init__(
+        self,
+        *,
+        app_cfg: Optional[AppConfig] = None,
+        runner_factory: Optional[Callable[..., PipelineRunner]] = None,
+    ):
         super().__init__()
         self.title("Entropia Skill Scanner")
         self.geometry("840x620")
 
-        self.cfg = cfg or PipelineConfig()
-        self.debug = debug
+        self.app_cfg = app_cfg or load_app_config()
+        self.app_cfg.validate()
+        self.pipeline_cfg = self.app_cfg.pipeline_config
 
         # Data model: list[SkillRow]
         self.rows = []
@@ -38,8 +43,8 @@ class SkillScannerApp(tk.Tk):
 
         # Runner
         self.runner = (runner_factory or self._default_runner_factory)(
-            cfg=self.cfg,
-            debug=self.debug,
+            cfg=self.pipeline_cfg,
+            debug=self.app_cfg.debug_pipeline,
             ui_dispatch=self._dispatch,
             on_started=self._on_pipeline_started,
             on_progress=self._on_pipeline_progress,
@@ -247,7 +252,10 @@ class SkillScannerApp(tk.Tk):
             return
 
         try:
-            result = build_export(self.rows)
+            result = build_export(
+                self.rows,
+                app_config=self.app_cfg,
+            )
             write_csv(result, Path(path))
         except ExportError as e:
             messagebox.showerror("Export CSV", f"Export failed:\n{e}")
@@ -278,7 +286,7 @@ class SkillScannerApp(tk.Tk):
         skills = {r.name: Decimal(str(r.value)) for r in self.rows}
 
         try:
-            weights = get_profession_weights(PROF_PATH)
+            weights = get_profession_weights(self.app_cfg.professions_weights_path)
             prof_vals = compute_professions(
                 skills=skills,
                 profession_weights=weights,
@@ -309,8 +317,8 @@ class SkillScannerApp(tk.Tk):
 
 
 def main():
-    cfg = PipelineConfig()
-    app = SkillScannerApp(cfg=cfg, debug=False)
+    app_cfg = load_app_config()
+    app = SkillScannerApp(app_cfg=app_cfg)
     app.mainloop()
 
 
