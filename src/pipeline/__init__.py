@@ -8,6 +8,13 @@ from .parse_points_value import parse_points_value
 from .extract_skill_name import extract_skill_name
 from .professions import compute_professions
 from .profession_store import get_profession_weights
+from .stage_results import (
+    WindowDetection,
+    TableExtraction,
+    RowExtraction,
+    OcrBatchResult,
+    PipelineStageError,
+)
 
 
 __all__ = [
@@ -21,6 +28,11 @@ __all__ = [
     "extract_skill_name",
     "parse_points_int_batch",
     "compute_professions",
-    "get_profession_weights"
+    "get_profession_weights",
+    "WindowDetection",
+    "TableExtraction",
+    "RowExtraction",
+    "OcrBatchResult",
+    "PipelineStageError",
 
 ]

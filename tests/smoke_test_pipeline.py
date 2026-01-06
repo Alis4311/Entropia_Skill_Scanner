@@ -58,20 +58,20 @@ def _run_one(cfg: PipelineConfig, img_path: Path, scfg: SmokeConfig, debug: bool
     named_ok = sum(1 for n in names if n.strip() not in NAME_BAD)
     values_ok = sum(1 for v in values if _is_value_ok(v, scfg.require_decimals))
 
-    named_ratio = named_ok / max(1, len(rows))
-    value_ratio = values_ok / max(1, len(rows))
+    named_ratio = named_ok / max(1, len(result.rows))
+    value_ratio = values_ok / max(1, len(result.rows))
 
     assert named_ratio >= scfg.min_named_ratio, (
         f"{img_path.name}: name ratio too low "
-        f"({named_ratio:.2%}, {named_ok}/{len(rows)})"
+        f"({named_ratio:.2%}, {named_ok}/{len(result.rows)})"
     )
     assert value_ratio >= scfg.min_value_ratio, (
         f"{img_path.name}: value ratio too low "
-        f"({value_ratio:.2%}, {values_ok}/{len(rows)})"
+        f"({value_ratio:.2%}, {values_ok}/{len(result.rows)})"
     )
 
     # Ensure no duplicate exact rows (often indicates row-splitting bug)
-    assert len(set(rows)) >= int(0.7 * len(rows)), (
+    assert len(set(result.rows)) >= int(0.7 * len(result.rows)), (
         f"{img_path.name}: too many duplicate rows, possible row extraction issue"
     )
 
