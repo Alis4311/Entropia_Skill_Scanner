@@ -5,7 +5,7 @@ import queue
 import threading
 import time
 from dataclasses import dataclass
-from typing import Callable, Optional, Union
+from typing import Callable, Optional
 
 import cv2 as cv
 import numpy as np
@@ -17,7 +17,7 @@ from pipeline.run_pipeline import PipelineConfig, run_pipeline
 
 PipelineStart = Callable[[], None]
 PipelineProgress = Callable[[str], None]
-PipelineCompletion = Callable[[Union[PipelineResult, Exception]], None]
+PipelineCompletion = Callable[[PipelineResult | Exception], None]
 
 
 def run_pipeline_sync(
@@ -63,11 +63,11 @@ class PipelineRunner:
         self.on_completed = on_completed
 
         self._auto = True
-        self._last_clip_hash: Optional[str] = None
+        self._last_clip_hash: str | None = None
         self._last_clip_ts: float = 0
 
         self._worker_busy = False
-        self._pending: Optional[_PendingFrame] = None
+        self._pending: _PendingFrame | None = None
         self._results_q: "queue.Queue[tuple[str, object]]" = queue.Queue()
 
     # -------- public controls --------
@@ -83,7 +83,7 @@ class PipelineRunner:
         self.ui_dispatch(self._poll_clipboard, self.poll_ms)
         self.ui_dispatch(self._drain_results_queue, 50)
 
-    def enqueue_bgr(self, bgr: np.ndarray, *, clip_hash: Optional[str] = None) -> None:
+    def enqueue_bgr(self, bgr: np.ndarray, *, clip_hash: str | None = None) -> None:
         if clip_hash is None:
             clip_hash = self._hash_bgr(bgr)
         self._enqueue(_PendingFrame(bgr=bgr, clip_hash=clip_hash))
@@ -196,7 +196,7 @@ class PipelineRunner:
         if self.on_progress:
             self.on_progress(msg)
 
-    def _emit_completed(self, result: Union[PipelineResult, Exception]) -> None:
+    def _emit_completed(self, result: PipelineResult | Exception) -> None:
         if self.on_completed:
             self.on_completed(result)
 
