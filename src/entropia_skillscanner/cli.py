@@ -5,13 +5,14 @@ import json
 import sys
 from pathlib import Path
 from typing import List, Optional
+from dataclasses import replace
 
 import cv2 as cv
 import numpy as np
 
+from entropia_skillscanner.config import load_app_config
 from entropia_skillscanner.core import PipelineResult
 from entropia_skillscanner.runtime import run_pipeline_sync
-from pipeline.run_pipeline import PipelineConfig
 
 
 def _iter_inputs(paths: List[Path], exts={".png", ".jpg", ".jpeg", ".bmp", ".webp"}) -> List[Path]:
@@ -35,18 +36,26 @@ def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(prog="entropia-skillscanner", description="Headless regression runner for skill scanner.")
     ap.add_argument("inputs", nargs="+", help="Image files or directories (recursively scanned).")
     ap.add_argument("--debug-dir", default=None, help="If set, pipeline debug artifacts go here.")
+    ap.add_argument("--config", default=None, help="Optional YAML/JSON config override (merged with pyproject.toml).")
     ap.add_argument("--json", action="store_true", help="Emit JSON instead of CSV.")
     ap.add_argument("--fail-on-empty", action="store_true", help="Fail if no rows are produced.")
-    ap.add_argument("--norm-width", type=int, default=1400)
-    ap.add_argument("--min-table-density", type=float, default=0.010)
+    ap.add_argument("--norm-width", type=int, default=None)
+    ap.add_argument("--min-table-density", type=float, default=None)
     args = ap.parse_args(argv)
+
+    app_cfg = load_app_config(override_path=Path(args.config) if args.config else None)
+    app_cfg.validate()
 
     input_paths = _iter_inputs([Path(x) for x in args.inputs])
     if not input_paths:
         print("No input images found.", file=sys.stderr)
         return 2
 
-    cfg = PipelineConfig(norm_width=args.norm_width, min_table_density=args.min_table_density)
+    cfg = app_cfg.pipeline_config
+    if args.norm_width is not None:
+        cfg = replace(cfg, norm_width=args.norm_width)
+    if args.min_table_density is not None:
+        cfg = replace(cfg, min_table_density=args.min_table_density)
 
     all_results = []
     overall_ok = True
@@ -60,9 +69,12 @@ def main(argv: Optional[List[str]] = None) -> int:
 
         try:
             bgr = _load_bgr(img_path)
+            debug_dir_root = Path(args.debug_dir) if args.debug_dir else app_cfg.debug_dir
+            debug_dir = debug_dir_root / img_path.stem if debug_dir_root else None
             result = run_pipeline_sync(
                 cfg,
                 bgr,
+                debug=app_cfg.debug_pipeline,
                 debug_dir=debug_dir,
                 logger=logger,
             )
