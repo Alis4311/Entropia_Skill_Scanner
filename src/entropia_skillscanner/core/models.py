@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 
 @dataclass(frozen=True)
@@ -37,9 +37,9 @@ class ProfessionResult:
 
     name: str
     value: Decimal
-    category: str | None = None
+    category: Optional[str] = None
     missing_skills: Tuple[str, ...] = ()
-    pct_sum: Decimal | None = None
+    pct_sum: Optional[Decimal] = None
 
 
 @dataclass(frozen=True)
