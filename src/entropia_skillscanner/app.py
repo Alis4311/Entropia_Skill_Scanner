@@ -3,7 +3,7 @@ from tkinter import ttk, filedialog, messagebox
 import time
 from pathlib import Path
 from decimal import Decimal
-from typing import Callable, Optional, Sequence
+from typing import Callable, Sequence
 
 from entropia_skillscanner.core import PipelineRow, PipelineResult, SkillRow
 from entropia_skillscanner.runtime import PipelineRunner
@@ -21,7 +21,7 @@ PROF_PATH = Path("data/professions.json")
 
 
 class SkillScannerApp(tk.Tk):
-    def __init__(self, cfg=None, debug=False, runner_factory: Optional[Callable[..., PipelineRunner]] = None):
+    def __init__(self, cfg=None, debug=False, runner_factory: Callable[..., PipelineRunner] | None = None):
         super().__init__()
         self.title("Entropia Skill Scanner")
         self.geometry("840x620")
