@@ -151,10 +151,20 @@ def run_pipeline(
     log("assembling")
     dec_dbg = (dbg_root / "06_points_dec") if dbg_root else None
 
-    try:
-        int_batch.require_ok()
-    except PipelineStageError as e:
+    partial_int_status = ""
+    if len(int_batch.points.results) < len(row_images):
+        e = PipelineStageError(
+            "ocr-int-batch",
+            "missing OCR rows",
+            context=f"results={len(int_batch.points.results)}, expected={len(row_images)}",
+        )
         return PipelineResult(rows=[], status=e.status, ok=False)
+
+    if int_batch.points.ok_count == 0:
+        e = PipelineStageError("ocr-int-batch", int_batch.points.reason, context=int_batch.failure_context)
+        return PipelineResult(rows=[], status=e.status, ok=False)
+    if int_batch.points.ok_count < len(row_images):
+        partial_int_status = f", int ok {int_batch.points.ok_count}/{len(row_images)}"
 
     for i, cols in enumerate(cols_list):
         int_res = int_batch.points.results[i]
@@ -175,4 +185,4 @@ def run_pipeline(
         name = skill_names[i] if i < len(skill_names) else ""
         out.append(PipelineRow(name=name, value=f"{value:.2f}"))
 
-    return PipelineResult(rows=out, status=f"done (+{len(out)} rows)", ok=True)
+    return PipelineResult(rows=out, status=f"done (+{len(out)} rows{partial_int_status})", ok=True)

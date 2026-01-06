@@ -133,3 +133,32 @@ def test_run_pipeline_ocr_failure(monkeypatch, sample_image):
     assert not result.ok
     assert result.status.startswith("ocr-int-batch: ok 0/1")
     assert "ok=0/1" in result.status
+
+
+def test_run_pipeline_allows_partial_int_success(monkeypatch, sample_image):
+    monkeypatch.setattr("pipeline.run_pipeline.extract_skill_window", lambda *a, **k: _ok_window())
+    table_bgr = np.zeros((10, 10, 3), dtype=np.uint8)
+    monkeypatch.setattr(
+        "pipeline.run_pipeline.extract_table",
+        lambda *a, **k: FixedTableResult((0, 0, 10, 10), table_bgr, True, 0.02, "ok"),
+    )
+    row_img = np.zeros((5, 5, 3), dtype=np.uint8)
+    monkeypatch.setattr(
+        "pipeline.run_pipeline.extract_rows",
+        lambda *a, **k: RowsResult([(0, 0, 5, 5), (0, 0, 5, 5)], [row_img, row_img], (10, 10), "ok"),
+    )
+    monkeypatch.setattr(
+        "pipeline.run_pipeline.parse_points_int_batch",
+        lambda *a, **k: PointsIntBatchResult(
+            values=[123, None],
+            results=[PointsIntResult(123, "123", 0.9, "ok"), PointsIntResult(None, "", 0.1, "no digits")],
+            ok_count=1,
+            reason="ok 1/2",
+        ),
+    )
+
+    result = run_pipeline(PipelineConfig(), sample_image, debug=False)
+    assert result.ok
+    assert len(result.rows) == 1
+    assert result.rows[0].value == "123.00"
+    assert "int ok 1/2" in result.status
