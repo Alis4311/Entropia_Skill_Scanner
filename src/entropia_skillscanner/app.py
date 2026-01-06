@@ -1,14 +1,16 @@
-import tkinter as tk
-from tkinter import ttk, filedialog, messagebox
 import time
 from pathlib import Path
 from decimal import Decimal
 from typing import Callable, Optional, Sequence, Union
 
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+
 from entropia_skillscanner.config import AppConfig, load_app_config
 from entropia_skillscanner.core import PipelineRow, PipelineResult, SkillRow
-from entropia_skillscanner.runtime import PipelineRunner
 from entropia_skillscanner.exporter import ExportError, build_export, write_csv
+from entropia_skillscanner.runtime import PipelineRunner
+from entropia_skillscanner.view_model import SkillScannerViewModel
 
 from pipeline.professions import compute_professions
 from pipeline.profession_store import get_profession_weights
@@ -34,12 +36,17 @@ class SkillScannerApp(tk.Tk):
         self.app_cfg.validate()
         self.pipeline_cfg = self.app_cfg.pipeline_config
 
-        # Data model: list[SkillRow]
-        self.rows = []
+        self.view_model = SkillScannerViewModel()
         self._last_added_indices = []
 
         self._build_ui()
-        self._set_status("waiting for screenshot")
+        self._subscriptions = [
+            self.view_model.subscribe("rows", self._on_rows_changed),
+            self.view_model.subscribe("status", self._on_status_changed),
+            self.view_model.subscribe("warnings", self._on_warnings_changed),
+        ]
+
+        self.view_model.set_status("waiting for screenshot")
 
         # Runner
         self.runner = (runner_factory or self._default_runner_factory)(
@@ -66,6 +73,15 @@ class SkillScannerApp(tk.Tk):
         self.status_var = tk.StringVar(value="")
         self.status_lbl = ttk.Label(top, textvariable=self.status_var, font=("Segoe UI", 11))
         self.status_lbl.pack(side="left")
+
+        self.warnings_var = tk.StringVar(value="")
+        self.warnings_lbl = ttk.Label(
+            top,
+            textvariable=self.warnings_var,
+            font=("Segoe UI", 10),
+            foreground="#b26b00",
+        )
+        self.warnings_lbl.pack(side="right")
 
         ttk.Separator(self).pack(fill="x")
 
@@ -144,7 +160,7 @@ class SkillScannerApp(tk.Tk):
         ).pack(side="right")
 
     def _set_status(self, s: str):
-        self.status_var.set(f"Status: {s}")
+        self.view_model.set_status(s)
 
     # ---------------- Runner integration ----------------
 
@@ -163,6 +179,7 @@ class SkillScannerApp(tk.Tk):
             self._set_status("paused (auto-poll off)")
 
     def _on_pipeline_started(self) -> None:
+        self.view_model.set_warnings(())
         self._set_status("extracting...")
 
     def _on_pipeline_progress(self, msg: str) -> None:
@@ -183,31 +200,35 @@ class SkillScannerApp(tk.Tk):
 
     def _append_rows(self, extracted_rows: Sequence[PipelineRow]):
         # extracted_rows expected: iterable of PipelineRow
-        start_idx = len(self.rows)
+        start_idx = len(self.view_model.rows)
         ts = time.strftime("%Y-%m-%d %H:%M:%S")
+        new_rows = []
         for row in extracted_rows:
             try:
                 fval = float(row.value)
             except Exception:
                 continue
-            self.rows.append(SkillRow(name=str(row.name), value=fval, added=ts))
+            new_rows.append(SkillRow(name=str(row.name), value=fval, added=ts))
 
-        end_idx = len(self.rows) - 1
+        if not new_rows:
+            return
+
+        end_idx = start_idx + len(new_rows) - 1
         self._last_added_indices = list(range(start_idx, end_idx + 1))
-
-        self._refresh_table()
+        self.view_model.set_warnings(())
+        self.view_model.append_rows(new_rows)
 
     def _refresh_table(self):
         self.tree.delete(*self.tree.get_children())
 
         last_set = set(self._last_added_indices[-HIGHLIGHT_LAST_N:]) if self._last_added_indices else set()
 
-        for i, r in enumerate(self.rows):
+        for i, r in enumerate(self.view_model.rows):
             tags = ("new",) if i in last_set else ()
             self.tree.insert("", "end", values=(r.name, f"{r.value:.2f}", r.added), tags=tags)
 
         # Scroll to bottom
-        if self.rows:
+        if self.view_model.rows:
             last = self.tree.get_children()[-1]
             self.tree.see(last)
 
@@ -232,14 +253,15 @@ class SkillScannerApp(tk.Tk):
             messagebox.showerror("Import failed", f"Unexpected error:\n{e}")
             return
 
-        self.rows = list(res.rows)
         self._last_added_indices = []  # don’t highlight imported rows as “new”
 
-        self._refresh_table()
-        self._set_status(f"loaded {len(self.rows)} skills from CSV")
+        self.view_model.set_rows(res.rows)
+        self.view_model.set_warnings(res.warnings)
+
+        self._set_status(f"loaded {len(self.view_model.rows)} skills from CSV")
 
     def _export_csv(self):
-        if not self.rows:
+        if not self.view_model.rows:
             messagebox.showinfo("Export CSV", "No rows to export yet.")
             return
 
@@ -253,7 +275,7 @@ class SkillScannerApp(tk.Tk):
 
         try:
             result = build_export(
-                self.rows,
+                self.view_model.rows,
                 app_config=self.app_cfg,
             )
             write_csv(result, Path(path))
@@ -264,12 +286,12 @@ class SkillScannerApp(tk.Tk):
             messagebox.showerror("Export CSV", f"Failed to export:\n{e}")
             return
 
-        messagebox.showinfo("Export CSV", f"Exported {len(self.rows)} rows with categories.")
+        messagebox.showinfo("Export CSV", f"Exported {len(self.view_model.rows)} rows with categories.")
 
     def _clear(self):
-        self.rows.clear()
+        self.view_model.set_rows([])
         self._last_added_indices = []
-        self._refresh_table()
+        self.view_model.set_warnings(())
         self._set_status("waiting for screenshot")
 
     def _refresh_professions(self):
@@ -278,12 +300,13 @@ class SkillScannerApp(tk.Tk):
         Non-strict so it never hard-fails mid-scan.
         """
         self.prof_tree.delete(*self.prof_tree.get_children())
+        warnings = list(self.view_model.warnings)
 
-        if not self.rows:
+        if not self.view_model.rows:
             return
 
         # Build skill->Decimal map from scanned rows
-        skills = {r.name: Decimal(str(r.value)) for r in self.rows}
+        skills = {r.name: Decimal(str(r.value)) for r in self.view_model.rows}
 
         try:
             weights = get_profession_weights(self.app_cfg.professions_weights_path)
@@ -295,6 +318,8 @@ class SkillScannerApp(tk.Tk):
         except Exception as e:
             # Show a single error row
             self.prof_tree.insert("", "end", values=("ERROR", "", str(e)), tags=("warn",))
+            warnings.append(f"profession computation failed: {e}")
+            self.view_model.set_warnings(warnings)
             return
 
         # Sort by value desc (best for debugging)
@@ -304,8 +329,10 @@ class SkillScannerApp(tk.Tk):
             flags = []
             if pv.missing_skills:
                 flags.append("MISSING_SKILLS")
+                warnings.append(f"{prof}: missing skills ({', '.join(pv.missing_skills)})")
             if pv.pct_sum != Decimal("100"):
                 flags.append(f"PCT_SUM={pv.pct_sum}")
+                warnings.append(f"{prof}: pct sum is {pv.pct_sum}")
 
             tag = ("warn",) if flags else ()
             self.prof_tree.insert(
@@ -314,6 +341,20 @@ class SkillScannerApp(tk.Tk):
                 values=(prof, format(pv.value, ".2f"), ";".join(flags)),
                 tags=tag,
             )
+
+        self.view_model.set_warnings(warnings)
+
+    # ---------------- View-model bindings ----------------
+
+    def _on_rows_changed(self, rows: Sequence[SkillRow]) -> None:
+        # Keep local cache for convenience
+        self._refresh_table()
+
+    def _on_status_changed(self, status: str) -> None:
+        self.status_var.set(f"Status: {status}")
+
+    def _on_warnings_changed(self, warnings: Sequence[str]) -> None:
+        self.warnings_var.set("; ".join(warnings))
 
 
 def main():
