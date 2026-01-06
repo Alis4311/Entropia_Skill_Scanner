@@ -3,7 +3,7 @@ from tkinter import ttk, filedialog, messagebox
 import time
 from pathlib import Path
 from decimal import Decimal
-from typing import Callable, Sequence
+from typing import Callable, Optional, Sequence, Union
 
 from entropia_skillscanner.core import PipelineRow, PipelineResult, SkillRow
 from entropia_skillscanner.runtime import PipelineRunner
@@ -21,7 +21,7 @@ PROF_PATH = Path("data/professions.json")
 
 
 class SkillScannerApp(tk.Tk):
-    def __init__(self, cfg=None, debug=False, runner_factory: Callable[..., PipelineRunner] | None = None):
+    def __init__(self, cfg=None, debug=False, runner_factory: Optional[Callable[..., PipelineRunner]] = None):
         super().__init__()
         self.title("Entropia Skill Scanner")
         self.geometry("840x620")
@@ -146,7 +146,7 @@ class SkillScannerApp(tk.Tk):
     def _default_runner_factory(self, **kwargs) -> PipelineRunner:
         return PipelineRunner(**kwargs)
 
-    def _dispatch(self, fn: Callable[[], None], delay_ms: int | None = None) -> None:
+    def _dispatch(self, fn: Callable[[], None], delay_ms: Optional[int] = None) -> None:
         if delay_ms is None:
             self.after_idle(fn)
         else:
@@ -163,7 +163,7 @@ class SkillScannerApp(tk.Tk):
     def _on_pipeline_progress(self, msg: str) -> None:
         self._set_status(msg)
 
-    def _on_pipeline_completed(self, result: PipelineResult | Exception) -> None:
+    def _on_pipeline_completed(self, result: Union[PipelineResult, Exception]) -> None:
         if isinstance(result, Exception):
             self._set_status(f"error (pipeline): {result}")
             return
