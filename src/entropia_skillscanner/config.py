@@ -5,7 +5,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, Mapping, Optional
 
-import tomllib
+try:  # Python <3.11 fallback
+    import tomllib  # type: ignore
+except ModuleNotFoundError:  # pragma: no cover - fallback path
+    import tomli as tomllib  # type: ignore
 
 from entropia_skillscanner.taxonomy import ExportSchema, SCHEMA_NEW, SCHEMA_OLD, validate_mappings
 

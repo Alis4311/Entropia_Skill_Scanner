@@ -5,6 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "entropia-skillscanner"
 version = "0.0.0"
+dependencies = [
+    "tomli; python_version<'3.11'",
+]
 
 [project.scripts]
 entropia-skillscanner = "entropia_skillscanner.cli:main"
