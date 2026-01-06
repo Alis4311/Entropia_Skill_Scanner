@@ -2,22 +2,12 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import time
 from pathlib import Path
-import hashlib
-import threading
-import queue
 from decimal import Decimal
-from typing import Sequence
-
-import numpy as np
-import cv2 as cv
-
-try:
-    from PIL import ImageGrab, Image
-except ImportError:
-    raise SystemExit("Missing dependency: pillow (pip install pillow)")
+from typing import Callable, Optional, Sequence
 
 from entropia_skillscanner.core import PipelineRow, PipelineResult, SkillRow
-from pipeline.run_pipeline import PipelineConfig, run_pipeline
+from entropia_skillscanner.runtime import PipelineRunner
+from pipeline.run_pipeline import PipelineConfig
 from entropia_skillscanner.exporter import ExportError, build_export, write_csv
 
 from pipeline.professions import compute_professions
@@ -26,13 +16,12 @@ from pipeline.profession_store import get_profession_weights
 from entropia_skillscanner.import_skills_csv import load_skill_rows_from_export_csv, ImportError
 
 
-POLL_MS = 400
 HIGHLIGHT_LAST_N = 12
 PROF_PATH = Path("data/professions.json")
 
 
 class SkillScannerApp(tk.Tk):
-    def __init__(self, cfg=None, debug=False):
+    def __init__(self, cfg=None, debug=False, runner_factory: Optional[Callable[..., PipelineRunner]] = None):
         super().__init__()
         self.title("Entropia Skill Scanner")
         self.geometry("840x620")
@@ -44,21 +33,23 @@ class SkillScannerApp(tk.Tk):
         self.rows = []
         self._last_added_indices = []
 
-        # Clipboard dedupe
-        self._last_clip_hash = None
-        self._last_clip_ts = 0
-
-        # Worker / async pipeline
-        self._worker_busy = False
-        self._pending_bgr = None          # latest-wins slot
-        self._results_q = queue.Queue()   # ("log"|"ok"|"err", payload)
-
         self._build_ui()
         self._set_status("waiting for screenshot")
 
+        # Runner
+        self.runner = (runner_factory or self._default_runner_factory)(
+            cfg=self.cfg,
+            debug=self.debug,
+            ui_dispatch=self._dispatch,
+            on_started=self._on_pipeline_started,
+            on_progress=self._on_pipeline_progress,
+            on_completed=self._on_pipeline_completed,
+        )
+        self.runner.set_auto_poll(self.auto_var.get())
+        self.runner.start_polling()
+
         # Start UI loops
-        self.after(POLL_MS, self._poll_clipboard)
-        self.after(50, self._drain_results_queue)
+        self.after(0, lambda: None)  # no-op to ensure Tk loop initialized
 
     # ---------------- UI ----------------
 
@@ -140,134 +131,48 @@ class SkillScannerApp(tk.Tk):
         ttk.Button(bot, text="Clear", command=self._clear).pack(side="left", padx=(8, 0))
 
         self.auto_var = tk.BooleanVar(value=True)
-        ttk.Checkbutton(bot, text="Auto-poll clipboard", variable=self.auto_var).pack(side="right")
+        ttk.Checkbutton(
+            bot,
+            text="Auto-poll clipboard",
+            variable=self.auto_var,
+            command=self._on_toggle_auto_poll,
+        ).pack(side="right")
 
     def _set_status(self, s: str):
         self.status_var.set(f"Status: {s}")
 
-    # ---------------- Clipboard polling ----------------
+    # ---------------- Runner integration ----------------
 
-    def _poll_clipboard(self):
-        try:
-            if self.auto_var.get():
-                img = ImageGrab.grabclipboard()
-                pil_img = self._normalize_clipboard_image(img)
-                if pil_img is not None:
-                    clip_hash = self._hash_pil(pil_img)
+    def _default_runner_factory(self, **kwargs) -> PipelineRunner:
+        return PipelineRunner(**kwargs)
 
-                    # debounce + dedupe
-                    now = time.time()
-                    if clip_hash != self._last_clip_hash and (now - self._last_clip_ts) > 0.2:
-                        self._last_clip_hash = clip_hash
-                        self._last_clip_ts = now
-                        self._handle_screenshot(pil_img)
-            else:
-                self._set_status("paused (auto-poll off)")
-        except Exception as e:
-            self._set_status(f"error (clipboard): {e}")
+    def _dispatch(self, fn: Callable[[], None], delay_ms: int | None = None) -> None:
+        if delay_ms is None:
+            self.after_idle(fn)
+        else:
+            self.after(delay_ms, fn)
 
-        self.after(POLL_MS, self._poll_clipboard)
+    def _on_toggle_auto_poll(self) -> None:
+        self.runner.set_auto_poll(self.auto_var.get())
+        if not self.auto_var.get():
+            self._set_status("paused (auto-poll off)")
 
-    @staticmethod
-    def _normalize_clipboard_image(obj):
-        # ImageGrab.grabclipboard() may return:
-        # - PIL.Image.Image
-        # - list of filenames
-        # - None
-        if obj is None:
-            return None
-        if isinstance(obj, Image.Image):
-            return obj.convert("RGB")
-        # If it's a list of file paths, ignore for now (you can extend later)
-        return None
-
-    @staticmethod
-    def _hash_pil(pil_img: "Image.Image") -> str:
-        """
-        Faster than hashing full-res: downscale + grayscale.
-        Still good enough for dedupe.
-        """
-        small = pil_img.convert("L").resize((320, 180))
-        return hashlib.sha1(small.tobytes()).hexdigest()
-
-    # ---------------- Pipeline integration (async) ----------------
-
-    def _handle_screenshot(self, pil_img: "Image.Image"):
-        rgb = np.array(pil_img)
-        bgr = cv.cvtColor(rgb, cv.COLOR_RGB2BGR)
-        self._enqueue_screenshot_for_processing(bgr)
-
-    def _enqueue_screenshot_for_processing(self, bgr: np.ndarray):
-        """
-        Latest-wins: if worker is busy, overwrite pending with newest.
-        If idle, start immediately.
-        """
-        if self._worker_busy:
-            self._pending_bgr = bgr
-            self._set_status("queued (new screenshot)")
-            return
-
-        self._worker_busy = True
-        self._pending_bgr = None
+    def _on_pipeline_started(self) -> None:
         self._set_status("extracting...")
 
-        threading.Thread(target=self._worker_run_pipeline, args=(bgr,), daemon=True).start()
+    def _on_pipeline_progress(self, msg: str) -> None:
+        self._set_status(msg)
 
-    def _worker_run_pipeline(self, bgr: np.ndarray):
-        """
-        Runs on background thread. Never touches Tk directly.
-        """
-        def worker_logger(msg: str):
-            # send status updates to UI thread
-            self._results_q.put(("log", msg))
+    def _on_pipeline_completed(self, result: PipelineResult | Exception) -> None:
+        if isinstance(result, Exception):
+            self._set_status(f"error (pipeline): {result}")
+            return
 
-        try:
-            result = run_pipeline(
-                self.cfg,
-                bgr,
-                debug=self.debug,
-                debug_dir=None,
-                logger=worker_logger,
-            )
-            self._results_q.put(("ok", result))
-        except Exception as e:
-            self._results_q.put(("err", str(e)))
-
-    def _drain_results_queue(self):
-        """
-        Runs on Tk thread. Applies logs/results and kicks next pending job if any.
-        """
-        try:
-            while True:
-                kind, payload = self._results_q.get_nowait()
-
-                if kind == "log":
-                    self._set_status(str(payload))
-
-                elif kind == "err":
-                    self._worker_busy = False
-                    self._set_status(f"error (pipeline): {payload}")
-
-                elif kind == "ok":
-                    result: PipelineResult = payload
-                    self._worker_busy = False
-
-                    if result.rows:
-                        self._append_rows(result.rows)
-                        self._set_status(result.status or f"done (+{len(result.rows)} rows)")
-                    else:
-                        self._set_status(result.status or "done (no rows)")
-
-                # After any terminal event, if we have a pending screenshot, run it next.
-                if (not self._worker_busy) and (self._pending_bgr is not None):
-                    next_bgr = self._pending_bgr
-                    self._pending_bgr = None
-                    self._enqueue_screenshot_for_processing(next_bgr)
-
-        except queue.Empty:
-            pass
-
-        self.after(50, self._drain_results_queue)
+        if result.rows:
+            self._append_rows(result.rows)
+            self._set_status(result.status or f"done (+{len(result.rows)} rows)")
+        else:
+            self._set_status(result.status or "done (no rows)")
 
     # ---------------- Data / Table rendering ----------------
 
