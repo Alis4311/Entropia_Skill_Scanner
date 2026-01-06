@@ -10,7 +10,8 @@ import cv2 as cv
 import numpy as np
 
 from entropia_skillscanner.core import PipelineResult
-from pipeline.run_pipeline import PipelineConfig, run_pipeline
+from entropia_skillscanner.runtime import run_pipeline_sync
+from pipeline.run_pipeline import PipelineConfig
 
 
 def _iter_inputs(paths: List[Path], exts={".png", ".jpg", ".jpeg", ".bmp", ".webp"}) -> List[Path]:
@@ -59,7 +60,7 @@ def main(argv: List[str] | None = None) -> int:
 
         try:
             bgr = _load_bgr(img_path)
-            result = run_pipeline(
+            result = run_pipeline_sync(
                 cfg,
                 bgr,
                 debug_dir=debug_dir,
@@ -68,7 +69,7 @@ def main(argv: List[str] | None = None) -> int:
         except Exception as e:
             result = PipelineResult(rows=[], status=f"error:exception:{e}", ok=False)
 
-        ok = result.ok
+        ok = _status_ok(result)
         status = result.status
 
         if args.fail_on_empty and not result.rows:
@@ -101,6 +102,14 @@ def main(argv: List[str] | None = None) -> int:
                 print(f"{r['input']},{r['status']},{name},{val}")
 
     return 0 if overall_ok else 1
+
+
+def _status_ok(result: PipelineResult) -> bool:
+    if not result.ok:
+        return False
+    if result.status and result.status.lower().startswith("error"):
+        return False
+    return True
 
 
 if __name__ == "__main__":
