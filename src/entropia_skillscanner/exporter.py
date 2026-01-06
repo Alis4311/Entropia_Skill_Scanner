@@ -2,11 +2,11 @@
 from __future__ import annotations
 
 import csv
-import json
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
-from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
+from typing import Callable, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
+from dataclasses import dataclass
 from entropia_skillscanner.core import (
     ExportProfession,
     ExportResult,
@@ -15,11 +15,10 @@ from entropia_skillscanner.core import (
     SkillRow,
 )
 from .taxonomy import ExportSchema, SCHEMA_OLD, validate_mappings, get_category, all_categories
-
-# Professions live in pipeline (derived)
-from pipeline.professions import (
+from entropia_skillscanner.professions import (
     ProfessionValue,
     compute_professions,
+    load_profession_categories,
     load_profession_weights,
 )
 
@@ -112,26 +111,19 @@ def _category_totals(
     return ordered
 
 
-def _load_profession_category_map(path: Path) -> Dict[str, str]:
-    """
-    data/professions_list.json: list of objects like:
-      {"activityName": "...", "category": "...", ...}
+@dataclass(frozen=True)
+class ProfessionServices:
+    load_weights: Callable[[Path], Mapping[str, List[Dict[str, object]]]]
+    load_categories: Callable[[Path], Mapping[str, str]]
+    compute: Callable[..., Dict[str, ProfessionValue]]
 
-    Returns: activityName -> category
-    """
-    raw = json.loads(Path(path).read_text(encoding="utf-8"))
-    if not isinstance(raw, list):
-        raise ExportError("professions_list.json must be a JSON list")
-
-    out: Dict[str, str] = {}
-    for item in raw:
-        if not isinstance(item, dict):
-            continue
-        name = item.get("activityName")
-        cat = item.get("category")
-        if isinstance(name, str) and name.strip() and isinstance(cat, str) and cat.strip():
-            out[name.strip()] = cat.strip()
-    return out
+    @classmethod
+    def default(cls) -> "ProfessionServices":
+        return cls(
+            load_weights=load_profession_weights,
+            load_categories=load_profession_categories,
+            compute=compute_professions,
+        )
 
 
 def _build_professions(
@@ -141,9 +133,10 @@ def _build_professions(
     professions_list_path: Path,
     strict: bool,
     unknown_bucket: str = "Miscellaneous",
+    services: ProfessionServices,
 ) -> Tuple[List[ExportProfession], Tuple[str, ...]]:
     """
-    Compute profession values from skills using pipeline.professions.
+    Compute profession values from skills.
     Category comes from professions_list.json (activityName->category).
     """
     warnings: List[str] = []
@@ -151,10 +144,10 @@ def _build_professions(
     # Skill -> Decimal (full precision from SkillRow.value stringified)
     skills_map: Dict[str, Decimal] = {r.name: _to_decimal_value(r.value) for r in rows}
 
-    weights = load_profession_weights(professions_weights_path)
-    cat_map = _load_profession_category_map(professions_list_path)
+    weights = services.load_weights(professions_weights_path)
+    cat_map = services.load_categories(professions_list_path)
 
-    prof_vals: Dict[str, ProfessionValue] = compute_professions(
+    prof_vals: Dict[str, ProfessionValue] = services.compute(
         skills=skills_map,
         profession_weights=weights,
         strict=strict,
@@ -192,6 +185,7 @@ def build_export(
     professions_weights_path: Path = Path("data/professions.json"),
     professions_list_path: Path = Path("data/professions_list.json"),
     professions_strict: bool = False,
+    profession_services: Optional[ProfessionServices] = None,
 ) -> ExportResult:
     if not rows:
         raise ExportError("no rows to export")
@@ -217,11 +211,13 @@ def build_export(
     professions: List[ExportProfession] = []
     warnings_prof: Tuple[str, ...] = ()
     if include_professions:
+        services = profession_services or ProfessionServices.default()
         professions, warnings_prof = _build_professions(
             rows,
             professions_weights_path=professions_weights_path,
             professions_list_path=professions_list_path,
             strict=professions_strict,
+            services=services,
         )
 
     warnings = tuple(sorted(set(warnings_sk) | set(warnings_prof)))

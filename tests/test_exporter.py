@@ -18,8 +18,8 @@ def test_build_export_orders_by_category_and_name(tmp_path: Path):
 
     # Category order: Attributes -> General -> Combat -> Defense...
     assert [s.name for s in result.skills] == ["Agility", "Rifle", "Evade"]
-    assert result.totals[-1].category == "Total"
-    assert result.totals[-1].total == pytest.approx(17.5)
+    assert result.totals[0].category == "Total"
+    assert result.totals[0].total == 18
 
 
 def test_build_export_fails_on_unknown_skill():

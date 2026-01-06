@@ -1,24 +1,20 @@
-# pipeline/professions.py
-from __future__ import annotations
-
-from pathlib import Path
-
-from entropia_skillscanner.professions import (
+from .compute import (
     ATTRIBUTE_FACTOR,
     ProfessionValue,
     ProfessionWeights,
     compute_professions,
-    load_profession_weights,
     q2,
     validate_profession_weights,
 )
+from .loader import load_profession_categories, load_profession_weights
 
 __all__ = [
     "ATTRIBUTE_FACTOR",
     "ProfessionValue",
     "ProfessionWeights",
     "compute_professions",
-    "load_profession_weights",
-    "validate_profession_weights",
     "q2",
+    "validate_profession_weights",
+    "load_profession_categories",
+    "load_profession_weights",
 ]
