@@ -16,6 +16,7 @@ from entropia_skillscanner.exporter import (
     build_export,
 )
 from entropia_skillscanner.runtime import run_pipeline_sync
+from entropia_skillscanner.skill_dedupe import dedupe_skill_rows
 
 Pathish = Union[str, Path]
 
@@ -162,7 +163,7 @@ def scans_to_skill_rows(results: Iterable[ScanResult], *, added_label: Optional[
             except Exception:
                 continue
             out.append(SkillRow(name=row.name, value=value, added=added))
-    return out
+    return dedupe_skill_rows(out)
 
 
 def export_scan_results(
@@ -191,4 +192,3 @@ def export_scan_results(
         professions_strict=professions_strict,
         profession_services=profession_services,
     )
-

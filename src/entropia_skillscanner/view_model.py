@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from typing import Callable, Dict, List, Literal, Sequence, Tuple
+from typing import Callable, Dict, Iterable, List, Literal, Sequence, Tuple
 
 from entropia_skillscanner.core import SkillRow
+from entropia_skillscanner.skill_dedupe import merge_skill_rows
 
 
 FieldName = Literal["rows", "status", "warnings"]
@@ -57,14 +58,14 @@ class SkillScannerViewModel:
         self.status = status
         self._notify("status")
 
-    def set_rows(self, rows: Sequence[SkillRow]) -> None:
-        self.rows = list(rows)
+    def set_rows(self, rows: Iterable[SkillRow]) -> None:
+        self.rows = merge_skill_rows([], rows)
         self._notify("rows")
 
-    def append_rows(self, new_rows: Sequence[SkillRow]) -> None:
+    def append_rows(self, new_rows: Iterable[SkillRow]) -> None:
         if not new_rows:
             return
-        self.rows = [*self.rows, *new_rows]
+        self.rows = merge_skill_rows(self.rows, new_rows)
         self._notify("rows")
 
     def set_warnings(self, warnings: Sequence[str]) -> None:
