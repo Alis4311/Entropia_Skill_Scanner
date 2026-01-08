@@ -121,6 +121,7 @@ class AppConfig:
     pipeline_min_table_density: float = _DEFAULT_MIN_TABLE_DENSITY
     debug_pipeline: bool = False
     debug_dir: Optional[Path] = None
+    enable_sfx: bool = True
 
     @property
     def export_schema(self) -> ExportSchema:
@@ -157,6 +158,9 @@ class AppConfig:
 
         for idx, msg in enumerate(validate_mappings(strict=False)):
             issues[f"taxonomy_{idx}"] = msg
+
+        if not isinstance(self.enable_sfx, bool):
+            issues["enable_sfx"] = "enable_sfx must be a bool"
 
         if strict and issues:
             details = "\n- ".join(f"{k}: {v}" for k, v in issues.items())

@@ -11,7 +11,7 @@ from entropia_skillscanner.core import PipelineRow, PipelineResult, SkillRow
 from entropia_skillscanner.exporter import ExportError, build_export, write_csv
 from entropia_skillscanner.runtime import PipelineRunner
 from entropia_skillscanner.view_model import SkillScannerViewModel
-
+from entropia_skillscanner.audio_feedback import AudioFeedback, AudioFeedbackConfig
 from pipeline.professions import compute_professions
 from pipeline.profession_store import get_profession_weights
 
@@ -61,7 +61,10 @@ class SkillScannerApp(tk.Tk):
         ]
 
         self.view_model.set_status("waiting for screenshot")
-
+        self.audio = AudioFeedback(AudioFeedbackConfig(
+            enabled=getattr(self.app_cfg, "enable_sfx", True),
+            start_min_interval_s=0.6,
+        ))
         # Runner
         self.runner = (runner_factory or self._default_runner_factory)(
             cfg=self.pipeline_cfg,
@@ -73,7 +76,7 @@ class SkillScannerApp(tk.Tk):
         )
         self.runner.set_auto_poll(self.auto_var.get())
         self.runner.start_polling()
-
+    
         # Start UI loops
         self.after(0, lambda: None)  # no-op to ensure Tk loop initialized
 
@@ -194,6 +197,7 @@ class SkillScannerApp(tk.Tk):
 
     def _on_pipeline_started(self) -> None:
         self.view_model.set_warnings(())
+        self.audio.play_start()    
         self._set_status("extracting...")
 
     def _on_pipeline_progress(self, msg: str) -> None:
@@ -201,14 +205,28 @@ class SkillScannerApp(tk.Tk):
 
     def _on_pipeline_completed(self, result: Union[PipelineResult, Exception]) -> None:
         if isinstance(result, Exception):
+            self.audio.play_error()
             self._set_status(f"error (pipeline): {result}")
             return
+
+        if result.warnings:
+            self.view_model.set_warnings(list(result.warnings))
+        else:
+            self.view_model.set_warnings(())
 
         if result.rows:
             self._append_rows(result.rows)
             self._set_status(result.status or f"done (+{len(result.rows)} rows)")
         else:
             self._set_status(result.status or "done (no rows)")
+
+        # Only pipeline quality drives sound
+        if (not result.ok) or result.warnings:
+            self.audio.play_warn()
+        else:
+            self.audio.play_success()
+
+
 
     # ---------------- Data / Table rendering ----------------
 
@@ -229,7 +247,7 @@ class SkillScannerApp(tk.Tk):
 
         end_idx = start_idx + len(new_rows) - 1
         self._last_added_indices = list(range(start_idx, end_idx + 1))
-        self.view_model.set_warnings(())
+        #self.view_model.set_warnings(())
         self.view_model.append_rows(new_rows)
 
     def _refresh_table(self):

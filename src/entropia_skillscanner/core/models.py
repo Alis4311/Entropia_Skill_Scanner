@@ -25,10 +25,10 @@ class PipelineRow:
 @dataclass(frozen=True)
 class PipelineResult:
     """Return type for run_pipeline."""
-
     rows: List[PipelineRow]
     status: str
     ok: bool
+    warnings: Tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
