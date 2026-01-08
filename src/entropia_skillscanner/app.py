@@ -17,6 +17,10 @@ from pipeline.profession_store import get_profession_weights
 
 from entropia_skillscanner.import_skills_csv import load_skill_rows_from_export_csv, ImportError
 
+##for bundling:
+import pytesseract
+from entropia_skillscanner.resources import resource_path, is_frozen
+import os
 
 HIGHLIGHT_LAST_N = 12
 
@@ -33,9 +37,19 @@ class SkillScannerApp(tk.Tk):
         self.geometry("840x620")
 
         self.app_cfg = app_cfg or load_app_config()
-        self.app_cfg.validate()
-        self.pipeline_cfg = self.app_cfg.pipeline_config
 
+        try:
+            self.app_cfg.validate()
+        except Exception as e: 
+            messagebox.showerror("Configuration error: ", str(e))
+        self.pipeline_cfg = self.app_cfg.pipeline_config
+        if is_frozen():
+            pytesseract.pytesseract.tesseract_cmd = str(
+                resource_path("tesseract/tesseract.exe")
+            )
+            os.environ["TESSDATA_PREFIX"] = str(
+                resource_path("tesseract/tessdata")
+            )
         self.view_model = SkillScannerViewModel()
         self._last_added_indices = []
 

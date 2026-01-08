@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from itertools import product
 from pathlib import Path
 from typing import Dict, List, Tuple
-
+from entropia_skillscanner.resources import resource_path
 from rapidfuzz import fuzz, process
 
 
@@ -21,7 +21,6 @@ class Vocab:
     canon: List[str]              # canonical names
     norm: List[str]               # normalized names (unique, same order)
     norm_to_canon: Dict[str, str] # mapping normalized -> canonical
-
 
 def load_vocab(path: Path) -> Vocab:
     lines = path.read_text(encoding="utf-8").splitlines()
@@ -141,5 +140,5 @@ def snap_name(raw_ocr: str, vocab: Vocab) -> tuple[str, int]:
     return ("", best_score)
 
 
-VOCAB_PATH = Path(__file__).with_name("skills_vocab.txt")
+VOCAB_PATH = resource_path("src/pipeline/skills_vocab.txt")
 VOCAB = load_vocab(VOCAB_PATH)

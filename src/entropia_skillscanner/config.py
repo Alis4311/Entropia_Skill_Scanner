@@ -91,13 +91,22 @@ def _merge_top(base: Mapping[str, Any], override: Mapping[str, Any]) -> Dict[str
 
 
 def _resolve_path(project_root: Path, candidate: Optional[object], default: Path) -> Path:
-    if candidate is None:
-        path = default
-    else:
-        path = Path(str(candidate))
-    if not path.is_absolute():
-        path = project_root / path
-    return path
+    from entropia_skillscanner.resources import resource_path, is_frozen, ensure_user_data_file  # local import avoids cycles
+
+    path = default if candidate is None else Path(str(candidate))
+
+    if path.is_absolute():
+        return path
+
+    # Frozen: treat relative paths under "data/" as user data (writable).
+    if is_frozen():
+        rel = path.as_posix().replace("\\", "/")
+        if rel.startswith("data/"):
+            return ensure_user_data_file(rel)
+        return resource_path(rel)
+    return (project_root / path).resolve()
+
+
 
 
 @dataclass(frozen=True)
@@ -140,7 +149,6 @@ class AppConfig:
             issues["schema"] = str(e)
 
         for label, path in (
-            ("data_dir", self.data_dir),
             ("professions_weights_path", self.professions_weights_path),
             ("professions_list_path", self.professions_list_path),
         ):
