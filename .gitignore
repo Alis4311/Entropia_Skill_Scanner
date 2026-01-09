@@ -1,16 +1,17 @@
+# virtual envs
+.venv/
+.venv_build/
+venv/
 __pycache__/
 *.pyc
-.venv/
-venv/
-.env
-.DS_Store
-*.log
-out*/
-debug*/
-dist/
-build/
-*.egg-info/
-.data/
-.out_points_test/
-.out_test_one/
-skills.csv
+
+# local data / debug
+data/screenshots/
+src/entropia_skillscanner/ocr_debug.py
+*.csv
+
+# third party local drops (if you don't want it versioned)
+third_party/
+
+#egg
+entropia_skillscanner.egg-info/
