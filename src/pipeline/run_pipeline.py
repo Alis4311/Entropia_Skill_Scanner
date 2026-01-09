@@ -39,17 +39,8 @@ def run_pipeline(
     debug_dir: Union[str, Path, None] = None,
     logger: Optional[Callable[[str], None]] = None,
 ) -> PipelineResult:
-    """
-    Fast pipeline:
-      - window detect (normalize)
-      - fixed table crop + validate
-      - fixed row slicing
-      - per-row column split
-      - batched OCR for skill names
-      - batched OCR for integer points
-      - per-row decimal-from-bar
-    """
     out: List[PipelineRow] = []
+    warnings: List[str] = []
 
     dbg_root = Path(debug_dir) if (debug and debug_dir is not None) else None
     if dbg_root:
@@ -72,9 +63,9 @@ def run_pipeline(
     try:
         win_res.require_ok()
     except PipelineStageError as e:
-        return PipelineResult(rows=[], status=e.status, ok=False)
+        return PipelineResult(rows=[], status=e.status, ok=False, warnings=())
 
-    norm_bgr = win_res.norm_bgr  # type: ignore[assignment]
+    norm_bgr = win_res.norm_bgr  
 
     # ---- 2) Table ROI ----
     log("detecting table")
@@ -89,9 +80,9 @@ def run_pipeline(
     try:
         table_res.require_ok()
     except PipelineStageError as e:
-        return PipelineResult(rows=[], status=e.status, ok=False)
+        return PipelineResult(rows=[], status=e.status, ok=False, warnings=())
 
-    table_bgr = table_res.table_bgr  # type: ignore[assignment]
+    table_bgr = table_res.table_bgr  
 
     # ---- 3) Rows ----
     log("extracting rows")
@@ -105,7 +96,7 @@ def run_pipeline(
     try:
         rows_res.require_ok()
     except PipelineStageError as e:
-        return PipelineResult(rows=[], status=e.status, ok=False)
+        return PipelineResult(rows=[], status=e.status, ok=False, warnings=())
     row_images = rows_res.row_images
 
     # ---- 4) Columns per row (collect crops) ----
@@ -117,7 +108,6 @@ def run_pipeline(
     points_rois: List[np.ndarray] = []
 
     for i, row_bgr in enumerate(row_images):
-        # Put all row debug artifacts under 04_cols/row_XX like before
         row_dbg = (cols_dbg / f"row_{i:02d}") if cols_dbg else None
         cols = extract_columns_from_row(
             row_bgr,
@@ -131,6 +121,9 @@ def run_pipeline(
     # ---- 5) Batched skill-name OCR ----
     log("batched: skill names")
     skill_names = extract_skill_names_batched(name_crops)
+    mismatch_count = sum(1 for s in skill_names if isinstance(s, str) and s.startswith("MISMATCH:"))
+    if mismatch_count:
+        warnings.append(f"skill name mismatches: {mismatch_count}")
 
     # ---- 6) Batched integer OCR ----
     log("batched: points int")
@@ -158,26 +151,34 @@ def run_pipeline(
             "missing OCR rows",
             context=f"results={len(int_batch.points.results)}, expected={len(row_images)}",
         )
-        return PipelineResult(rows=[], status=e.status, ok=False)
+        return PipelineResult(rows=[], status=e.status, ok=False, warnings=())
 
     if int_batch.points.ok_count == 0:
         e = PipelineStageError("ocr-int-batch", int_batch.points.reason, context=int_batch.failure_context)
-        return PipelineResult(rows=[], status=e.status, ok=False)
+        return PipelineResult(rows=[], status=e.status, ok=False, warnings=())
+
     if int_batch.points.ok_count < len(row_images):
         partial_int_status = f", int ok {int_batch.points.ok_count}/{len(row_images)}"
+        warnings.append(f"integer OCR partial: {int_batch.points.ok_count}/{len(row_images)}")
+
+    skipped_int = 0
+    missing_dec = 0
 
     for i, cols in enumerate(cols_list):
         int_res = int_batch.points.results[i]
         if int_res.value is None:
             log(f"row {i}: int failed ({int_res.reason})")
+            skipped_int += 1
             continue
 
-        # keep decimal extraction per-row (already fast in your profile)
         row_dec_dbg = (dec_dbg / f"row_{i:02d}") if dec_dbg else None
         dec_res = parse_points_decimal_from_bar(
             cols.points_bgr,
             debug_dir=row_dec_dbg,
         )
+
+        if getattr(dec_res, "decimal", None) is None:
+            missing_dec += 1
 
         dec_val = dec_res.decimal if dec_res.decimal is not None else 0.0
         value = float(int_res.value + dec_val)
@@ -185,4 +186,10 @@ def run_pipeline(
         name = skill_names[i] if i < len(skill_names) else ""
         out.append(PipelineRow(name=name, value=f"{value:.2f}"))
 
-    return PipelineResult(rows=out, status=f"done (+{len(out)} rows{partial_int_status})", ok=True)
+    if skipped_int:
+        warnings.append(f"rows skipped (int OCR failed): {skipped_int}")
+    if missing_dec:
+        warnings.append(f"rows with missing decimal (assumed .00): {missing_dec}")
+
+    status = f"done (+{len(out)} rows{partial_int_status})"
+    return PipelineResult(rows=out, status=status, ok=True, warnings=tuple(warnings))

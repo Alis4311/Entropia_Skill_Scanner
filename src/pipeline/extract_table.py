@@ -33,7 +33,7 @@ def extract_table(
     min_density: float = 0.010,
 ) -> FixedTableResult:
     """
-    Normalized skills window -> fixed table bbox + cropped ROI + quick validation (no OCR).
+    Normalized skills window -> fixed table bbox + cropped ROI + quick validation.
     """
     bbox = _fixed_table_bbox(norm_bgr)
     table = _crop_bbox(norm_bgr, bbox)
@@ -102,7 +102,7 @@ def _crop_bbox(img: np.ndarray, bbox: BBox) -> Optional[np.ndarray]:
 
 def _validate_table_roi(table_bgr: np.ndarray, *, min_density: float) -> Tuple[bool, float, str, Optional[np.ndarray]]:
     """
-    Quick structural validation (no OCR):
+    Quick structural validation:
     - In the right half of the table ROI, we should see horizontal-line evidence (bars/rows).
     Returns (valid, density, reason, horiz_mask).
     """

@@ -78,7 +78,7 @@ class SkillScannerApp(tk.Tk):
         self.runner.start_polling()
     
         # Start UI loops
-        self.after(0, lambda: None)  # no-op to ensure Tk loop initialized
+        self.after(0, lambda: None)  # no-op to ensure Tk loop initialized, apparently this is standard? 
 
     # ---------------- UI ----------------
 
@@ -158,7 +158,7 @@ class SkillScannerApp(tk.Tk):
         prof_tab.grid_rowconfigure(0, weight=1)
         prof_tab.grid_columnconfigure(0, weight=1)
 
-        self.prof_tree.tag_configure("warn", background="#fff6e5")  # light warning highlight
+        self.prof_tree.tag_configure("warn", background="#fff6e5") 
 
         # Bottom controls
         bot = ttk.Frame(self, padding=(10, 6, 10, 10))
@@ -348,13 +348,12 @@ class SkillScannerApp(tk.Tk):
                 strict=False,
             )
         except Exception as e:
-            # Show a single error row
+            
             self.prof_tree.insert("", "end", values=("ERROR", "", str(e)), tags=("warn",))
             warnings.append(f"profession computation failed: {e}")
             self.view_model.set_warnings(warnings)
             return
 
-        # Sort by value desc (best for debugging)
         items = sorted(prof_vals.items(), key=lambda kv: kv[1].value, reverse=True)
 
         for prof, pv in items:
@@ -379,7 +378,7 @@ class SkillScannerApp(tk.Tk):
     # ---------------- View-model bindings ----------------
 
     def _on_rows_changed(self, rows: Sequence[SkillRow]) -> None:
-        # Keep local cache for convenience
+        
         self._refresh_table()
 
     def _on_status_changed(self, status: str) -> None:

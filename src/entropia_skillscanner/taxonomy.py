@@ -264,7 +264,7 @@ SCHEMA_OLD = ExportSchema(
         "Information",
         "Mining",
         "Construction",
-        "Tailoring",   # OLD label for canonical "Design"
+        "Tailoring",   # OLD label "Design"
         "Mindforce",
         "Beauty",
         "Social",
@@ -331,7 +331,7 @@ def get_category_new(skill: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Validation (recommended to run at startup / export time)
+# Validation 
 # ---------------------------------------------------------------------------
 
 def validate_mappings(*, strict: bool = True) -> List[str]:
@@ -339,7 +339,7 @@ def validate_mappings(*, strict: bool = True) -> List[str]:
     Validate that:
       - canonical categories used by SKILL_TO_CATEGORY are known
       - schemas can represent all canonical categories used
-    Returns a list of human-readable issues. If strict=True and issues exist, raises ValueError.
+    Returns a list of issues. If strict=True and issues exist, raises ValueError.
     """
     issues: List[str] = []
 

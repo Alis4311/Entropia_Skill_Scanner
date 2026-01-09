@@ -26,11 +26,10 @@ def parse_points_value(
     points_bgr: np.ndarray,
     *,
     # int OCR options
-    upscale: int = 3,
+    upscale: int = 3, # next Test switching to 2 to see if faster on exe-run. 
     blur: bool = True,
     psm: int = 7,
     top_band_frac: float = 0.55,
-    # decimal options
     debug_dir: Union[str, Path, None] = None,
 ) -> PointsValueResult:
     """

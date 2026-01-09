@@ -17,7 +17,7 @@ class PointsDecimalResult:
 
 
 # -----------------------------
-# Fixed bar slice inside points_bgr (tune these once)
+# Fixed bar slice inside points_bgr CALIBRATED
 # -----------------------------
 BAR_X1_OFF_PX = 12
 BAR_X2_OFF_PX = 15
@@ -29,11 +29,11 @@ BAR_HEIGHT_PX = 7
 # -----------------------------
 # Teal detection (HSV)
 # -----------------------------
-# These are intentionally conservative. Adjust H/S/V only if debug proves needed.
+# Decently CALIBRATED. More if necessary
 HSV_TEAL_LOWER = (70, 70, 40)
 HSV_TEAL_UPPER = (105, 255, 255)
 
-# Small cleanup (bar is only 7px tall, so keep kernels small)
+# Small cleanup, small kernels
 MORPH_OPEN_K = (3, 3)
 MORPH_CLOSE_K = (3, 3)
 
@@ -42,13 +42,16 @@ MORPH_CLOSE_K = (3, 3)
 # Robust fill logic tuned for ~147x7 crops
 # -----------------------------
 # A column counts as "teal" if >= this many pixels are teal in that column.
-# For a 7px tall crop, 2 pixels is a good "real signal vs speckle" threshold.
+# For our intents and purposes, most, if not all columns should be considered teal 
+# but 2 seems to work just fine. 
 COL_TEAL_MIN_PX = 2
 
 # Left anchor: require at least one teal column in the first N columns to consider non-empty.
+
 LEFT_PROBE_PX = 10  # ~7% of 147
 
 # Full bar: if >= this fraction of columns are teal, treat as full.
+# Mismatched on "full" bars so added this
 FULL_COL_FRAC = 0.99
 
 # If teal exists but is not left-anchored, we treat it as noise/ambiguous.
@@ -56,6 +59,7 @@ FULL_COL_FRAC = 0.99
 LEFT_START_TOL_PX = 3
 
 # Noise check: if we have teal but it’s extremely fragmented (many tiny CCs), fail.
+# NOTE: if max cc is higher than 6, likely miscrop and hitting near top or bottom. 
 MAX_CC_COUNT = 6
 MIN_LARGEST_CC_PX = 25  # with 147x7, real fills create a CC bigger than this
 

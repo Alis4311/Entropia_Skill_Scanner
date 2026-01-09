@@ -60,7 +60,7 @@ _OCR_SUBS: Dict[str, Tuple[str, ...]] = {
 def _ocr_variants(q: str, *, max_variants: int = 64) -> List[str]:
     """
     Generate a bounded set of variants for common OCR confusions.
-    Keeps runtime bounded (important when called per row).
+    Keeps runtime bounded.
     """
     choices = [_OCR_SUBS.get(ch, (ch,)) for ch in q]
 
@@ -84,11 +84,10 @@ def snap_name(raw_ocr: str, vocab: Vocab) -> tuple[str, int]:
     """
     Snap an OCR string to the nearest canonical skill name.
 
-    Strategy:
     - Normalize query
     - Restrict candidate pool by length (reduces false positives, helps margins)
     - Try original query + bounded OCR-variants (i<->l, l<->t) and keep best score
-    - Apply strict thresholds (same as before) so we don't over-snap
+    - Apply strict thresholds so we don't over-snap
     """
     q = _norm(raw_ocr)
     if len(q) < 2 or not vocab.norm:
@@ -99,7 +98,6 @@ def snap_name(raw_ocr: str, vocab: Vocab) -> tuple[str, int]:
     pool = [n for n in vocab.norm if abs(len(n) - len(q)) <= 1] or vocab.norm
 
     # For very short queries, restrict to exact-length when possible
-    # (prevents "alm" from drifting into longer strings).
     if len(q) <= 4:
         exact = [n for n in pool if len(n) == len(q)]
         if exact:
@@ -128,7 +126,6 @@ def snap_name(raw_ocr: str, vocab: Vocab) -> tuple[str, int]:
     if not best_norm or best_score < 0:
         return ("", 0)
 
-    # Margin check using the ORIGINAL query (stable behavior vs your logs)
     matches2 = process.extract(q, pool, scorer=fuzz.ratio, limit=2)
     second_score = int(matches2[1][1]) if matches2 and len(matches2) > 1 else 0
 

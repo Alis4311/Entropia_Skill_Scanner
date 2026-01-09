@@ -223,8 +223,6 @@ def parse_points_int(
 ) -> PointsIntResult:
     """
     Parse INTEGER part from points_roi (no decimals yet).
-
-    Key trick: OCR only the top band to avoid the horizontal bar dominating thresholded image.
     """
     if points_bgr is None or points_bgr.size == 0:
         return PointsIntResult(None, "", 0.0, "empty input")
@@ -247,17 +245,15 @@ def parse_points_int(
     if blur:
         gray = cv2.GaussianBlur(gray, (3, 3), 0)
 
-    # Otsu binarization
     _, bw = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-    # Tesseract generally likes black text on white background
     if float(np.mean(bw)) < 127.0:
         bw = 255 - bw
 
     # Light cleanup
     bw = cv2.morphologyEx(bw, cv2.MORPH_OPEN, np.ones((2, 2), np.uint8), iterations=1)
 
-    # NEW: keep only the top band where the digits are (remove the progress bar)
+    # Further crop to remove bar
     H, W = bw.shape[:2]
     cut = int(round(np.clip(top_band_frac, 0.20, 1.00) * H))
     bw_num = bw[:cut, :]

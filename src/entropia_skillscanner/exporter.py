@@ -42,8 +42,7 @@ def _q2(x: Decimal) -> Decimal:
 
 
 def _to_decimal_value(v: float) -> Decimal:
-    # SkillRow.value is float-like in your codebase.
-    # Use str() to avoid binary float surprises.
+    # SkillRow.value is float
     try:
         return Decimal(str(v))
     except InvalidOperation as e:
@@ -164,15 +163,15 @@ def _build_professions(
         if prof not in cat_map:
             warnings.append(f"UNKNOWN_PROF_CATEGORY:{prof}")
 
-        # compute_professions already q2()'d, but we re-q2 defensively
+        
         value = _q2(Decimal(pv.value))
 
         if pv.missing_skills:
             warnings.append(f"PROF_MISSING_SKILLS:{prof}:{','.join(pv.missing_skills)}")
 
         # informational; your validator notes it’s often not exactly 100
-        if pv.pct_sum != Decimal("100"):
-            warnings.append(f"PROF_PCT_SUM:{prof}:{pv.pct_sum}")
+        #if pv.pct_sum != Decimal("100"):
+            #warnings.append(f"PROF_PCT_SUM:{prof}:{pv.pct_sum}")
 
         out.append(ExportProfession(name=prof, value=value, category=cat))
 
@@ -196,7 +195,6 @@ def build_export(
     if not rows:
         raise ExportError("no rows to export")
 
-    # Surface schema/config errors early (startup/export time).
     validate_mappings(strict=True)
 
     schema = schema or (app_config.export_schema if app_config else SCHEMA_OLD)
@@ -241,14 +239,14 @@ def write_csv(result: ExportResult, path: Path) -> None:
     with path.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
 
-        # Skills section (keep 2 decimals)
+        # Skills section 2 decimal
         w.writerow(["[Skills]"])
         for s in result.skills:
             w.writerow([s.name, format(s.value, ".2f"), s.category])
 
         w.writerow([])
 
-        # Professions section (keep 2 decimals)
+        # Professions section 2 decimal
         if result.professions:
             w.writerow(["[Professions]"])
             for p in result.professions:
@@ -260,9 +258,4 @@ def write_csv(result: ExportResult, path: Path) -> None:
         for t in result.totals:
             w.writerow([t.category, str(int(t.total))])
 
-        # Optional: audit warnings at end (commented out for now)
-        # if result.warnings:
-        #     w.writerow([])
-        #     w.writerow(["[Warnings]"])
-        #     for msg in result.warnings:
-        #         w.writerow([msg])
+

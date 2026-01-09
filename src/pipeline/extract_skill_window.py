@@ -11,7 +11,7 @@ BBox = Tuple[int, int, int, int]  # x, y, w, h
 
 
 # -----------------------------
-# Result (frozen contract)
+# Result
 # -----------------------------
 @dataclass
 class CropResult:
@@ -25,7 +25,7 @@ class CropResult:
 
 
 # -----------------------------
-# Public API (in-memory only)
+# Public API
 # -----------------------------
 def extract_skill_window(
     bgr: np.ndarray,
@@ -35,11 +35,7 @@ def extract_skill_window(
 ) -> CropResult:
     """
     Full screenshot (BGR) -> normalized skills window crop.
-
-    Frozen pipeline stage.
-    - No OCR.
-    - Robust window detection + inner-panel trim + normalize-to-width.
-    - Debug output is optional and minimal.
+    Robust window detection + inner-panel trim + normalize-to-width.
     """
     det = _detect_skills_window(bgr)
 
@@ -117,8 +113,8 @@ def _normalize_to_width(
 # -----------------------------
 def _trim_to_inner_panel(bgr: np.ndarray) -> np.ndarray:
     """
-    Remove decorative border by snapping to the largest dark inner panel.
-    Safe: returns original if detection looks wrong.
+    Remove border by snapping to the largest dark inner panel.
+    Returns original if detection looks wrong.
     """
     if bgr is None or bgr.size == 0:
         return bgr
@@ -155,7 +151,7 @@ def _trim_to_inner_panel(bgr: np.ndarray) -> np.ndarray:
 
 
 # -----------------------------
-# Detection core (frozen)
+# Detection core
 # -----------------------------
 def _detect_skills_window(bgr: np.ndarray) -> dict:
     """
@@ -165,7 +161,7 @@ def _detect_skills_window(bgr: np.ndarray) -> dict:
     if bgr is None or bgr.ndim != 3 or bgr.shape[2] != 3:
         raise ValueError("bgr must be an HxWx3 BGR image (uint8).")
 
-    # Frozen parameters (these were your proven defaults)
+    # Frozen parameters (Worked in all cases thus far)
     min_area_frac = 0.05
     max_area_frac = 0.90
     ar_min = 1.00
@@ -173,7 +169,7 @@ def _detect_skills_window(bgr: np.ndarray) -> dict:
     max_candidates = 25
     conf_threshold = 0.55
     margin_threshold = 0.08
-    pad_frac = 0.0  # disabled; we trim inner panel instead
+    pad_frac = 0.0  # disabled; trim inner panel instead
 
     H, W = bgr.shape[:2]
     gray = cv2.cvtColor(bgr, cv2.COLOR_BGR2GRAY)
@@ -250,7 +246,7 @@ def _detect_skills_window(bgr: np.ndarray) -> dict:
 
 
 # -----------------------------
-# Scoring helpers (no OCR)
+# Scoring helpers
 # -----------------------------
 def _score_candidate(gray: np.ndarray, bbox: BBox) -> float:
     x, y, w, h = bbox

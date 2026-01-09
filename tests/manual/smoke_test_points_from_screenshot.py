@@ -8,7 +8,7 @@ from pipeline.parse_points_value import parse_points_value
 from pipeline.extract_skill_name import extract_skill_name
 
 # ---- Hardcoded input ----
-INPUT = Path("data/screenshots/1024x768-125.png")
+INPUT = Path("data\screenshots\wektb.png")
 
 # ---- Output folders ----
 OUT_DIR = Path("out_points_test")

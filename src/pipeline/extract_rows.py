@@ -21,7 +21,7 @@ class RowsResult:
 # ---- Fixed geometry (CALIBRATED; do not change lightly) ----
 TABLE_FIRST_ROW_Y = 55   # px from top of table ROI
 TABLE_ROW_HEIGHT  = 39   # px
-TABLE_NUM_ROWS    = 12   # visible rows in your fixed table ROI
+TABLE_NUM_ROWS    = 12   # visible rows infixed table ROI
 
 
 def extract_rows(

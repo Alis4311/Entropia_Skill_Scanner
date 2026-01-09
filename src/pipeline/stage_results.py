@@ -21,7 +21,7 @@ class PipelineStageError(RuntimeError):
     stage:
         Machine-readable stage identifier (e.g. "window-detection").
     reason:
-        Human-readable failure summary suitable for a status string.
+        Failure summary suitable for a status string.
     context:
         Optional extra context that should accompany the reason when
         constructing status messages.

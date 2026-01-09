@@ -12,7 +12,7 @@ except ModuleNotFoundError:  # pragma: no cover - fallback path
 
 from entropia_skillscanner.taxonomy import ExportSchema, SCHEMA_NEW, SCHEMA_OLD, validate_mappings
 
-try:  # Optional dependency
+try:  
     import yaml  # type: ignore
 except Exception:  # pragma: no cover - import guard
     yaml = None
@@ -23,13 +23,13 @@ DEFAULT_PROFESSIONS_WEIGHTS_PATH = DEFAULT_DATA_DIR / "professions.json"
 DEFAULT_PROFESSIONS_LIST_PATH = DEFAULT_DATA_DIR / "professions_list.json"
 DEFAULT_SCHEMA = "OLD"
 
-if TYPE_CHECKING:  # pragma: no cover - import used only for typing
+if TYPE_CHECKING:  
     from pipeline.run_pipeline import PipelineConfig
 
 
 def _pipeline_defaults() -> tuple[int, float]:
     try:
-        from pipeline.run_pipeline import PipelineConfig as _PipelineConfig  # type: ignore
+        from pipeline.run_pipeline import PipelineConfig as _PipelineConfig  
 
         cfg = _PipelineConfig()
         return cfg.norm_width, cfg.min_table_density
@@ -91,14 +91,14 @@ def _merge_top(base: Mapping[str, Any], override: Mapping[str, Any]) -> Dict[str
 
 
 def _resolve_path(project_root: Path, candidate: Optional[object], default: Path) -> Path:
-    from entropia_skillscanner.resources import resource_path, is_frozen, ensure_user_data_file  # local import avoids cycles
+    from entropia_skillscanner.resources import resource_path, is_frozen, ensure_user_data_file 
 
     path = default if candidate is None else Path(str(candidate))
 
     if path.is_absolute():
         return path
 
-    # Frozen: treat relative paths under "data/" as user data (writable).
+    
     if is_frozen():
         rel = path.as_posix().replace("\\", "/")
         if rel.startswith("data/"):

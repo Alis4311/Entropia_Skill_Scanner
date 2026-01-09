@@ -19,7 +19,6 @@ def _resource_path(relative: str) -> Path:
     Resolve a resource path that works:
     - in development (normal package files)
     - in PyInstaller onefile (sys._MEIPASS)
-    - in PyInstaller onedir
     """
     # PyInstaller sets sys._MEIPASS to the temp extraction dir (onefile)
     base = Path(getattr(sys, "_MEIPASS", Path(__file__).resolve().parent))
@@ -27,9 +26,6 @@ def _resource_path(relative: str) -> Path:
 
 
 def _dev_asset_path(relative: str) -> Path:
-    """
-    Dev fallback: when running from source tree, the assets live alongside the package.
-    """
     return (Path(__file__).resolve().parent / relative).resolve()
 
 
@@ -47,7 +43,6 @@ class AudioFeedback:
     - enable toggle
     - start-click rate limiting
     - non-blocking playback
-    - PyInstaller-friendly resource resolution
     """
 
     def __init__(self, cfg: AudioFeedbackConfig | None = None):
@@ -72,11 +67,9 @@ class AudioFeedback:
         self._play(self._warn_rel)
 
     def play_error(self) -> None:
-        # If you don’t want a separate error sound, keep it same as warn.
         self._play(self._warn_rel)
 
     def _should_play_start(self) -> bool:
-        print("_should_play_start")
         if not self.cfg.enabled:
             return False
         now = time.monotonic()
@@ -92,7 +85,7 @@ class AudioFeedback:
         if p.exists():
             return p
 
-        # Then try dev tree (package-relative)
+        # Then try dev tree 
         p2 = _dev_asset_path(relative.replace("entropia_skillscanner/", ""))
         if p2.exists():
             return p2
@@ -108,12 +101,12 @@ class AudioFeedback:
 
         wav_path = self._resolve_wav(relative)
         if not wav_path.exists():
-            # Fail silently: audio should never break the app.
+            # Fail silently
             return
 
         try:
-            # Non-blocking playback
+            # Non-blocking playback with SND_ASYNC
             winsound.PlaySound(str(wav_path), winsound.SND_FILENAME | winsound.SND_ASYNC)
         except Exception:
-            # Fail silently: audio should never break the app.
+            # Fail silently
             return

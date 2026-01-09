@@ -45,9 +45,9 @@ def validate_profession_weights(
             issues.append(f"{prof}: references unknown skills: {missing}")
 
         pct_sum = sum((Decimal(str(w["pct"])) for w in weights), Decimal("0"))
-        # informational only: your data often isn't exactly 100, and 0% entries exist
+        # informational only
         if pct_sum != Decimal("100"):
-            issues.append(f"{prof}: pct sum = {pct_sum} (expected 100)")
+            issues.append(f"{prof}: pct sum = {pct_sum}")
 
     return issues
 

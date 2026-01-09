@@ -31,7 +31,6 @@ def _preprocess(name_bgr: np.ndarray) -> np.ndarray:
     # Invert: black text on white bg for Tesseract
     gray = 255 - gray
 
-    # Otsu threshold
     _, bw = cv.threshold(
         gray, 0, 255,
         cv.THRESH_BINARY | cv.THRESH_OTSU
@@ -51,7 +50,7 @@ def _clean_text(s: str) -> str:
     s = s.replace("|", "I")
     s = s.replace("’", "'")
 
-    # Keep only characters skill names actually use
+    # Keep only characters skill names actually use (not sure if valid, but seems to work)
     s = "".join(ch for ch in s if ch.isalpha() or ch in " -'")
 
     # Normalize whitespace
@@ -68,8 +67,7 @@ def _tesseract_config() -> str:
 
 # -------- public API --------
 
-# Cache still useful if the *same* ROI is processed repeatedly (rare),
-# but keep it for compatibility.
+#Cache kept only for compatibility
 _ocr_cache: Dict[str, str] = {}
 
 
@@ -82,7 +80,7 @@ def extract_skill_names_batched(name_bgr_list: List[np.ndarray]) -> List[str]:
     if not name_bgr_list:
         return []
 
-    # Preprocess each crop (cheap compared to OCR)
+    # Preprocess each crop
     bw_list = [_preprocess(bgr) for bgr in name_bgr_list]
 
     # Normalize widths so we can stack cleanly
@@ -126,7 +124,7 @@ def extract_skill_names_batched(name_bgr_list: List[np.ndarray]) -> List[str]:
         cleaned.append(name)
 
 
-    # Force length match (caller expects same count)
+    # Force length match
     if len(cleaned) < len(name_bgr_list):
         cleaned += [""] * (len(name_bgr_list) - len(cleaned))
     else:
@@ -138,7 +136,7 @@ def extract_skill_names_batched(name_bgr_list: List[np.ndarray]) -> List[str]:
 def extract_skill_name(name_bgr: np.ndarray) -> str:
     """
     Backwards-compatible single-ROI API.
-    Uses cache + batched OCR (N=1).
+    Not used, and should realistically never be used, since the batched handles singles as well. 
     """
     key = _hash_img(name_bgr)
     if key in _ocr_cache:

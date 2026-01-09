@@ -17,7 +17,6 @@ from pipeline.run_pipeline import PipelineConfig, run_pipeline
 
 PipelineStart = Callable[[], None]
 PipelineProgress = Callable[[str], None]
-# Avoid runtime union operations for older Python versions
 PipelineCompletion = Callable[[Any], None]
 
 
@@ -41,7 +40,6 @@ class _PendingFrame:
 class PipelineRunner:
     """
     Encapsulates clipboard polling and background pipeline work.
-    Thread-safe; UI callbacks invoked from Tk thread via `ui_dispatch`.
     """
 
     def __init__(
@@ -176,7 +174,7 @@ class PipelineRunner:
                     self._emit_completed(payload if isinstance(payload, Exception) else Exception(str(payload)))
                 elif kind == "ok":
                     self._worker_busy = False
-                    self._emit_completed(payload)  # type: ignore[arg-type]
+                    self._emit_completed(payload) 
 
                 if (not self._worker_busy) and self._pending is not None:
                     next_frame = self._pending
@@ -204,6 +202,6 @@ class PipelineRunner:
 
 # Pillow import only for typing clarity; grabbed lazily.
 try:
-    from PIL import ImageGrab  # noqa: E402
+    from PIL import ImageGrab 
 except ImportError:
     raise SystemExit("Missing dependency: pillow (pip install pillow)")

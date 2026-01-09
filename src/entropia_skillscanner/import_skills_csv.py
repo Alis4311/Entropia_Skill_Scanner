@@ -43,7 +43,7 @@ def load_skill_rows_from_export_csv(
     Expected rows inside [Skills]:
       name,value,category
 
-    Everything else (Professions/Totals/etc) is ignored on purpose.
+    Everything else (Professions/Totals/etc) is ignored on purpose and computed on load
     """
     if not path.exists():
         raise ImportError(f"File not found: {path}")
@@ -88,7 +88,6 @@ def load_skill_rows_from_export_csv(
             val_s = row[1].strip()
             d = _parse_decimal(val_s, ctx=f"[Skills] line {line_no}").quantize(_Q2, rounding=ROUND_HALF_UP)
 
-            # SkillRow.value is float in your app; keep it consistent.
             value = float(d)
 
             rows.append(SkillRow(name=name, value=value, added=added_label))

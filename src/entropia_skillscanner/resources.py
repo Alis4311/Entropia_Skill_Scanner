@@ -10,8 +10,6 @@ APP_NAME_DEFAULT = "Entropia Skill Scanner"
 
 
 def _repo_root() -> Path:
-    # resources.py is in: <repo>/src/entropia_skillscanner/resources.py
-    # parents[0]=entropia_skillscanner, [1]=src, [2]=repo
     return Path(__file__).resolve().parents[2]
 
 
