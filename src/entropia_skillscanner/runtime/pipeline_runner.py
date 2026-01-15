@@ -1,3 +1,4 @@
+#src/entropia_skillscanner/runtime/pipeline_runner.py
 from __future__ import annotations
 
 import hashlib
@@ -13,7 +14,7 @@ from PIL import Image
 
 from entropia_skillscanner.core import PipelineResult
 from pipeline.run_pipeline import PipelineConfig, run_pipeline
-
+from pipeline.window_lock import WindowLock, LockState, WindowLockConfig
 
 PipelineStart = Callable[[], None]
 PipelineProgress = Callable[[str], None]
@@ -68,6 +69,15 @@ class PipelineRunner:
         self._worker_busy = False
         self._pending: Optional[_PendingFrame] = None
         self._results_q: "queue.Queue[tuple[str, object]]" = queue.Queue()
+        self._prime_clipboard()
+        #window lock
+        self._winlock = WindowLock(
+            WindowLockConfig(
+                debug=self.debug,
+                debug_dir=None,
+            )
+        )
+        self._winlock_state = LockState(pad=40)
 
     # -------- public controls --------
 
@@ -86,6 +96,11 @@ class PipelineRunner:
         if clip_hash is None:
             clip_hash = self._hash_bgr(bgr)
         self._enqueue(_PendingFrame(bgr=bgr, clip_hash=clip_hash))
+
+    def reset_window_lock(self) -> None:
+        self._winlock_state.bbox = None
+        self._winlock_state.fail_count = 0
+        self._winlock_state.last_score = 0.0
 
     # -------- clipboard --------
 
@@ -108,6 +123,25 @@ class PipelineRunner:
             self._emit_progress(f"error (clipboard): {e}")
 
         self.ui_dispatch(self._poll_clipboard, self.poll_ms)
+
+    def _prime_clipboard(self) -> None:
+        """Treat current clipboard content as already-seen so startup doesn't auto-run."""
+        try:
+            img = ImageGrab.grabclipboard()
+            pil_img = self._normalize_clipboard_image(img)
+            if pil_img is None:
+                self._last_clip_hash = None
+                self._last_clip_ts = time.time()
+                return
+
+            self._last_clip_hash = self._hash_pil(pil_img)
+            self._last_clip_ts = time.time()
+            self._emit_progress("ready (clipboard primed)")
+        except Exception as e:
+            # Don't crash startup; just avoid accidental trigger.
+            self._last_clip_hash = None
+            self._last_clip_ts = time.time()
+            self._emit_progress(f"warning (prime clipboard): {e}")
 
     @staticmethod
     def _normalize_clipboard_image(obj):
@@ -151,9 +185,10 @@ class PipelineRunner:
             self._results_q.put(("log", msg))
 
         try:
+            wf= self._winlock.prepare_frame(pending.bgr, self._winlock_state)
             result = run_pipeline_sync(
                 self.cfg,
-                pending.bgr,
+                wf.bgr,
                 debug=self.debug,
                 debug_dir=None,
                 logger=worker_logger,

@@ -52,8 +52,10 @@ def load_vocab(path: Path) -> Vocab:
 # i<->l and l<->t show up a lot ("Aim"->"Alm", "Biology"->"Blotogy").
 _OCR_SUBS: Dict[str, Tuple[str, ...]] = {
     "l": ("l", "i", "t"),
-    "i": ("i", "l"),
-    "t": ("t", "l"),
+    "i": ("i", "l", "t"),
+    "t": ("i", "l" , "t"),
+    "c": ("c", "g"),
+    "g": ("g", "c"),
 }
 
 
@@ -107,7 +109,8 @@ def snap_name(raw_ocr: str, vocab: Vocab) -> tuple[str, int]:
     best_score = -1
 
     queries = [q]
-    if len(q) <= 10:  # keep variant generation bounded
+    subs_count = sum(1 for ch in q if ch in _OCR_SUBS)
+    if subs_count <= 4:
         queries += _ocr_variants(q)
 
     # Find best across variants

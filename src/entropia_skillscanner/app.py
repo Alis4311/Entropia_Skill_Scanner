@@ -17,12 +17,57 @@ from pipeline.profession_store import get_profession_weights
 
 from entropia_skillscanner.import_skills_csv import load_skill_rows_from_export_csv, ImportError
 
-##for bundling:
+# for bundling:
 import pytesseract
 from entropia_skillscanner.resources import resource_path, is_frozen
 import os
 
 HIGHLIGHT_LAST_N = 12
+
+
+class _EditRowDialog(tk.Toplevel):
+    def __init__(self, master: tk.Tk, name: str, value: float):
+        super().__init__(master)
+        self.title("Edit row")
+        self.resizable(False, False)
+        self.result: Optional[tuple[str, float]] = None
+
+        ttk.Label(self, text="Skill name").grid(row=0, column=0, sticky="w", padx=8, pady=(8, 2))
+        self.name_var = tk.StringVar(value=name)
+        e1 = ttk.Entry(self, textvariable=self.name_var, width=44)
+        e1.grid(row=0, column=1, padx=8, pady=(8, 2))
+
+        ttk.Label(self, text="Skill value").grid(row=1, column=0, sticky="w", padx=8, pady=2)
+        self.val_var = tk.StringVar(value=f"{value:.2f}")
+        e2 = ttk.Entry(self, textvariable=self.val_var, width=20)
+        e2.grid(row=1, column=1, sticky="w", padx=8, pady=2)
+
+        btns = ttk.Frame(self)
+        btns.grid(row=2, column=0, columnspan=2, pady=10, padx=8, sticky="e")
+        ttk.Button(btns, text="Cancel", command=self._cancel).pack(side="right", padx=(6, 0))
+        ttk.Button(btns, text="Save", command=self._save).pack(side="right")
+
+        self.bind("<Return>", lambda e: self._save())
+        self.bind("<Escape>", lambda e: self._cancel())
+
+        self.transient(master)
+        self.grab_set()
+        e1.focus_set()
+
+    def _cancel(self) -> None:
+        self.result = None
+        self.destroy()
+
+    def _save(self) -> None:
+        name = self.name_var.get().strip()
+        if not name:
+            return
+        try:
+            val = float(self.val_var.get().strip())
+        except Exception:
+            return
+        self.result = (name, val)
+        self.destroy()
 
 
 class SkillScannerApp(tk.Tk):
@@ -40,20 +85,20 @@ class SkillScannerApp(tk.Tk):
 
         try:
             self.app_cfg.validate()
-        except Exception as e: 
+        except Exception as e:
             messagebox.showerror("Configuration error: ", str(e))
+
         self.pipeline_cfg = self.app_cfg.pipeline_config
+
         if is_frozen():
-            pytesseract.pytesseract.tesseract_cmd = str(
-                resource_path("tesseract/tesseract.exe")
-            )
-            os.environ["TESSDATA_PREFIX"] = str(
-                resource_path("tesseract/tessdata")
-            )
+            pytesseract.pytesseract.tesseract_cmd = str(resource_path("tesseract/tesseract.exe"))
+            os.environ["TESSDATA_PREFIX"] = str(resource_path("tesseract/tessdata"))
+
         self.view_model = SkillScannerViewModel()
-        self._last_added_indices = []
+        self._last_added_indices: list[int] = []
 
         self._build_ui()
+
         self._subscriptions = [
             self.view_model.subscribe("rows", self._on_rows_changed),
             self.view_model.subscribe("status", self._on_status_changed),
@@ -61,10 +106,13 @@ class SkillScannerApp(tk.Tk):
         ]
 
         self.view_model.set_status("waiting for screenshot")
-        self.audio = AudioFeedback(AudioFeedbackConfig(
-            enabled=getattr(self.app_cfg, "enable_sfx", True),
-            start_min_interval_s=0.6,
-        ))
+        self.audio = AudioFeedback(
+            AudioFeedbackConfig(
+                enabled=getattr(self.app_cfg, "enable_sfx", True),
+                start_min_interval_s=0.6,
+            )
+        )
+
         # Runner
         self.runner = (runner_factory or self._default_runner_factory)(
             cfg=self.pipeline_cfg,
@@ -76,9 +124,9 @@ class SkillScannerApp(tk.Tk):
         )
         self.runner.set_auto_poll(self.auto_var.get())
         self.runner.start_polling()
-    
+
         # Start UI loops
-        self.after(0, lambda: None)  # no-op to ensure Tk loop initialized, apparently this is standard? 
+        self.after(0, lambda: None)  # no-op to ensure Tk loop initialized
 
     # ---------------- UI ----------------
 
@@ -113,6 +161,16 @@ class SkillScannerApp(tk.Tk):
         skills_tab = ttk.Frame(nb)
         nb.add(skills_tab, text="Skills")
 
+        # Actions row (Edit/Delete)
+        actions = ttk.Frame(skills_tab)
+        actions.grid(row=0, column=0, sticky="ew", padx=4, pady=(4, 2))
+        skills_tab.grid_columnconfigure(0, weight=1)
+
+        self.btn_edit = ttk.Button(actions, text="Edit…", command=self._edit_selected_row, state="disabled")
+        self.btn_del = ttk.Button(actions, text="Delete", command=self._delete_selected_rows, state="disabled")
+        self.btn_edit.pack(side="left", padx=(0, 6))
+        self.btn_del.pack(side="left")
+
         cols = ("skill", "value", "added")
         self.tree = ttk.Treeview(skills_tab, columns=cols, show="headings", height=20)
         self.tree.heading("skill", text="Skill name")
@@ -126,14 +184,30 @@ class SkillScannerApp(tk.Tk):
         vsb = ttk.Scrollbar(skills_tab, orient="vertical", command=self.tree.yview)
         self.tree.configure(yscrollcommand=vsb.set)
 
-        self.tree.grid(row=0, column=0, sticky="nsew")
-        vsb.grid(row=0, column=1, sticky="ns")
+        # enable multi-select
+        self.tree.configure(selectmode="extended")
 
-        skills_tab.grid_rowconfigure(0, weight=1)
+        self.tree.grid(row=1, column=0, sticky="nsew")
+        vsb.grid(row=1, column=1, sticky="ns")
+
+        skills_tab.grid_rowconfigure(1, weight=1)
         skills_tab.grid_columnconfigure(0, weight=1)
 
         self.tree.tag_configure("new", background="#e9f5ff")
         self.tree.tag_configure("err", background="#ffe9e9")
+
+        # selection / edit / delete bindings
+        self.tree.bind("<<TreeviewSelect>>", self._on_tree_select)
+        self.tree.bind("<Double-1>", self._on_tree_double_click)
+
+        # Delete key for deleting selected
+        self.bind_all("<Delete>", lambda e: self._delete_selected_rows())
+
+        # Right-click context menu
+        self._skills_menu = tk.Menu(self, tearoff=0)
+        self._skills_menu.add_command(label="Edit…", command=self._edit_selected_row)
+        self._skills_menu.add_command(label="Delete", command=self._delete_selected_rows)
+        self.tree.bind("<Button-3>", self._on_tree_right_click)  # Windows/Linux
 
         # ---- Professions tab ----
         prof_tab = ttk.Frame(nb)
@@ -158,7 +232,7 @@ class SkillScannerApp(tk.Tk):
         prof_tab.grid_rowconfigure(0, weight=1)
         prof_tab.grid_columnconfigure(0, weight=1)
 
-        self.prof_tree.tag_configure("warn", background="#fff6e5") 
+        self.prof_tree.tag_configure("warn", background="#fff6e5")
 
         # Bottom controls
         bot = ttk.Frame(self, padding=(10, 6, 10, 10))
@@ -179,6 +253,91 @@ class SkillScannerApp(tk.Tk):
     def _set_status(self, s: str):
         self.view_model.set_status(s)
 
+    # ---------------- Tree interaction ----------------
+
+    def _on_tree_select(self, _evt=None) -> None:
+        sel = list(self.tree.selection())
+        self.btn_del.configure(state=("normal" if sel else "disabled"))
+        self.btn_edit.configure(state=("normal" if len(sel) == 1 else "disabled"))
+
+    def _on_tree_right_click(self, event) -> None:
+        iid = self.tree.identify_row(event.y)
+        if iid:
+            if iid not in self.tree.selection():
+                self.tree.selection_set(iid)
+        self._on_tree_select()
+        try:
+            self._skills_menu.tk_popup(event.x_root, event.y_root)
+        finally:
+            self._skills_menu.grab_release()
+
+    def _on_tree_double_click(self, event) -> None:
+        iid = self.tree.identify_row(event.y)
+        if not iid:
+            return
+        self.tree.selection_set(iid)
+        self._on_tree_select()
+        self._edit_selected_row()
+
+    def _delete_selected_rows(self) -> None:
+        sel = list(self.tree.selection())
+        if not sel:
+            return
+
+        indices: list[int] = []
+        for iid in sel:
+            try:
+                indices.append(self.tree.index(iid))
+            except Exception:
+                pass
+
+        if not indices:
+            return
+
+        indices = sorted(set(indices), reverse=True)
+
+        # Remove from model
+        for idx in indices:
+            if 0 <= idx < len(self.view_model.rows):
+                self.view_model.rows.pop(idx)
+
+        # Adjust highlight indices so tags don't drift
+        if self._last_added_indices:
+            removed = set(indices)
+            new_last: list[int] = []
+            for old_i in self._last_added_indices:
+                if old_i in removed:
+                    continue
+                shift = sum(1 for r in removed if r < old_i)
+                new_last.append(old_i - shift)
+            self._last_added_indices = new_last
+
+        self._refresh_table()
+        self._on_tree_select()
+
+    def _edit_selected_row(self) -> None:
+        sel = list(self.tree.selection())
+        if len(sel) != 1:
+            return
+
+        idx = self.tree.index(sel[0])
+        if not (0 <= idx < len(self.view_model.rows)):
+            return
+
+        row = self.view_model.rows[idx]
+        dlg = _EditRowDialog(self, row.name, row.value)
+        self.wait_window(dlg)
+        if dlg.result is None:
+            return
+
+        new_name, new_val = dlg.result
+
+        # Preserve timestamp; keep audit trail simple for now
+        self.view_model.rows[idx] = SkillRow(name=new_name, value=float(new_val), added=row.added)
+
+        self._refresh_table()
+        self._on_tree_select()
+
     # ---------------- Runner integration ----------------
 
     def _default_runner_factory(self, **kwargs) -> PipelineRunner:
@@ -197,7 +356,7 @@ class SkillScannerApp(tk.Tk):
 
     def _on_pipeline_started(self) -> None:
         self.view_model.set_warnings(())
-        self.audio.play_start()    
+        self.audio.play_start()
         self._set_status("extracting...")
 
     def _on_pipeline_progress(self, msg: str) -> None:
@@ -226,12 +385,9 @@ class SkillScannerApp(tk.Tk):
         else:
             self.audio.play_success()
 
-
-
     # ---------------- Data / Table rendering ----------------
 
     def _append_rows(self, extracted_rows: Sequence[PipelineRow]):
-        # extracted_rows expected: iterable of PipelineRow
         start_idx = len(self.view_model.rows)
         ts = time.strftime("%Y-%m-%d %H:%M:%S")
         new_rows = []
@@ -247,7 +403,6 @@ class SkillScannerApp(tk.Tk):
 
         end_idx = start_idx + len(new_rows) - 1
         self._last_added_indices = list(range(start_idx, end_idx + 1))
-        #self.view_model.set_warnings(())
         self.view_model.append_rows(new_rows)
 
     def _refresh_table(self):
@@ -337,7 +492,6 @@ class SkillScannerApp(tk.Tk):
         if not self.view_model.rows:
             return
 
-        # Build skill->Decimal map from scanned rows
         skills = {r.name: Decimal(str(r.value)) for r in self.view_model.rows}
 
         try:
@@ -348,7 +502,6 @@ class SkillScannerApp(tk.Tk):
                 strict=False,
             )
         except Exception as e:
-            
             self.prof_tree.insert("", "end", values=("ERROR", "", str(e)), tags=("warn",))
             warnings.append(f"profession computation failed: {e}")
             self.view_model.set_warnings(warnings)
@@ -378,7 +531,6 @@ class SkillScannerApp(tk.Tk):
     # ---------------- View-model bindings ----------------
 
     def _on_rows_changed(self, rows: Sequence[SkillRow]) -> None:
-        
         self._refresh_table()
 
     def _on_status_changed(self, status: str) -> None:
@@ -386,6 +538,9 @@ class SkillScannerApp(tk.Tk):
 
     def _on_warnings_changed(self, warnings: Sequence[str]) -> None:
         self.warnings_var.set("; ".join(warnings))
+
+    def _on_pipeline_progress(self, msg: str) -> None:
+        self._set_status(msg)
 
 
 def main():
